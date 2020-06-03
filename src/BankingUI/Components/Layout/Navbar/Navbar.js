@@ -1,12 +1,14 @@
 import React from "react";
 import "./Navbar.css";
 import { Avatar } from "antd";
-import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Button, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell, faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
 	return (
-		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+		<Navbar collapseOnSelect expand="lg" bg="info" variant="dark">
 			<Link to="/">
 				<Navbar.Brand href="/">INTERNET BANKING</Navbar.Brand>
 			</Link>
@@ -14,8 +16,8 @@ const Header = () => {
 			<Navbar.Collapse id="responsive-navbar-nav">
 				<Nav className="mr-auto">
 					<Navbar.Text className="text-light">
-						<Avatar src="./tic-tac-toe.png" roundedCircle />
-						<span className="text-success">Hello world</span>
+						<Image src="./tic-tac-toe.png" className="avatar" roundedCircle />{" "}
+						<span className="text-dark bold">Nguyễn Ngọc Khắc Triệu</span>
 					</Navbar.Text>
 				</Nav>
 				<Nav>
@@ -34,30 +36,30 @@ const Header = () => {
 							Join Chat
 						</Link>
 					</Nav.Link>
-					<NavDropdown title="InternetBanking" id="collasible-nav-dropdown">
-						<NavDropdown.Item>
-							<Link to="/receivers" className="text-light mr-2">
-								Receivers
-							</Link>
-						</NavDropdown.Item>
-						{/* <NavDropdown.Item href="#action/3.2">
+					<NavDropdown
+						title={<FontAwesomeIcon icon={faBell} />}
+						id="collasible-nav-dropdown"
+					>
+						<NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+						<NavDropdown.Item href="#action/3.2">
 							Another action
 						</NavDropdown.Item>
 						<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
 						<NavDropdown.Divider />
 						<NavDropdown.Item href="#action/3.4">
 							Separated link
-						</NavDropdown.Item> */}
+						</NavDropdown.Item>
 					</NavDropdown>
 					<Button
 						eventKey={2}
-						variant="outline-danger"
-						// onClick={() => {
-						// 	localStorage.removeItem("token");
-						// 	setUserToken("");
-						// }}
+						variant="danger"
+						onClick={() => {
+							console.log("helloworld");
+							// localStorage.removeItem("token");
+							// setUserToken("");
+						}}
 					>
-						Logout
+						<FontAwesomeIcon icon={faPowerOff} /> Logout
 					</Button>
 				</Nav>
 			</Navbar.Collapse>
