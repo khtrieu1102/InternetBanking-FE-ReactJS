@@ -6,6 +6,7 @@ import DefaultLayout from "../BankingUI/Components/Layout/DefaultLayout";
 import Dashboard from "../BankingUI/Components/Banking/Dashboard/Dashboard";
 import LogIn from "../BankingUI/Components/Authentication/Login/Login";
 import Register from "../BankingUI/Components/Authentication/Register/Register";
+import ReceiverList from "../BankingUI/Components/Banking/ReceiverList/ReceiverList";
 
 const PrivateRoute = ({ comp: Component, ...rest }) => {
 	return (
@@ -47,6 +48,12 @@ export const private_routes = [
 		path: "/edit",
 		routetype: PrivateRoute,
 		component: Register,
+		layout: DefaultLayout,
+	},
+	{
+		path: "/receivers",
+		routetype: PrivateRoute,
+		component: ReceiverList,
 		layout: DefaultLayout,
 	},
 ];
