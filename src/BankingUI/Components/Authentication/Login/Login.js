@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Row, Col, Card, Spinner } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
+import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const LogIn = (props) => {
 	const { isAuthenticated } = props;
 	const [redirectToReferrer, setRedirectToReferrer] = useState(false);
-	const [messageForm, setMessageForm] = useState({});
-	const { username, password } = messageForm;
+	const [messageForm, setMessageForm] = useState({
+		username: "",
+		password: "",
+	});
+	// const { username, password } = messageForm;
 	const [validated, setValidated] = useState(false);
 	const reCaptchaRef = React.createRef();
 
@@ -17,7 +21,7 @@ const LogIn = (props) => {
 		setRedirectToReferrer(isAuthenticated ? true : false);
 	}, [isAuthenticated]);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		const form = event.currentTarget;
 		// const reCaptchaValue = reCaptchaRef.current.getValue();
 		const reCaptchaValue = true;
@@ -25,7 +29,17 @@ const LogIn = (props) => {
 		if (form.checkValidity() === false || !reCaptchaValue) {
 			event.stopPropagation();
 		} else {
-			console.log(username, password);
+			await axios
+				.post("http://localhost:5000/api/auth/login", {
+					username: messageForm.username,
+					password: messageForm.password,
+				})
+				.then((result) => {
+					if (result.status == 200) console.log(result);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
 		}
 		setValidated(true);
 	};
@@ -44,23 +58,16 @@ const LogIn = (props) => {
 					<Card.Header>
 						<Card.Title className="text-center text-dark">LOG IN</Card.Title>
 					</Card.Header>
-					{/* {error ? (
-						<MessageBox
-							alertTypes="danger"
-							alertHeading={message}
-							alertMessage={error}
-						/>
-					) : null} */}
 					<Card.Body>
 						<Form noValidate validated={validated} onSubmit={handleSubmit}>
 							<Form.Group controlId="formBasicUsername">
 								<Form.Label className="font-weight-bold">Username</Form.Label>
 								<Form.Control
 									required
-									type="email"
+									type="text"
 									name="username"
 									placeholder="Enter Username"
-									value={username}
+									value={messageForm.username}
 									onChange={(e) => handleChange(e)}
 								/>
 								<Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -75,7 +82,7 @@ const LogIn = (props) => {
 									type="password"
 									name="password"
 									placeholder="Password"
-									value={password}
+									value={messageForm.password}
 									onChange={(e) => handleChange(e)}
 								/>
 								<Form.Control.Feedback type="invalid">
@@ -86,12 +93,8 @@ const LogIn = (props) => {
 								ref={reCaptchaRef}
 								sitekey="6LeTv_QUAAAAAF65I5hEKOF7PuE1JUxYcQ4JMBrb"
 							/>
-							{/* <Form.Group controlId="formBasicCheckbox">
-								<Form.Check type="checkbox" label="Remember me!" />
-							</Form.Group> */}
 							<Button variant="primary" type="submit" className="mt-3">
 								Submit
-								{/* {isLoading ? <Spinner animation="border" size="sm" /> : null} */}
 							</Button>
 						</Form>
 					</Card.Body>
