@@ -3,14 +3,19 @@ import React from "react";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./BankingUI/App/App";
+import AppConnect from "./BankingUI/App/AppConnect";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 require("dotenv").config();
 
 ReactDOM.render(
-	<BrowserRouter>
-		<App />
-	</BrowserRouter>,
+	<Provider store={store}>
+		<BrowserRouter>
+			<AppConnect />
+		</BrowserRouter>
+	</Provider>,
 	document.getElementById("root")
 );
 
