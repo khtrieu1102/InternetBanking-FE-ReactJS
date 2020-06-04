@@ -46,9 +46,13 @@ const App = (props) => {
 					.catch((err) => {
 						console.log(err);
 						setIsAuthenticated(false);
+						localStorage.removeItem("token");
 					});
 			}
-		} else setIsAuthenticated(false);
+		} else {
+			setIsAuthenticated(false);
+			localStorage.removeItem("token");
+		}
 		// get Token from both side (redux + localStorage)
 	}, [authentication.accessToken]);
 
