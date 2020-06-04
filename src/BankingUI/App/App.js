@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -7,9 +7,51 @@ import {
 } from "react-router-dom";
 
 import { public_routes, private_routes } from "../../routes/appRoutes";
+import axios from "axios";
 
-const App = () => {
-	const isAuthenticated = true;
+const App = (props) => {
+	const {
+		reducerAuthorization,
+		setUserAccessToken,
+		setIsAuthenticated,
+	} = props;
+	const {
+		isAuthenticated,
+		authentication,
+		userInfomation,
+	} = reducerAuthorization;
+	const localAccessToken = localStorage.getItem("token");
+
+	useEffect(() => {
+		console.log("hello world");
+		if (localAccessToken) {
+			if (!authentication.accessToken) setUserAccessToken(localAccessToken);
+		} else setUserAccessToken(null);
+		// get Token from both side (redux + localStorage)
+	}, []);
+
+	useEffect(() => {
+		if (authentication.accessToken) {
+			if (userInfomation.id === -1) {
+				axios
+					.get("http://localhost:5000/api/users/me", {
+						headers: { Authorization: `Bearer ${authentication.accessToken}` },
+					})
+					.then((result) => {
+						if (result.status === 200) {
+							console.log(result);
+							setIsAuthenticated(true);
+						}
+					})
+					.catch((err) => {
+						console.log(err);
+						setIsAuthenticated(false);
+					});
+			}
+		} else setIsAuthenticated(false);
+		// get Token from both side (redux + localStorage)
+	}, [authentication.accessToken]);
+
 	return (
 		<div className="app">
 			<Router>

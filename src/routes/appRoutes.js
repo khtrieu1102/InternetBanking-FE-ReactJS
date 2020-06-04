@@ -5,6 +5,7 @@ import DefaultLayout from "../BankingUI/Components/Layout/DefaultLayout";
 
 import Dashboard from "../BankingUI/Components/Banking/Dashboard/Dashboard";
 import LogIn from "../BankingUI/Components/Authentication/Login/Login";
+import LoginConnect from "../BankingUI/Components/Authentication/Login/LoginConnect";
 import Register from "../BankingUI/Components/Authentication/Register/Register";
 import ReceiverList from "../BankingUI/Components/Banking/ReceiverList/ReceiverList";
 
@@ -33,7 +34,7 @@ export const public_routes = [
 	{
 		path: "/login",
 		routetype: Route,
-		component: LogIn,
+		component: LoginConnect,
 	},
 ];
 

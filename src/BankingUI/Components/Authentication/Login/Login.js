@@ -5,6 +5,7 @@ import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const LogIn = (props) => {
+	const { reducerAuthorization, setUserAccessToken } = props;
 	const { isAuthenticated } = props;
 	const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 	const [messageForm, setMessageForm] = useState({
@@ -35,11 +36,16 @@ const LogIn = (props) => {
 					password: messageForm.password,
 				})
 				.then((result) => {
-					if (result.status == 200) console.log(result);
+					if (result.status === 200) {
+						console.log(result);
+						localStorage.setItem("token", result.data.accessToken);
+					}
 				})
 				.catch((error) => {
 					console.log(error);
 				});
+			const accessToken = localStorage.getItem("token");
+			if (accessToken) setUserAccessToken(accessToken);
 		}
 		setValidated(true);
 	};
