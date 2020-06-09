@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Col, Row, Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import "./Dashboard.css";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+	const {
+		reducerAuthorization,
+		reducerUserInformation,
+		getAllInformation,
+	} = props;
+	const { authentication } = reducerAuthorization;
+	const { balance, name } = reducerUserInformation;
+	const accessTokennn = authentication.accessToken;
+	const mountedRef = useRef(true);
+
+	const formatter = new Intl.NumberFormat("en-US", {
+		style: "currency",
+		currency: "VND",
+		minimumFractionDigits: 0,
+	});
+	const formattedBalance = formatter.format(balance);
+
+	useEffect(() => {
+		return () => {
+			mountedRef.current = false;
+		};
+	}, []);
+
 	return (
 		<Container fluid>
 			<Row>
@@ -15,12 +39,12 @@ const Dashboard = () => {
 							<Card.Title>
 								Xin chào,{" "}
 								<Link to="/edit">
-									<span className="text-primary">Nguyễn Ngọc Khắc Triệu</span>
+									<span className="text-primary">{name}</span>
 								</Link>
 							</Card.Title>
 							<Card.Text>
 								Số dư khả dụng của bạn:{" "}
-								<span className="text-primary">12,101,200đ</span>
+								<span className="text-primary">{formattedBalance}</span>
 							</Card.Text>
 							<Col>
 								<Link to="/games">
