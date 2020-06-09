@@ -6,7 +6,14 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
-const Header = () => {
+const Header = (props) => {
+	const {
+		reducerAuthorization,
+		reducerUserInformation,
+		setIsAuthenticated,
+	} = props;
+	const { name } = reducerUserInformation;
+
 	return (
 		<Navbar collapseOnSelect expand="lg" bg="info" variant="dark">
 			<Link to="/">
@@ -17,7 +24,7 @@ const Header = () => {
 				<Nav className="mr-auto">
 					<Navbar.Text className="text-light">
 						<Image src="./tic-tac-toe.png" className="avatar" roundedCircle />{" "}
-						<span className="text-dark bold">Nguyễn Ngọc Khắc Triệu</span>
+						<span className="text-dark bold">{name}</span>
 					</Navbar.Text>
 				</Nav>
 				<Nav>
@@ -36,7 +43,7 @@ const Header = () => {
 							Join Chat
 						</Link>
 					</Nav.Link>
-					<NavDropdown
+					{/* <NavDropdown
 						title={<FontAwesomeIcon icon={faBell} />}
 						id="collasible-nav-dropdown"
 					>
@@ -49,13 +56,14 @@ const Header = () => {
 						<NavDropdown.Item href="#action/3.4">
 							Separated link
 						</NavDropdown.Item>
-					</NavDropdown>
+					</NavDropdown> */}
 					<Button
 						eventKey={2}
 						variant="danger"
 						onClick={() => {
-							console.log("helloworld");
-							// localStorage.removeItem("token");
+							// console.log("helloworld");
+							localStorage.removeItem("token");
+							setIsAuthenticated(false);
 							// setUserToken("");
 						}}
 					>

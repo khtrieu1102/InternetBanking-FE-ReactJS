@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 
-import Navbar from "./Navbar/Navbar";
+import NavbarConnect from "./Navbar/NavbarConnect";
 
 const DefaultLayout = ({ children }) => (
 	<Fragment>
-		<Navbar />
+		<NavbarConnect />
 		{children}
 	</Fragment>
 );
