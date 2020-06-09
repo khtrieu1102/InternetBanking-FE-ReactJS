@@ -5,18 +5,6 @@ const initialState = {
 		accessToken: "",
 		refreshToken: "",
 	},
-	userInfomation: {
-		id: -1,
-		accountNumber: "",
-		username: "",
-		name: "",
-		role: "",
-		email: "",
-		phone: "",
-		balance: -1,
-		permission: true,
-		receivers: [],
-	},
 	isLoading: false,
 	isAuthenticated: true,
 	error: null,
@@ -29,9 +17,6 @@ const reducerAuthorization = (state = initialState, action) => {
 		case AuthorizationActionTypes.AUTH_SET_ACCESS_TOKEN: {
 			return {
 				...state,
-				isLoading: false,
-				error: null,
-				message: "Set access token successfully!",
 				authentication: {
 					...state.authentication,
 					accessToken: payload,
