@@ -2,3 +2,7 @@ export const AuthorizationActionTypes = {
 	AUTH_SET_ACCESS_TOKEN: "AUTH_SET_ACCESS_TOKEN",
 	AUTH_SET_IS_AUTHENTICATED: "AUTH_SET_IS_AUTHENTICATED",
 };
+
+export const UserInformationActionTypes = {
+	USER_GET_ALL_INFORMATION: "USER_GET_ALL_INFORMATION",
+};
