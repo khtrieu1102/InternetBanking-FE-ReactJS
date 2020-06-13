@@ -2,16 +2,23 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Row, Col, Card, Spinner } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackward } from "@fortawesome/free-solid-svg-icons";
+import EmailForm from "./EmailForm/EmailForm";
+import OtpForm from "./OtpForm/OtpForm";
+import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
+import AlertBox from "../../Others/AlertBox/AlertBox";
 
 const ForgotPassword = (props) => {
 	const { reducerAuthorization } = props;
 	const { isAuthenticated } = reducerAuthorization;
 	const [redirectToReferrer, setRedirectToReferrer] = useState(false);
-	const [messageForm, setMessageForm] = useState({
+	const [resetPasswordForm, setResetPasswordForm] = useState({
 		email: "",
+		otp: null,
+		newPassword: "",
+		retypeNewPassword: "",
+		error: null,
 	});
+	const [step, setStep] = useState(0);
 	const [validated, setValidated] = useState(false);
 
 	const from = props.location.state || { from: { pathname: "/" } };
@@ -20,35 +27,53 @@ const ForgotPassword = (props) => {
 		setRedirectToReferrer(isAuthenticated ? true : false);
 	}, [isAuthenticated]);
 
-	const handleSubmit = async (event) => {
-		const form = event.currentTarget;
-		event.preventDefault();
-		if (form.checkValidity() === false) {
-			event.stopPropagation();
-		} else {
-			// await axios
-			// 	.post("http://localhost:5000/api/auth/login", {
-			// 		username: messageForm.username,
-			// 		password: messageForm.password,
-			// 	})
-			// 	.then((result) => {
-			// 		if (result.status === 200) {
-			// 			console.log(result);
-			// 			localStorage.setItem("token", result.data.accessToken);
-			// 		}
-			// 	})
-			// 	.catch((error) => {
-			// 		console.log(error);
-			// 	});
-			// const accessToken = localStorage.getItem("token");
-			// if (accessToken) setUserAccessToken(accessToken);
-		}
-		setValidated(true);
+	const setFormError = (message) => {
+		resetPasswordForm["error"] = message;
+		setResetPasswordForm({ ...resetPasswordForm });
 	};
 
-	const handleChange = (e) => {
-		messageForm[e.target.name] = e.target.value;
-		setMessageForm({ ...messageForm });
+	const renderAlert = () => {
+		if (resetPasswordForm.error)
+			return (
+				<AlertBox alertTypes="danger" alertMessage={resetPasswordForm.error} />
+			);
+	};
+
+	const renderStepForm = () => {
+		switch (step) {
+			case 0:
+				return (
+					<EmailForm
+						resetPasswordForm={resetPasswordForm}
+						setResetPasswordForm={setResetPasswordForm}
+						step={step}
+						setStep={setStep}
+						setFormError={setFormError}
+					/>
+				);
+			case 1:
+				return (
+					<OtpForm
+						resetPasswordForm={resetPasswordForm}
+						setResetPasswordForm={setResetPasswordForm}
+						step={step}
+						setStep={setStep}
+						setFormError={setFormError}
+					/>
+				);
+			case 2:
+				return (
+					<ResetPasswordForm
+						resetPasswordForm={resetPasswordForm}
+						setResetPasswordForm={setResetPasswordForm}
+						step={step}
+						setStep={setStep}
+						setFormError={setFormError}
+					/>
+				);
+			case 3:
+				return <Redirect to="/login" />;
+		}
 	};
 
 	return redirectToReferrer ? (
@@ -63,39 +88,8 @@ const ForgotPassword = (props) => {
 						</Card.Title>
 					</Card.Header>
 					<Card.Body>
-						<Form noValidate validated={validated} onSubmit={handleSubmit}>
-							<Form.Group controlId="formBasicUsername">
-								<Form.Label className="font-weight-bold">Email</Form.Label>
-								<Form.Control
-									required
-									type="email"
-									name="email"
-									placeholder="Enter your Email"
-									value={messageForm.email}
-									onChange={(e) => handleChange(e)}
-								/>
-								<Form.Text className="text-muted">
-									We will send your OTP password to this email.
-								</Form.Text>
-								<Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-								<Form.Control.Feedback type="invalid">
-									Please provide a valid username.
-								</Form.Control.Feedback>
-							</Form.Group>
-							<Link to="/login">
-								<Button
-									variant="primary-outline"
-									type="button"
-									className="mt-3"
-								>
-									<FontAwesomeIcon icon={faBackward} />
-									Login
-								</Button>
-							</Link>
-							<Button variant="primary" type="submit" className="mt-3">
-								Send
-							</Button>
-						</Form>
+						{renderAlert()}
+						{renderStepForm()}
 					</Card.Body>
 				</Card>
 			</Col>
