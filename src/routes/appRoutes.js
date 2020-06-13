@@ -1,15 +1,16 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
+import LoginConnect from "../BankingUI/Components/Authentication/Login/LoginConnect";
+import NotFound from "../BankingUI/Components/Others/NotFound/NotFound";
+import Register from "../BankingUI/Components/Authentication/Register/Register";
+
 import DefaultLayout from "../BankingUI/Components/Layout/DefaultLayout";
 
-import Dashboard from "../BankingUI/Components/Banking/Dashboard/Dashboard";
-import LogIn from "../BankingUI/Components/Authentication/Login/Login";
-import LoginConnect from "../BankingUI/Components/Authentication/Login/LoginConnect";
-import Register from "../BankingUI/Components/Authentication/Register/Register";
-import ReceiverList from "../BankingUI/Components/Banking/ReceiverList/ReceiverList";
+import DashboardConnect from "../BankingUI/Components/Customer/Dashboard/DashboardConnect";
+import ReceiverList from "../BankingUI/Components/Customer/ReceiverList/ReceiverList";
 
-const PrivateRoute = ({ comp: Component, ...rest }) => {
+export const PrivateRoute = ({ comp: Component, ...rest }) => {
 	return (
 		<Route
 			{...rest}
@@ -42,7 +43,7 @@ export const private_routes = [
 	{
 		path: "/",
 		routetype: PrivateRoute,
-		component: Dashboard,
+		component: DashboardConnect,
 		layout: DefaultLayout,
 	},
 	{
@@ -55,6 +56,12 @@ export const private_routes = [
 		path: "/receivers",
 		routetype: PrivateRoute,
 		component: ReceiverList,
+		layout: DefaultLayout,
+	},
+	{
+		path: "/*",
+		routetype: PrivateRoute,
+		component: NotFound,
 		layout: DefaultLayout,
 	},
 ];

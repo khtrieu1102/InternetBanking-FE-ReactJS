@@ -1,10 +1,7 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {
-	AuthorizationActionCreators,
-	UserInformationActionCreators,
-} from "../../redux/actions/index";
-import App from "./App";
+import { AuthorizationActionCreators } from "../../../../redux/actions/index";
+import Navbar from "./Navbar";
 
 const mapStateToProps = (state) => {
 	return {
@@ -14,9 +11,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-	setUserAccessToken: AuthorizationActionCreators.setUserAccessToken,
 	setIsAuthenticated: AuthorizationActionCreators.setIsAuthenticated,
-	getAllInformation: UserInformationActionCreators.getAllInformation,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
