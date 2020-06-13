@@ -9,7 +9,7 @@ import Register from "../BankingUI/Components/Authentication/Register/Register";
 import DefaultLayout from "../BankingUI/Components/Layout/DefaultLayout";
 
 import DashboardConnect from "../BankingUI/Components/Customer/Dashboard/DashboardConnect";
-import ReceiverList from "../BankingUI/Components/Customer/ReceiverList/ReceiverList";
+import ReceiverListConnect from "../BankingUI/Components/Customer/ReceiverList/ReceiverListConnect";
 import FormEditInfoConnect from "../BankingUI/Components/Customer/FormEditInfo/FormEditInfoConnect";
 import TransactionConnect from "../BankingUI/Components/Customer/Transaction/TransactionConnect";
 
@@ -84,7 +84,7 @@ export const customer_routes = [
 	{
 		path: "/receivers",
 		routetype: CustomerRoute,
-		component: ReceiverList,
+		component: ReceiverListConnect,
 		layout: DefaultLayout,
 	},
 	{
