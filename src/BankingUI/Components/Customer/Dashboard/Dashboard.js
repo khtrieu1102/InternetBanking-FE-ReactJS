@@ -12,7 +12,7 @@ const Dashboard = (props) => {
 		getAllInformation,
 	} = props;
 	const { authentication } = reducerAuthorization;
-	const { balance, name } = reducerUserInformation;
+	const { balance, name } = reducerUserInformation.data;
 	const accessTokennn = authentication.accessToken;
 	const mountedRef = useRef(true);
 
@@ -47,14 +47,14 @@ const Dashboard = (props) => {
 								<span className="text-primary">{formattedBalance}</span>
 							</Card.Text>
 							<Col>
-								<Link to="/games">
+								<Link to="/receivers">
 									<Button variant="primary" className="extraButton">
-										Nạp tiền
+										Danh sách người nhận
 									</Button>
 								</Link>
 							</Col>
 							<Col className="mt-2">
-								<Link to="/sidebar" className="extraButton">
+								<Link to="/transaction" className="extraButton">
 									<Button variant="primary" className="extraButton">
 										Chuyển tiền
 									</Button>
