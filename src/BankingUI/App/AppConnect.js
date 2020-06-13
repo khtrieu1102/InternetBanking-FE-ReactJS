@@ -16,6 +16,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
 	setUserAccessToken: AuthorizationActionCreators.setUserAccessToken,
 	setIsAuthenticated: AuthorizationActionCreators.setIsAuthenticated,
+	setRole: AuthorizationActionCreators.setRole,
 	getAllInformation: UserInformationActionCreators.getAllInformation,
 };
 
