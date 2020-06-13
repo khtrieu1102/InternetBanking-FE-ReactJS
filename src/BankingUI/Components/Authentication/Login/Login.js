@@ -94,6 +94,9 @@ const LogIn = (props) => {
 								<Form.Control.Feedback type="invalid">
 									Please provide a valid password.
 								</Form.Control.Feedback>
+								<Form.Text className="mt-2">
+									<Link to="/reset-password">Forgot your password?</Link>
+								</Form.Text>
 							</Form.Group>
 							<ReCAPTCHA
 								ref={reCaptchaRef}
