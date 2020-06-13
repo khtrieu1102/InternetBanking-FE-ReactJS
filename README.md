@@ -7,14 +7,18 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
 ## 1. Customer
 
 - [x] Đăng nhập (và Google Captcha)
-- [x] Quên mật khẩu. **(Chưa có dữ liệu)**
+- [x] Quên mật khẩu.
+  - [x] Luồng đi giữa các màn hình
+  - [ ] Luồng dữ liệu
 - [x] Layout (Navbar)
 - [x] Dashboard
   - [x] Hiển thị số dư tài khoản
 - [x] Chỉnh sửa thông tin
   - [x] Thông tin cơ bản (name, phone, email)
   - [x] Đổi mật khẩu **(chưa có dữ liệu)**
-- [x] Thông tin danh sách người dùng (chưa có dữ liệu)
+- [x] Thông tin danh sách người nhận
+  - [x] Show thông tin từ API
+  - [ ] CRUD
 - [ ] Chuyển khoản
   - [ ] Nội bộ
   - [ ] Liên ngân hàng

@@ -2,6 +2,7 @@ import { AuthorizationActionTypes } from "../actions/actionTypes";
 
 const initialState = {
 	authentication: {
+		role: "",
 		accessToken: "",
 		refreshToken: "",
 	},
@@ -27,6 +28,15 @@ const reducerAuthorization = (state = initialState, action) => {
 			return {
 				...state,
 				isAuthenticated: payload,
+			};
+		}
+		case AuthorizationActionTypes.AUTH_SET_ROLE: {
+			return {
+				...state,
+				authentication: {
+					...state.authentication,
+					role: payload,
+				},
 			};
 		}
 		default:

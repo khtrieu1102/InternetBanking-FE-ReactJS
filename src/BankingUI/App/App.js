@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -6,8 +6,13 @@ import {
 	Route,
 } from "react-router-dom";
 
-import { public_routes, private_routes } from "../../routes/appRoutes";
+import {
+	public_routes,
+	customer_routes,
+	admin_routes,
+} from "../../routes/appRoutes";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 const App = (props) => {
 	const {
@@ -15,19 +20,17 @@ const App = (props) => {
 		setUserAccessToken,
 		setIsAuthenticated,
 		getAllInformation,
+		setRole,
+		getAllReceivers,
 	} = props;
-	const {
-		isAuthenticated,
-		authentication,
-		userInformation,
-	} = reducerAuthorization;
+	const { isAuthenticated, authentication } = reducerAuthorization;
+	const { role } = authentication;
 	const localAccessToken = localStorage.getItem("token");
 	const mountedRef = useRef(true);
 
 	useEffect(() => {
 		if (!mountedRef.current) return null;
 
-		console.log(`hello world ${localAccessToken}`);
 		if (localAccessToken) {
 			if (!authentication.accessToken) setUserAccessToken(localAccessToken);
 		} else setUserAccessToken(null);
@@ -41,15 +44,16 @@ const App = (props) => {
 		if (!mountedRef.current) return null;
 
 		if (authentication.accessToken) {
+			setRole(jwtDecode(authentication.accessToken).role);
 			axios
 				.get("http://localhost:5000/api/users/me", {
 					headers: { Authorization: `Bearer ${authentication.accessToken}` },
 				})
 				.then((result) => {
 					if (result.status === 200) {
-						console.log(result);
 						setIsAuthenticated(true);
 						getAllInformation(result.data);
+						getAllReceivers(authentication.accessToken);
 					}
 				})
 				.catch((err) => {
@@ -69,6 +73,7 @@ const App = (props) => {
 			<Router>
 				<Switch>
 					{/* https://stackoverflow.com/questions/43520498/react-router-private-routes-redirect-not-working => Newm */}
+					{/* --- LOGIN/PUBLIC COMPONENTS RENDER --- */}
 					{public_routes.map((item, index) => {
 						return (
 							<Route
@@ -85,25 +90,63 @@ const App = (props) => {
 							/>
 						);
 					})}
-					{private_routes.map((item, index) => {
-						return (
-							<item.routetype
-								key={index}
-								path={item.path}
-								exact={item.exact ? item.exact : null}
-								isAuthenticated={isAuthenticated}
-								comp={(props) => {
-									return item.layout ? (
-										<item.layout>
+					{!isAuthenticated &&
+						public_routes.map((item, index) => {
+							return (
+								<Redirect
+									to={{
+										pathname: "/login",
+										// state: { from: props.location },
+									}}
+								/>
+							);
+						})}
+
+					{/* ---CUSTOMER RENDER --- */}
+					{isAuthenticated &&
+						role === "customer" &&
+						customer_routes.map((item, index) => {
+							return (
+								<item.routetype
+									key={index}
+									path={item.path}
+									exact={item.exact ? item.exact : null}
+									isAuthenticated={isAuthenticated}
+									comp={(props) => {
+										return item.layout ? (
+											<item.layout>
+												<item.component {...props} {...item.props} />
+											</item.layout>
+										) : (
 											<item.component {...props} {...item.props} />
-										</item.layout>
-									) : (
-										<item.component {...props} {...item.props} />
-									);
-								}}
-							/>
-						);
-					})}
+										);
+									}}
+								/>
+							);
+						})}
+
+					{/* ---ADMIN RENDER --- */}
+					{isAuthenticated &&
+						role === "admin" &&
+						admin_routes.map((item, index) => {
+							return (
+								<item.routetype
+									key={index}
+									path={item.path}
+									exact={item.exact ? item.exact : null}
+									isAuthenticated={isAuthenticated}
+									comp={(props) => {
+										return item.layout ? (
+											<item.layout>
+												<item.component {...props} {...item.props} />
+											</item.layout>
+										) : (
+											<item.component {...props} {...item.props} />
+										);
+									}}
+								/>
+							);
+						})}
 				</Switch>
 			</Router>
 		</div>

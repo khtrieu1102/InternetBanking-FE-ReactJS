@@ -12,10 +12,56 @@ const Header = (props) => {
 		reducerUserInformation,
 		setIsAuthenticated,
 	} = props;
-	const { name } = reducerUserInformation;
+	const { authentication } = reducerAuthorization;
+	const { name } = reducerUserInformation.data;
+	console.log(authentication.role);
 
-	return (
+	const CustomerNavbar = () => (
 		<Navbar collapseOnSelect expand="lg" bg="info" variant="dark">
+			<Link to="/">
+				<Navbar.Brand href="/">SAPHASAN Bank</Navbar.Brand>
+			</Link>
+			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+			<Navbar.Collapse id="responsive-navbar-nav">
+				<Nav className="mr-auto">
+					<Navbar.Text className="text-light">
+						<Image src="./tic-tac-toe.png" className="avatar" roundedCircle />{" "}
+						<span className="text-dark bold">{name}</span>
+					</Navbar.Text>
+				</Nav>
+				<Nav>
+					<Nav.Link>
+						<Link to="/edit" className="text-light mr-2">
+							Sửa thông tin
+						</Link>
+					</Nav.Link>
+					<Nav.Link>
+						<Link to="/games" className="text-light mr-2">
+							Quản lý nợ
+						</Link>
+					</Nav.Link>
+					<Nav.Link>
+						<Link to="/join" className="text-light mr-2">
+							Quản lý giao dịch
+						</Link>
+					</Nav.Link>
+					<Button
+						eventKey={2}
+						variant="danger"
+						onClick={() => {
+							localStorage.removeItem("token");
+							setIsAuthenticated(false);
+						}}
+					>
+						<FontAwesomeIcon icon={faPowerOff} /> Logout
+					</Button>
+				</Nav>
+			</Navbar.Collapse>
+		</Navbar>
+	);
+
+	const AdminNavbar = () => (
+		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
 			<Link to="/">
 				<Navbar.Brand href="/">INTERNET BANKING</Navbar.Brand>
 			</Link>
@@ -24,7 +70,7 @@ const Header = (props) => {
 				<Nav className="mr-auto">
 					<Navbar.Text className="text-light">
 						<Image src="./tic-tac-toe.png" className="avatar" roundedCircle />{" "}
-						<span className="text-dark bold">{name}</span>
+						<span className="text-light bold">{name}</span>
 					</Navbar.Text>
 				</Nav>
 				<Nav>
@@ -43,28 +89,13 @@ const Header = (props) => {
 							Join Chat
 						</Link>
 					</Nav.Link>
-					{/* <NavDropdown
-						title={<FontAwesomeIcon icon={faBell} />}
-						id="collasible-nav-dropdown"
-					>
-						<NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-						<NavDropdown.Item href="#action/3.2">
-							Another action
-						</NavDropdown.Item>
-						<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-						<NavDropdown.Divider />
-						<NavDropdown.Item href="#action/3.4">
-							Separated link
-						</NavDropdown.Item>
-					</NavDropdown> */}
 					<Button
 						eventKey={2}
 						variant="danger"
 						onClick={() => {
-							// console.log("helloworld");
 							localStorage.removeItem("token");
 							setIsAuthenticated(false);
-							// setUserToken("");
+							props.history.push("/login");
 						}}
 					>
 						<FontAwesomeIcon icon={faPowerOff} /> Logout
@@ -72,6 +103,12 @@ const Header = (props) => {
 				</Nav>
 			</Navbar.Collapse>
 		</Navbar>
+	);
+
+	return authentication.role === "customer" ? (
+		<CustomerNavbar />
+	) : (
+		<AdminNavbar />
 	);
 };
 

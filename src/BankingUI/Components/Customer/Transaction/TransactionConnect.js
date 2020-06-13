@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 import {
 	AuthorizationActionCreators,
 	UserInformationActionCreators,
-} from "../../redux/actions/index";
-import App from "./App";
+} from "../../../../redux/actions/index";
+import Transaction from "./Transaction";
 
 const mapStateToProps = (state) => {
 	return {
@@ -18,7 +18,9 @@ const mapDispatchToProps = {
 	setIsAuthenticated: AuthorizationActionCreators.setIsAuthenticated,
 	setRole: AuthorizationActionCreators.setRole,
 	getAllInformation: UserInformationActionCreators.getAllInformation,
-	getAllReceivers: UserInformationActionCreators.getAllReceivers,
+	updateUserInfo: UserInformationActionCreators.updateUserInfo,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(
+	connect(mapStateToProps, mapDispatchToProps)(Transaction)
+);

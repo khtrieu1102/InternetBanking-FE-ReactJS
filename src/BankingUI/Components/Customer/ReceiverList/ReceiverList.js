@@ -1,51 +1,87 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Container, Row, Col, Card, Table, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-	faPlus,
-	faPencilAlt,
-	faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import ToolBar from "./ToolBar/ToolBar";
 import ModalForm from "./ModalForm";
+import AlertBox from "../../Others/AlertBox/AlertBox";
+import axios from "axios";
 
 const ReceiverList = (props) => {
+	const {
+		reducerAuthorization,
+		reducerUserInformation,
+		getAllReceivers,
+		getReceiverList,
+	} = props;
 	const [modalFormVariables, setModalFormVariables] = useState({ show: false });
+	const mountedRef = useRef(true);
+	const receiversData = reducerUserInformation.receivers;
 
-	const receiver_data = [
-		{
-			accountNumber: "1234567",
-			bankName: "SAPHASAN Bank",
-			name: "Trieu an com",
-		},
-		{
-			accountNumber: "3198197",
-			bankName: "SAPHASAN Bank",
-			name: "Thuong C310",
-		},
-		{
-			accountNumber: "3340129",
-			bankName: "SAPHASAN Bank",
-			name: "Thoi dep trai",
-		},
-		{
-			accountNumber: "2019384",
-			bankName: "SAPHASAN Bank",
-			name: "Bao Son",
-		},
-		{
-			accountNumber: "1023959",
-			bankName: "BAOSON Bank",
-			name: "quan123",
-		},
-	];
+	useEffect(() => {
+		if (!mountedRef.current) return null;
+
+		return () => {
+			mountedRef.current = false;
+		};
+	}, []);
 
 	const handleClose = () => {
 		setModalFormVariables({ ...modalFormVariables, show: false });
 	};
+
 	const handleShowFormModal = () => {
 		setModalFormVariables({ ...modalFormVariables, show: true });
+	};
+
+	const showComponent = () => {
+		if (receiversData.length === 0) {
+			return (
+				<AlertBox
+					alertTypes="success"
+					alertHeading="Xin chào!"
+					alertMessage="Hiện tại bạn chưa có người nhận nào, hãy thêm để dễ thao tác hơn!"
+				/>
+			);
+		} else {
+			return (
+				<Table responsive="sm" striped bordered hover>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Bank name</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{receiversData.map((receiver, index) => (
+							<tr key={index}>
+								<td>{receiver.accountNumber}</td>
+								<td>{receiver.savedName}</td>
+								<td>
+									{receiver.bankId === 0
+										? "SAPHASAN Bank"
+										: receiver.bankId === 1
+										? "Ngân hàng Ba Tê"
+										: "BAOSON Bank"}
+								</td>
+								<td className="action">
+									<Button
+										variant="danger"
+										size="sm"
+										onClick={handleShowFormModal}
+									>
+										<FontAwesomeIcon icon={faTrash} />
+									</Button>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			);
+		}
 	};
 
 	return (
@@ -53,69 +89,15 @@ const ReceiverList = (props) => {
 			<Row>
 				<Col md={{ span: 5, offset: 3 }} lg={6}>
 					<Card className="mt-3">
-						<ToolBar handleShowFormModal={handleShowFormModal} />
+						<ToolBar
+							handleShowFormModal={handleShowFormModal}
+							isAdding={true}
+						/>
 						<ModalForm
 							show={modalFormVariables.show}
 							handleClose={handleClose}
 						/>
-						<Card.Body>
-							<Table responsive="sm" striped bordered hover>
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Name</th>
-										<th>Bank name</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									{receiver_data.map((receiver, index) => (
-										<tr>
-											<td>{receiver.accountNumber}</td>
-											<td>{receiver.name}</td>
-											<td>{receiver.bankName}</td>
-											<td className="action">
-												<Button
-													variant="danger"
-													size="sm"
-													onClick={handleShowFormModal}
-												>
-													<FontAwesomeIcon icon={faTrash} />
-												</Button>
-											</td>
-										</tr>
-									))}
-									{/* <tr>
-										<td>2</td>
-										<td>1131</td>
-										<td>Trieu</td>
-										<td className="action">
-											<Button
-												variant="danger"
-												size="sm"
-												onClick={handleShowFormModal}
-											>
-												<FontAwesomeIcon icon={faTrash} />
-											</Button>
-										</td>
-									</tr>
-									<tr>
-										<td>3</td>
-										<td>2302</td>
-										<td>Thornton</td>
-										<td className="action">
-											<Button
-												variant="danger"
-												size="sm"
-												onClick={handleShowFormModal}
-											>
-												<FontAwesomeIcon icon={faTrash} />
-											</Button>
-										</td>
-									</tr> */}
-								</tbody>
-							</Table>
-						</Card.Body>
+						<Card.Body>{showComponent()}</Card.Body>
 					</Card>
 				</Col>
 			</Row>
