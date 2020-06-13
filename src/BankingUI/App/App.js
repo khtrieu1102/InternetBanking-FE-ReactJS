@@ -21,6 +21,7 @@ const App = (props) => {
 		setIsAuthenticated,
 		getAllInformation,
 		setRole,
+		getAllReceivers,
 	} = props;
 	const { isAuthenticated, authentication } = reducerAuthorization;
 	const { role } = authentication;
@@ -30,7 +31,6 @@ const App = (props) => {
 	useEffect(() => {
 		if (!mountedRef.current) return null;
 
-		console.log(`hello world ${localAccessToken}`);
 		if (localAccessToken) {
 			if (!authentication.accessToken) setUserAccessToken(localAccessToken);
 		} else setUserAccessToken(null);
@@ -53,6 +53,7 @@ const App = (props) => {
 					if (result.status === 200) {
 						setIsAuthenticated(true);
 						getAllInformation(result.data);
+						getAllReceivers(authentication.accessToken);
 					}
 				})
 				.catch((err) => {

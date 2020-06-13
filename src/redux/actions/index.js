@@ -29,6 +29,22 @@ export const UserInformationActionCreators = {
 		type: UserInformationActionTypes.USER_GET_ALL_INFORMATION,
 		payload: objectUser,
 	}),
+	getAllReceivers: (token) => ({
+		type: UserInformationActionTypes.USER_GET_ALL_RECEIVERS,
+		payload: new Promise((resolve, reject) =>
+			axios
+				.get(`${URL_API}/api/users/all-receiver-list`, {
+					headers: { Authorization: `Bearer ${token}` },
+				})
+				.then((result) => {
+					// console.log(result.data.data);
+					if (result.status === 200) resolve(result.data);
+				})
+				.catch((error) => {
+					reject(error);
+				})
+		),
+	}),
 	updateUserInfo: (entity, token) => ({
 		type: UserInformationActionTypes.USER_UPDATE_INFORMATION,
 		payload: new Promise((resolve, reject) =>

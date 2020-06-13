@@ -8,11 +8,11 @@ const initialState = {
 		name: "",
 		email: "",
 		phone: "",
-		receivers: [],
 		status: true,
 		role: "",
 		balance: -1,
 	},
+	receivers: [],
 	isLoading: false,
 	message: null,
 	error: null,
@@ -37,14 +37,14 @@ const reducerUserInformation = (state = initialState, action) => {
 				},
 			};
 		}
-		case UserInformationActionTypes.USER_UPDATE_INFORMATION_PENDING: {
-			return {
-				...state,
-				isLoading: true,
-				message: null,
-				error: null,
-			};
-		}
+		// case UserInformationActionTypes.USER_UPDATE_INFORMATION_PENDING: {
+		// 	return {
+		// 		...state,
+		// 		isLoading: true,
+		// 		message: "",
+		// 		error: "",
+		// 	};
+		// }
 		case UserInformationActionTypes.USER_UPDATE_INFORMATION_FULFILLED: {
 			return {
 				...state,
@@ -59,7 +59,7 @@ const reducerUserInformation = (state = initialState, action) => {
 				error: null,
 			};
 		}
-		case UserInformationActionTypes.USER_UPDATE_INFORMATION_PENDING: {
+		case UserInformationActionTypes.USER_UPDATE_INFORMATION_REJECTED: {
 			return {
 				...state,
 				isLoading: false,
@@ -67,6 +67,32 @@ const reducerUserInformation = (state = initialState, action) => {
 				error: payload,
 			};
 		}
+		case UserInformationActionTypes.USER_GET_ALL_RECEIVERS_PENDING: {
+			return {
+				...state,
+				isLoading: true,
+				message: null,
+				error: null,
+			};
+		}
+		case UserInformationActionTypes.USER_GET_ALL_RECEIVERS_FULFILLED: {
+			return {
+				...state,
+				receivers: payload,
+				isLoading: false,
+				message: null,
+				error: null,
+			};
+		}
+		case UserInformationActionTypes.USER_GET_ALL_RECEIVERS_REJECTED: {
+			return {
+				...state,
+				isLoading: false,
+				message: "Error when getting receivers!",
+				error: payload,
+			};
+		}
+
 		default:
 			return state;
 	}

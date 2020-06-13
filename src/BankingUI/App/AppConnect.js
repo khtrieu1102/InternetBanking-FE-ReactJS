@@ -18,6 +18,7 @@ const mapDispatchToProps = {
 	setIsAuthenticated: AuthorizationActionCreators.setIsAuthenticated,
 	setRole: AuthorizationActionCreators.setRole,
 	getAllInformation: UserInformationActionCreators.getAllInformation,
+	getAllReceivers: UserInformationActionCreators.getAllReceivers,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
