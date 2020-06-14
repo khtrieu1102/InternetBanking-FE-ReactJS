@@ -2,11 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { Container, Row, Col, Card, Table, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 import ToolBar from "./ToolBar/ToolBar";
-import ModalForm from "./ModalForm";
+import ModalReceiverForm from "./ModalReceiverForm";
 import AlertBox from "../../Others/AlertBox/AlertBox";
-import axios from "axios";
+
+import "./ReceiverList.css";
 
 const ReceiverList = (props) => {
 	const {
@@ -15,9 +17,18 @@ const ReceiverList = (props) => {
 		getAllReceivers,
 		getReceiverList,
 	} = props;
-	const [modalFormVariables, setModalFormVariables] = useState({ show: false });
+	const [modalFormVariables, setModalFormVariables] = useState({
+		show: false,
+		isAdding: false,
+	});
 	const mountedRef = useRef(true);
 	const receiversData = reducerUserInformation.receivers;
+	const [workingReceiver, setWorkingReceiver] = useState({
+		accountNumber: "",
+		savedName: "",
+		bankId: -1,
+		name: "",
+	});
 
 	useEffect(() => {
 		if (!mountedRef.current) return null;
@@ -27,12 +38,42 @@ const ReceiverList = (props) => {
 		};
 	}, []);
 
+	useEffect(() => {
+		console.log("workingReceiver", workingReceiver);
+		if (!workingReceiver.accountNumber || workingReceiver.bankId) return;
+		handleShowFormModal(false);
+	}, [workingReceiver]);
+
 	const handleClose = () => {
-		setModalFormVariables({ ...modalFormVariables, show: false });
+		setModalFormVariables({
+			...modalFormVariables,
+			show: false,
+			isAdding: false,
+		});
+		setWorkingReceiver({
+			accountNumber: "",
+			savedName: "",
+			bankId: -1,
+			name: "",
+		});
 	};
 
-	const handleShowFormModal = () => {
-		setModalFormVariables({ ...modalFormVariables, show: true });
+	const handleShowFormModal = (isAdding) => {
+		setModalFormVariables({
+			...modalFormVariables,
+			show: true,
+			isAdding: isAdding,
+		});
+	};
+
+	const deleteReceiver = async (accountNumber, bankId) => {
+		await axios.delete(`http://localhost:5000/api/users/receiver-list`, {
+			headers: {
+				Authorization: `Bearer ${reducerAuthorization.authentication.accessToken}`,
+			},
+			data: { accountNumber: accountNumber, bankId: +bankId },
+		});
+		window.location.reload();
 	};
 
 	const showComponent = () => {
@@ -56,28 +97,43 @@ const ReceiverList = (props) => {
 						</tr>
 					</thead>
 					<tbody>
-						{receiversData.map((receiver, index) => (
-							<tr key={index}>
-								<td>{receiver.accountNumber}</td>
-								<td>{receiver.savedName}</td>
-								<td>
-									{receiver.bankId === 0
-										? "SAPHASAN Bank"
-										: receiver.bankId === 1
-										? "Ngân hàng Ba Tê"
-										: "BAOSON Bank"}
-								</td>
-								<td className="action">
-									<Button
-										variant="danger"
-										size="sm"
-										onClick={handleShowFormModal}
-									>
-										<FontAwesomeIcon icon={faTrash} />
-									</Button>
-								</td>
-							</tr>
-						))}
+						{receiversData.map((receiver, index) => {
+							receiver.name = "";
+							return (
+								<tr key={index}>
+									<td>{receiver.accountNumber}</td>
+									<td>
+										<span
+											type="button"
+											className="name"
+											onClick={() => {
+												setWorkingReceiver(receiver);
+											}}
+										>
+											{receiver.savedName}
+										</span>
+									</td>
+									<td>
+										{receiver.bankId === 0
+											? "SAPHASAN Bank"
+											: receiver.bankId === 1
+											? "Ngân hàng Ba Tê"
+											: "BAOSON Bank"}
+									</td>
+									<td className="action">
+										<Button
+											variant="danger"
+											size="sm"
+											onClick={() =>
+												deleteReceiver(receiver.accountNumber, receiver.bankId)
+											}
+										>
+											<FontAwesomeIcon icon={faTrash} />
+										</Button>
+									</td>
+								</tr>
+							);
+						})}
 					</tbody>
 				</Table>
 			);
@@ -91,11 +147,17 @@ const ReceiverList = (props) => {
 					<Card className="mt-3">
 						<ToolBar
 							handleShowFormModal={handleShowFormModal}
-							isAdding={true}
+							setModalFormVariables={setModalFormVariables}
+							setWorkingReceiver={setWorkingReceiver}
+							modalFormVariables={modalFormVariables}
 						/>
-						<ModalForm
+						<ModalReceiverForm
 							show={modalFormVariables.show}
+							isAdding={modalFormVariables.isAdding}
 							handleClose={handleClose}
+							workingReceiver={workingReceiver}
+							setWorkingReceiver={setWorkingReceiver}
+							accessToken={reducerAuthorization.authentication.accessToken}
 						/>
 						<Card.Body>{showComponent()}</Card.Body>
 					</Card>
