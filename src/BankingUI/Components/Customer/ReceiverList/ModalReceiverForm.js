@@ -12,14 +12,17 @@ const ModalForm = ({
 }) => {
 	const [validated, setValidated] = useState(false);
 
+	// Lấy tên người dùng khi bấm vào receiver có sẵn.
 	useEffect(() => {
 		if (!isAdding)
 			getThisUserName(workingReceiver.accountNumber, workingReceiver.bankId);
 	}, [workingReceiver.accountNumber, workingReceiver.bankId]);
 
+	// Hàm lấy tên người dùng theo accountNumber, gọi qua API
 	const getThisUserName = async (accountNumber, bankId) => {
+		console.log(accountNumber, bankId);
+
 		if (bankId !== -1 && accountNumber !== "") {
-			console.log(accountNumber, bankId);
 			const name = await axios
 				.get(`http://localhost:5000/api/users/${accountNumber}`, {
 					headers: {
@@ -31,15 +34,18 @@ const ModalForm = ({
 					return "KHONG TIM THAY";
 				})
 				.catch((err) => "KHONG TIM THAY");
+			console.log(accountNumber, bankId);
 			await setWorkingReceiver({ ...workingReceiver, name: name });
 		}
 	};
 
+	// Update giá trị điền vào Form
 	const handleChange = (e) => {
 		workingReceiver[e.target.name] = e.target.value;
 		setWorkingReceiver({ ...workingReceiver });
 	};
 
+	// Submit
 	const handleSubmit = async (event) => {
 		const form = event.currentTarget;
 		if (form.checkValidity() === false) {
@@ -47,6 +53,7 @@ const ModalForm = ({
 			event.stopPropagation();
 		} else {
 			if (isAdding) {
+				// Nếu như là add vào một receiver mới
 				await axios.patch(
 					`http://localhost:5000/api/users/receiver-list`,
 					{
@@ -57,6 +64,7 @@ const ModalForm = ({
 					{ headers: { Authorization: `Bearer ${accessToken}` } }
 				);
 			} else {
+				// Nếu như update (chỉ đổi savedName)
 				await axios.patch(
 					`http://localhost:5000/api/users/receiver-list-update`,
 					{
@@ -71,6 +79,7 @@ const ModalForm = ({
 		setValidated(true);
 	};
 
+	// Render component
 	const renderComponent = () => {
 		if (!isAdding) {
 			return (
@@ -248,7 +257,7 @@ const ModalForm = ({
 	};
 
 	return (
-		<Modal show={show} onHide={handleClose} animation={false} centered>
+		<Modal show={show} onHide={handleClose} animation={true} centered>
 			<Modal.Header closeButton>
 				<Modal.Title>Receiver Form</Modal.Title>
 			</Modal.Header>

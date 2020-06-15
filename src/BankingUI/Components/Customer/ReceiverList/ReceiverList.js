@@ -11,12 +11,7 @@ import AlertBox from "../../Others/AlertBox/AlertBox";
 import "./ReceiverList.css";
 
 const ReceiverList = (props) => {
-	const {
-		reducerAuthorization,
-		reducerUserInformation,
-		getAllReceivers,
-		getReceiverList,
-	} = props;
+	const { reducerAuthorization, reducerUserInformation } = props;
 	const [modalFormVariables, setModalFormVariables] = useState({
 		show: false,
 		isAdding: false,
@@ -39,8 +34,7 @@ const ReceiverList = (props) => {
 	}, []);
 
 	useEffect(() => {
-		console.log("workingReceiver", workingReceiver);
-		if (!workingReceiver.accountNumber || workingReceiver.bankId) return;
+		if (!workingReceiver.accountNumber || workingReceiver.bankId === -1) return;
 		handleShowFormModal(false);
 	}, [workingReceiver]);
 
@@ -58,6 +52,7 @@ const ReceiverList = (props) => {
 		});
 	};
 
+	// set show modal and state isAdding
 	const handleShowFormModal = (isAdding) => {
 		setModalFormVariables({
 			...modalFormVariables,
@@ -66,6 +61,7 @@ const ReceiverList = (props) => {
 		});
 	};
 
+	// Delete
 	const deleteReceiver = async (accountNumber, bankId) => {
 		await axios.delete(`http://localhost:5000/api/users/receiver-list`, {
 			headers: {
@@ -98,7 +94,6 @@ const ReceiverList = (props) => {
 					</thead>
 					<tbody>
 						{receiversData.map((receiver, index) => {
-							receiver.name = "";
 							return (
 								<tr key={index}>
 									<td>{receiver.accountNumber}</td>
