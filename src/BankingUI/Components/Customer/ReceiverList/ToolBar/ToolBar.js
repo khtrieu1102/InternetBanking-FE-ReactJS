@@ -6,15 +6,31 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import "./ToolBar.css";
 
-const ToolBar = ({ handleShowFormModal }) => (
-	<Card.Header className="toolBar">
-		<span>YOUR RECEIVERS LIST</span>
-		<span>
-			<Button onClick={handleShowFormModal}>
-				<FontAwesomeIcon icon={faPlus} />
-			</Button>
-		</span>
-	</Card.Header>
-);
+const ToolBar = ({
+	handleShowFormModal,
+	setModalFormVariables,
+	modalFormVariables,
+	setWorkingReceiver,
+}) => {
+	const handleClick = () => {
+		setWorkingReceiver({
+			savedName: "",
+			bankId: -1,
+			accountNumber: "",
+			name: "",
+		});
+		handleShowFormModal(true);
+	};
+	return (
+		<Card.Header className="toolBar">
+			<span>YOUR RECEIVERS LIST</span>
+			<span>
+				<Button onClick={handleClick}>
+					<FontAwesomeIcon icon={faPlus} />
+				</Button>
+			</span>
+		</Card.Header>
+	);
+};
 
 export default ToolBar;
