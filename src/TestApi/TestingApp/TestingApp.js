@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import TestMe from "../components/TestMe";
-import TestSon from "../components/TestSon";
-import TestTien from "../components/TestTien";
+import TestMe from "../TestingComponent/TestMe";
+import TestSon from "../TestingComponent/TestSon";
+import TestTien from "../TestingComponent/TestTien";
 
 const App = () => {
 	return (
