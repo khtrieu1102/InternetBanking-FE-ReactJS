@@ -18,8 +18,9 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
   - [x] Đổi mật khẩu **(chưa có dữ liệu)**
 - [x] Thông tin danh sách người nhận
   - [x] Show thông tin từ API
-  - [ ] CRUD
+  - [x] CRUD
 - [ ] Chuyển khoản
+  - [ ] Luồng đi giữa các màn hình
   - [ ] Nội bộ
   - [ ] Liên ngân hàng
   - [ ] Nhập OTP
