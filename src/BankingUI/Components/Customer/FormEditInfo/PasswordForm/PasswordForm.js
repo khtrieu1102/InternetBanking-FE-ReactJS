@@ -2,16 +2,17 @@ import React, { useState } from "react";
 
 import { Col, Row, Button, Card, Container, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const PasswordForm = ({
 	passwordForm,
 	setPasswordForm,
 	accessToken,
-	setShowBasicForm,
+	setFormError,
 }) => {
 	const [validated, setValidated] = useState(false);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		const form = event.currentTarget;
 		event.preventDefault();
 		if (
@@ -22,6 +23,30 @@ const PasswordForm = ({
 		} else {
 			console.log(passwordForm);
 			// updateUserInfo(passwordForm, accessToken);6
+			const request = await axios
+				.patch(
+					`http://localhost:5000/api/users/change-password`,
+					{
+						password: passwordForm.currentPassword,
+						newPassword: passwordForm.newPassword,
+					},
+					{ headers: { Authorization: `Bearer ${accessToken}` } }
+				)
+				.then((result) => {
+					setFormError(null, "Password is changed successfully!");
+					return result;
+				})
+				.catch((err) => {
+					setFormError(true, "Cannot change your password, please try again!");
+					setPasswordForm({
+						...passwordForm,
+						currentPassword: "",
+						newPassword: "",
+						retypeNewPassword: "",
+					});
+					return err;
+				});
+			console.log(request);
 		}
 		setValidated(true);
 	};

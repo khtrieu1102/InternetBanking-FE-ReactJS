@@ -5,6 +5,7 @@ import axios from "axios";
 
 import BasicInfoForm from "./BasicInfoForm/BasicInfoForm";
 import PasswordForm from "./PasswordForm/PasswordForm";
+import AlertBox from "../../Others/AlertBox/AlertBox";
 import "./FormEditInfo.css";
 
 const FormEditInfo = (props) => {
@@ -27,16 +28,34 @@ const FormEditInfo = (props) => {
 		name: name,
 		phone: phone,
 		email: email,
-	});
-	const [passwordForm, setPasswordForm] = useState({
-		accountNumber: accountNumber,
-		username: username,
 		currentPassword: "",
 		newPassword: "",
 		retypeNewPassword: "",
+		message: "",
+		error: "",
 	});
 
 	const [showBasicForm, setShowBasicForm] = useState(true);
+
+	const renderAlert = () => {
+		if (basicInfoForm.message)
+			return (
+				<AlertBox
+					alertTypes={basicInfoForm.error}
+					alertMessage={basicInfoForm.message}
+				/>
+			);
+	};
+
+	const setFormError = (error, message) => {
+		let alertTypes = error === null ? "success" : "danger";
+
+		basicInfoForm["error"] = alertTypes;
+		setBasicInfoForm({ ...basicInfoForm });
+
+		basicInfoForm["message"] = message;
+		setBasicInfoForm({ ...basicInfoForm });
+	};
 
 	return (
 		<Container fluid>
@@ -65,6 +84,7 @@ const FormEditInfo = (props) => {
 							)}
 						</Card.Header>
 						<Card.Body>
+							{renderAlert()}
 							{showBasicForm === true ? (
 								<BasicInfoForm
 									basicInfoForm={basicInfoForm}
@@ -75,10 +95,10 @@ const FormEditInfo = (props) => {
 								/>
 							) : (
 								<PasswordForm
-									passwordForm={passwordForm}
-									setPasswordForm={setPasswordForm}
+									passwordForm={basicInfoForm}
+									setPasswordForm={setBasicInfoForm}
 									accessToken={accessToken}
-									setShowBasicForm={setShowBasicForm}
+									setFormError={setFormError}
 								/>
 							)}
 						</Card.Body>

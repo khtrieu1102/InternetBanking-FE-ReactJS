@@ -21,7 +21,14 @@ const BasicInfoForm = ({
 			event.preventDefault();
 			event.stopPropagation();
 		} else {
-			updateUserInfo(basicInfoForm, accessToken);
+			const entity = {
+				accountNumber: basicInfoForm.accountNumber,
+				username: basicInfoForm.username,
+				name: basicInfoForm.name,
+				phone: basicInfoForm.phone,
+				email: basicInfoForm.email,
+			};
+			updateUserInfo(entity, accessToken);
 		}
 		setValidated(true);
 	};
