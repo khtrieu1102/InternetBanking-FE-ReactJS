@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
-	AuthorizationActionCreators,
+	// AuthorizationActionCreators,
 	UserInformationActionCreators,
 } from "../../../../redux/actions/index";
 import ReceiverList from "./ReceiverList";

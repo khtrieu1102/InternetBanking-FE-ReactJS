@@ -33,8 +33,11 @@ const ReceiverList = (props) => {
 		};
 	}, []);
 
+	// Làm cho form không xuất hiện khi render màn hình
 	useEffect(() => {
-		if (!workingReceiver.accountNumber || workingReceiver.bankId === -1) return;
+		if (workingReceiver.accountNumber === "" || workingReceiver.bankId === -1)
+			return;
+		if (modalFormVariables.isAdding) return;
 		handleShowFormModal(false);
 	}, [workingReceiver]);
 
