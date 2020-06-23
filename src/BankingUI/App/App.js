@@ -10,6 +10,7 @@ import {
 	public_routes,
 	customer_routes,
 	admin_routes,
+	employee_routes,
 } from "../../routes/appRoutes";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
@@ -129,6 +130,29 @@ const App = (props) => {
 					{isAuthenticated &&
 						role === "admin" &&
 						admin_routes.map((item, index) => {
+							return (
+								<item.routetype
+									key={index}
+									path={item.path}
+									exact={item.exact ? item.exact : null}
+									isAuthenticated={isAuthenticated}
+									comp={(props) => {
+										return item.layout ? (
+											<item.layout>
+												<item.component {...props} {...item.props} />
+											</item.layout>
+										) : (
+											<item.component {...props} {...item.props} />
+										);
+									}}
+								/>
+							);
+						})}
+
+					{/* ---EMPLOYEE RENDER --- */}
+					{isAuthenticated &&
+						role === "employee" &&
+						employee_routes.map((item, index) => {
 							return (
 								<item.routetype
 									key={index}
