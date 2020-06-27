@@ -1,19 +1,12 @@
 import React, { useRef, useEffect } from "react";
 import { Col, Row, Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 import "./Dashboard.css";
 
 const Dashboard = (props) => {
-	const {
-		reducerAuthorization,
-		reducerUserInformation,
-		getAllInformation,
-	} = props;
-	const { authentication } = reducerAuthorization;
+	const { reducerUserInformation } = props;
 	const { balance, name } = reducerUserInformation.data;
-	const accessTokennn = authentication.accessToken;
 	const mountedRef = useRef(true);
 
 	const formatter = new Intl.NumberFormat("en-US", {
