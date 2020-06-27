@@ -1,0 +1,11 @@
+ul {
+	list-style-type: none;
+}
+
+.information {
+	border-width: 1px;
+	border-color: black;
+	border-style: solid;
+	border-radius: 10px;
+	padding: 10px;
+}
