@@ -7,15 +7,19 @@ import NotFound from "../BankingUI/Components/Others/NotFound/NotFound";
 
 import DefaultLayout from "../BankingUI/Components/Layout/DefaultLayout";
 
+//* CUSTOMER'S COMPONENTS *//
 import DashboardConnect from "../BankingUI/Components/Customer/Dashboard/DashboardConnect";
 import ReceiverListConnect from "../BankingUI/Components/Customer/ReceiverList/ReceiverListConnect";
 import FormEditInfoConnect from "../BankingUI/Components/Customer/FormEditInfo/FormEditInfoConnect";
 import TransactionConnect from "../BankingUI/Components/Customer/Transaction/TransactionConnect";
+import DebtConnect from "../BankingUI/Components/Customer/Debt/DebtConnect";
 
+//* EMPLOYEE'S COMPONENTS *//
 import EmployeeDashboardConnect from "../BankingUI/Components/Employee/Dashboard/DashboardConnect";
 import NewCustomerFormConnect from "../BankingUI/Components/Employee/NewCustomerForm/NewCustomerFormConnect";
 import DepositFormConnect from "../BankingUI/Components/Employee/DepositForm/DepositFormConnect";
 
+//* ADMINISTRATOR'S COMPONENTS *//
 import AdminDashboardConnect from "../BankingUI/Components/Admin/Dashboard/DashboardConnect";
 
 export const PrivateRoute = ({ comp: Component, ...rest }) => {
@@ -73,6 +77,12 @@ export const customer_routes = [
 	},
 	{
 		path: "/transaction",
+		routetype: PrivateRoute,
+		component: TransactionConnect,
+		layout: DefaultLayout,
+	},
+	{
+		path: "/debt",
 		routetype: PrivateRoute,
 		component: TransactionConnect,
 		layout: DefaultLayout,
