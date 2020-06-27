@@ -1,86 +1,124 @@
-import React, { useState } from "react";
-import {
-	Col,
-	Row,
-	Button,
-	Card,
-	Container,
-	Form,
-	Table,
-} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faForward } from "@fortawesome/free-solid-svg-icons";
+import React, { useState, useEffect } from "react";
+import { Col, Row, Card, Container, Form, Table } from "react-bootstrap";
 
-import TransactionReceiverList from "./TransactionReceiverList/TransactionReceiverList";
+import ReceiverDetail from "./ReceiverDetail/ReceiverDetail";
+import AddAmountForm from "./AddAmountForm/AddAmountForm";
+import OtpForm from "./OtpForm/OtpForm";
+import SuccessInformation from "./SuccessInformation/SuccessInformation";
+import RecommendAddReceiver from "./RecommendAddReceiver/RecommendAddReceiver";
+
 import "./Transaction.css";
 
-const FormEditInfo = (props) => {
-	const {
-		reducerAuthorization,
-		reducerUserInformation,
-		updateUserInfo,
-		getAllInformation,
-	} = props;
-	const { accessToken } = reducerAuthorization.authentication;
-	const {
-		accountNumber,
-		username,
-		name,
-		phone,
-		email,
-	} = reducerUserInformation.data;
-	const { isLoading } = reducerUserInformation;
-	const [validated, setValidated] = useState(false);
-	const [messageForm, setMessageForm] = useState({
-		accountNumber: accountNumber,
-		username: username,
-		name: name,
-		phone: phone,
-		email: email,
-	});
-	const receiver_data = [
-		{
-			accountNumber: "1234567",
-			bankName: "SAPHASAN Bank",
-			name: "Trieu an com",
-		},
-		{
-			accountNumber: "3198197",
-			bankName: "SAPHASAN Bank",
-			name: "Thuong C310",
-		},
-		{
-			accountNumber: "3340129",
-			bankName: "SAPHASAN Bank",
-			name: "Thoi dep trai",
-		},
-		{
-			accountNumber: "2019384",
-			bankName: "SAPHASAN Bank",
-			name: "Bao Son",
-		},
-		{
-			accountNumber: "1023959",
-			bankName: "BAOSON Bank",
-			name: "quan123",
-		},
-	];
+import AlertBox from "../../Others/AlertBox/AlertBox";
 
-	const handleSubmit = (event) => {
-		const form = event.currentTarget;
-		if (form.checkValidity() === false) {
-			event.preventDefault();
-			event.stopPropagation();
-		} else {
-			console.log(messageForm);
-			updateUserInfo(messageForm, accessToken);
-		}
-		setValidated(true);
+const Transaction = (props) => {
+	const { reducerAuthorization, reducerUserInformation } = props;
+	const { accessToken } = reducerAuthorization.authentication;
+	const { balance } = reducerUserInformation.data;
+	const receiversData = reducerUserInformation.receivers;
+
+	const [formVariables, setFormVariables] = useState({
+		accountNumber: "",
+		bankId: 0,
+		name: "",
+		savedName: "",
+		amount: 50000,
+		content: "",
+		otp: "",
+		isDebt: 0,
+		isReceiverPaid: false,
+		error: null,
+		message: "",
+		transactionId: "",
+		createdAt: "",
+	});
+	const [step, setStep] = useState(1);
+
+	const renderAlert = () => {
+		if (formVariables.message)
+			return (
+				<AlertBox
+					alertTypes={formVariables.error}
+					alertMessage={formVariables.message}
+				/>
+			);
 	};
 
+	const setFormError = (error, message) => {
+		let alertTypes = error === null ? "success" : "danger";
+
+		formVariables["error"] = alertTypes;
+		setFormVariables({ ...formVariables });
+
+		formVariables["message"] = message;
+		setFormVariables({ ...formVariables });
+	};
+
+	// Update giá trị điền vào Form
 	const handleChange = (e) => {
-		messageForm[e.target.name] = e.target.value;
-		setMessageForm({ ...messageForm });
+		formVariables[e.target.name] = e.target.value;
+		setFormVariables({ ...formVariables });
+	};
+
+	const renderStepForm = () => {
+		switch (step) {
+			case 1:
+				return (
+					<ReceiverDetail
+						receiversData={receiversData}
+						formVariables={formVariables}
+						setFormVariables={setFormVariables}
+						accessToken={accessToken}
+						setStep={setStep}
+						setFormError={setFormError}
+						handleChange={handleChange}
+					/>
+				);
+			case 2:
+				return (
+					<AddAmountForm
+						formVariables={formVariables}
+						setFormVariables={setFormVariables}
+						accessToken={accessToken}
+						setStep={setStep}
+						balance={balance}
+						setFormError={setFormError}
+					/>
+				);
+			case 3:
+				return (
+					<OtpForm
+						formVariables={formVariables}
+						setFormVariables={setFormVariables}
+						accessToken={accessToken}
+						setStep={setStep}
+						balance={balance}
+						setFormError={setFormError}
+					/>
+				);
+			case 4:
+				return (
+					<SuccessInformation
+						formVariables={formVariables}
+						reducerUserInformation={reducerUserInformation}
+						balance={balance}
+						setFormError={setFormError}
+						setStep={setStep}
+					/>
+				);
+			case 5:
+				return (
+					<RecommendAddReceiver
+						formVariables={formVariables}
+						setFormVariables={setFormVariables}
+						reducerUserInformation={reducerUserInformation}
+						balance={balance}
+						setFormError={setFormError}
+						accessToken={accessToken}
+						setStep={setStep}
+					/>
+				);
+		}
 	};
 
 	return (
@@ -90,89 +128,8 @@ const FormEditInfo = (props) => {
 					<Card className="text-center" className="mt-3">
 						<Card.Header className="text-center">TRANSACTION</Card.Header>
 						<Card.Body>
-							<TransactionReceiverList receiver_data={receiver_data} />
-							<Form noValidate validated={validated} onSubmit={handleSubmit}>
-								<Form.Group>
-									{/* <Form.Label className="font-weight-bold">ID and UserName</Form.Label> */}
-									<Row>
-										<Col>
-											<Form.Text className="text-muted font-weight-bold">
-												Account Number
-											</Form.Text>
-											<Form.Control
-												required
-												type="text"
-												value={messageForm.accountNumber}
-												disabled
-											/>
-										</Col>
-										<Col>
-											<Form.Text className="text-muted font-weight-bold">
-												Username
-											</Form.Text>
-											<Form.Control
-												required
-												type="text"
-												value={messageForm.username}
-												disabled
-											/>
-										</Col>
-									</Row>
-									<Form.Text className="text-muted">
-										You cannot change this value. You will use this username to
-										login.
-									</Form.Text>
-								</Form.Group>
-								<Form.Group>
-									<Form.Label className="font-weight-bold">
-										Full Name
-									</Form.Label>
-									<Form.Text className="text-muted font-weight-bold">
-										Name
-									</Form.Text>
-									<Form.Control
-										required
-										type="text"
-										name="name"
-										value={messageForm.name}
-										onChange={(e) => handleChange(e)}
-									/>
-									<Form.Control.Feedback type="invalid">
-										Please fill the field.
-									</Form.Control.Feedback>
-									<Form.Text className="text-muted font-weight-bold">
-										Email
-									</Form.Text>
-									<Form.Control
-										required
-										type="email"
-										name="email"
-										value={messageForm.email}
-										onChange={(e) => handleChange(e)}
-									/>
-									<Form.Control.Feedback type="invalid">
-										Please fill the field.
-									</Form.Control.Feedback>
-									<Form.Text className="text-muted font-weight-bold">
-										Phone number
-									</Form.Text>
-									<Form.Control
-										required
-										type="text"
-										name="phone"
-										value={messageForm.phone}
-										onChange={(e) => handleChange(e)}
-									/>
-									<Form.Control.Feedback type="invalid">
-										Please fill the field.
-									</Form.Control.Feedback>
-								</Form.Group>
-
-								<Button variant="primary" type="submit">
-									Edit
-									{/* {isLoading ? <Spinner animation="border" size="sm" /> : null} */}
-								</Button>
-							</Form>
+							{renderAlert()}
+							{renderStepForm()}
 						</Card.Body>
 						<Card.Footer className="text-muted text-center">
 							HCMUS - PTUDWNC - 2019
@@ -184,4 +141,4 @@ const FormEditInfo = (props) => {
 	);
 };
 
-export default FormEditInfo;
+export default Transaction;

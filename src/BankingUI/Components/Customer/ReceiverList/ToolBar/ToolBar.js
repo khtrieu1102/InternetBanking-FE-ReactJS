@@ -22,14 +22,14 @@ const ToolBar = ({
 		handleShowFormModal(true);
 	};
 	return (
-		<Card.Header className="toolBar">
+		<>
 			<span>YOUR RECEIVERS LIST</span>
 			<span>
 				<Button onClick={handleClick}>
 					<FontAwesomeIcon icon={faPlus} />
 				</Button>
 			</span>
-		</Card.Header>
+		</>
 	);
 };
 

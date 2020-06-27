@@ -143,12 +143,14 @@ const ReceiverList = (props) => {
 			<Row>
 				<Col md={{ span: 5, offset: 3 }} lg={6}>
 					<Card className="mt-3">
-						<ToolBar
-							handleShowFormModal={handleShowFormModal}
-							setModalFormVariables={setModalFormVariables}
-							setWorkingReceiver={setWorkingReceiver}
-							modalFormVariables={modalFormVariables}
-						/>
+						<Card.Header className="toolBar">
+							<ToolBar
+								handleShowFormModal={handleShowFormModal}
+								setModalFormVariables={setModalFormVariables}
+								setWorkingReceiver={setWorkingReceiver}
+								modalFormVariables={modalFormVariables}
+							/>
+						</Card.Header>
 						<ModalReceiverForm
 							show={modalFormVariables.show}
 							isAdding={modalFormVariables.isAdding}

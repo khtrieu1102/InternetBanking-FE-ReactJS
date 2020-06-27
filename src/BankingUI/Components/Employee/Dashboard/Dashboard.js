@@ -27,7 +27,7 @@ const Dashboard = (props) => {
 			<Row>
 				<Col md={{ span: 6, offset: 3 }} lg={6}>
 					<Card className="text-center" className="mt-3 text-center">
-						<Card.Header>DASHBOARD</Card.Header>
+						<Card.Header>EMPLOYEE DASHBOARD</Card.Header>
 						<Card.Body>
 							<Card.Title>
 								Xin chào,{" "}
@@ -35,21 +35,17 @@ const Dashboard = (props) => {
 									<span className="text-primary">{name}</span>
 								</Link>
 							</Card.Title>
-							<Card.Text>
-								Số dư khả dụng của bạn:{" "}
-								<span className="text-primary">{formattedBalance}</span>
-							</Card.Text>
 							<Col>
-								<Link to="/receivers">
+								<Link to="/new-customer">
 									<Button variant="primary" className="extraButton">
-										Danh sách người nhận
+										Tạo khách hàng mới
 									</Button>
 								</Link>
 							</Col>
 							<Col className="mt-2">
-								<Link to="/transaction" className="extraButton">
+								<Link to="/deposit" className="extraButton">
 									<Button variant="primary" className="extraButton">
-										Chuyển tiền
+										Nạp tiền cho khách hàng
 									</Button>
 								</Link>
 							</Col>
