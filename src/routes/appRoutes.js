@@ -84,7 +84,7 @@ export const customer_routes = [
 	{
 		path: "/debt",
 		routetype: PrivateRoute,
-		component: TransactionConnect,
+		component: DebtConnect,
 		layout: DefaultLayout,
 	},
 	{
