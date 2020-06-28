@@ -1,6 +1,7 @@
 import {
 	AuthorizationActionTypes,
 	UserInformationActionTypes,
+	UserTransactionsActionTypes,
 } from "./actionTypes";
 import axios from "axios";
 
@@ -54,6 +55,25 @@ export const UserInformationActionCreators = {
 				})
 				.then((result) => {
 					resolve(result);
+				})
+				.catch((error) => {
+					reject(error);
+				})
+		),
+	}),
+};
+
+export const UserTransactionsActionCreators = {
+	getAllTransactions: (token) => ({
+		type: UserTransactionsActionTypes.USER_GET_ALL_TRANSACTIONS,
+		payload: new Promise((resolve, reject) =>
+			axios
+				.get(`${URL_API}/api/transaction/history`, {
+					headers: { Authorization: `Bearer ${token}` },
+				})
+				.then((result) => {
+					// console.log(result.data.data);
+					if (result.status === 200) resolve(result.data.data);
 				})
 				.catch((error) => {
 					reject(error);

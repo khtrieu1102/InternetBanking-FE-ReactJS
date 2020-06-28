@@ -12,6 +12,7 @@ import DashboardConnect from "../BankingUI/Components/Customer/Dashboard/Dashboa
 import ReceiverListConnect from "../BankingUI/Components/Customer/ReceiverList/ReceiverListConnect";
 import FormEditInfoConnect from "../BankingUI/Components/Customer/FormEditInfo/FormEditInfoConnect";
 import TransactionConnect from "../BankingUI/Components/Customer/Transaction/TransactionConnect";
+import TransactionManagementConnect from "../BankingUI/Components/Customer/TransactionManagement/TransactionManagementConnect";
 import DebtConnect from "../BankingUI/Components/Customer/Debt/DebtConnect";
 
 //* EMPLOYEE'S COMPONENTS *//
@@ -79,6 +80,12 @@ export const customer_routes = [
 		path: "/transaction",
 		routetype: PrivateRoute,
 		component: TransactionConnect,
+		layout: DefaultLayout,
+	},
+	{
+		path: "/transaction-management",
+		routetype: PrivateRoute,
+		component: TransactionManagementConnect,
 		layout: DefaultLayout,
 	},
 	{
