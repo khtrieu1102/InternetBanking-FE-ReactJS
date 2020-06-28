@@ -23,6 +23,7 @@ const App = (props) => {
 		getAllInformation,
 		setRole,
 		getAllReceivers,
+		getAllTransactions,
 	} = props;
 	const { isAuthenticated, authentication } = reducerAuthorization;
 	const { role } = authentication;
@@ -55,6 +56,7 @@ const App = (props) => {
 						setIsAuthenticated(true);
 						getAllInformation(result.data);
 						getAllReceivers(authentication.accessToken);
+						getAllTransactions(authentication.accessToken);
 					}
 				})
 				.catch((err) => {
