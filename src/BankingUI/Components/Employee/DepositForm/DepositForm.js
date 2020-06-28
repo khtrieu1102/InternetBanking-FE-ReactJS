@@ -12,15 +12,16 @@ const PayInForm = (props) => {
 
 	const [formVariables, setFormVariables] = useState({
 		accountNumber: "",
-		bankId: -1,
+		bankId: 0,
 		username: "",
 		name: "",
 		isDebt: false,
 		isReceiverPaid: false,
-		amount: 0,
-		content: "",
+		amount: 50000,
+		content: `Nạp tiền cho khách hàng ngày ${Date().toString()}`,
 		error: "",
 		message: "",
+		isLoading: false,
 	});
 
 	const renderAlert = () => {
@@ -48,7 +49,7 @@ const PayInForm = (props) => {
 		setFormVariables({ ...formVariables });
 	};
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		const form = event.currentTarget;
 		event.preventDefault();
 		if (form.checkValidity() === false) {
@@ -56,30 +57,31 @@ const PayInForm = (props) => {
 		} else {
 			console.log(formVariables);
 			setFormError(null, "Cái này chưa có gọi api");
-			// axios
-			// 	.post(
-			// 		"http://localhost:5000/api/admin/deposit",
-			// 		{
-			// 			receivedUserId: formVariables.accountNumber,
-			// 			receivedBankId: formVariables.bankId,
-			// 			isDebt: false,
-			// 			isReceiverPaid: false,
-			// 			isVerified: true,
-			// 			amount: formVariables.amount,
-			// 			content: formVariables.content,
-			// 		},
-			// 		{ headers: { Authorization: `Bearer ${accessToken}` } }
-			// 	)
-			// 	.then((result) => {
-			// 		if (result.status === 200) setFormError(null, result.data.message);
-			// 	})
-			// 	.catch((err) => {
-			// 		const { response } = err;
-			// 		console.log(err.response);
-			// 		if (response.status === 400) {
-			// 			setFormError(true, response.data.message);
-			// 		} else setFormError(true, "Something's wrong!");
-			// 	});
+			setFormVariables({ ...formVariables, isLoading: true });
+			await axios
+				.post(
+					"http://localhost:5000/api/admin/deposit",
+					{
+						receivedUserId: formVariables.accountNumber,
+						receivedBankId: +formVariables.bankId,
+						amount: +formVariables.amount,
+						content: formVariables.content,
+					},
+					{ headers: { Authorization: `Bearer ${accessToken}` } }
+				)
+				.then((result) => {
+					console.log();
+					if (result.status === 200) setFormError(null, result.data.message);
+				})
+				.catch((err) => {
+					const { response } = err;
+					console.log(err.response);
+					if (response.status === 400) {
+						setFormError(true, response.data.message);
+					} else setFormError(true, "Something's wrong!");
+				});
+
+			setFormVariables({ ...formVariables, isLoading: false });
 		}
 		setValidated(true);
 	};
@@ -157,6 +159,7 @@ const PayInForm = (props) => {
 														formVariables.bankId
 													)
 												}
+												disabled
 											>
 												<option value={-1}></option>
 												<option value={0}>SAPHASAN Bank</option>
@@ -180,6 +183,37 @@ const PayInForm = (props) => {
 										}
 										disabled
 									/>
+									<Form.Text className="text-muted font-weight-bold">
+										Amount
+									</Form.Text>
+									<Form.Control
+										required
+										type="number"
+										step="1000"
+										min="1000"
+										name="amount"
+										value={formVariables.amount}
+										onChange={(e) => handleChange(e)}
+										isInvalid={formVariables.amount % 1000 !== 0}
+									/>
+									<Form.Control.Feedback type="invalid">
+										Số tiền phải chia hết cho 1.000đ và trên 50.000đ.
+									</Form.Control.Feedback>
+									<Form.Text className="text-muted font-weight-bold">
+										Content
+									</Form.Text>
+									<Form.Control
+										required
+										as="textarea"
+										type="text"
+										name="content"
+										value={formVariables.content}
+										onChange={(e) => handleChange(e)}
+										isInvalid={formVariables.content === ""}
+									/>
+									<Form.Control.Feedback type="invalid">
+										Hãy điền lời nhắn phù hợp.
+									</Form.Control.Feedback>
 								</Form.Group>
 								<Button variant="primary" type="submit">
 									Next
