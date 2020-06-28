@@ -36,12 +36,12 @@ const Header = (props) => {
 						</Link>
 					</Nav.Link>
 					<Nav.Link>
-						<Link to="/games" className="text-light mr-2">
+						<Link to="/debt-management" className="text-light mr-2">
 							Quản lý nợ
 						</Link>
 					</Nav.Link>
 					<Nav.Link>
-						<Link to="/join" className="text-light mr-2">
+						<Link to="/transaction-management" className="text-light mr-2">
 							Quản lý giao dịch
 						</Link>
 					</Nav.Link>
