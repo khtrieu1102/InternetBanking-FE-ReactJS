@@ -56,7 +56,7 @@ const App = (props) => {
 						setIsAuthenticated(true);
 						getAllInformation(result.data);
 						getAllReceivers(authentication.accessToken);
-						getAllTransactions(authentication.accessToken);
+						// getAllTransactions(authentication.accessToken);
 					}
 				})
 				.catch((err) => {
