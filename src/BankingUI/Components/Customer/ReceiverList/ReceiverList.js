@@ -23,6 +23,7 @@ const ReceiverList = (props) => {
 		savedName: "",
 		bankId: -1,
 		name: "",
+		username: "",
 	});
 
 	useEffect(() => {
@@ -52,6 +53,7 @@ const ReceiverList = (props) => {
 			savedName: "",
 			bankId: -1,
 			name: "",
+			username: "",
 		});
 	};
 
