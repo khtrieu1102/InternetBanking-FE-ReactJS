@@ -23,19 +23,27 @@ const ModalForm = ({
 		console.log(accountNumber, bankId);
 
 		if (bankId !== -1 && accountNumber !== "") {
-			const name = await axios
+			const result = await axios
 				.get(`http://localhost:5000/api/users/${accountNumber}`, {
 					headers: {
 						Authorization: `Bearer ${accessToken}`,
 					},
 				})
 				.then((result) => {
-					if (result.data.name) return result.data.name;
-					return "KHONG TIM THAY";
+					if (result.data.name)
+						return { name: result.data.name, username: result.data.username };
+					return { name: "KHONG TIM THAY", username: "KHONG TIM THAY" };
 				})
-				.catch((err) => "KHONG TIM THAY");
+				.catch((err) => ({
+					name: "KHONG TIM THAY",
+					username: "KHONG TIM THAY",
+				}));
 			console.log(accountNumber, bankId);
-			await setWorkingReceiver({ ...workingReceiver, name: name });
+			await setWorkingReceiver({
+				...workingReceiver,
+				name: result.name,
+				username: result.username,
+			});
 		}
 	};
 
@@ -57,7 +65,10 @@ const ModalForm = ({
 				await axios.patch(
 					`http://localhost:5000/api/users/receiver-list`,
 					{
-						savedName: workingReceiver.savedName,
+						savedName:
+							workingReceiver.savedName !== ""
+								? workingReceiver.savedName
+								: workingReceiver.username,
 						bankId: +workingReceiver.bankId,
 						accountNumber: workingReceiver.accountNumber,
 					},
@@ -68,7 +79,10 @@ const ModalForm = ({
 				await axios.patch(
 					`http://localhost:5000/api/users/receiver-list-update`,
 					{
-						savedName: workingReceiver.savedName,
+						savedName:
+							workingReceiver.savedName !== ""
+								? workingReceiver.savedName
+								: workingReceiver.username,
 						bankId: +workingReceiver.bankId,
 						accountNumber: workingReceiver.accountNumber,
 					},
@@ -139,7 +153,6 @@ const ModalForm = ({
 							Saved name
 						</Form.Text>
 						<Form.Control
-							required
 							type="text"
 							name="savedName"
 							value={workingReceiver.savedName}
@@ -230,7 +243,6 @@ const ModalForm = ({
 							Saved name
 						</Form.Text>
 						<Form.Control
-							required
 							type="text"
 							name="savedName"
 							value={workingReceiver.savedName}

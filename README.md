@@ -26,16 +26,18 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
 - [x] Thông tin danh sách người nhận
   - [x] Show thông tin từ API
   - [x] CRUD
-  - [ ] Sử dụng tên đăng ký làm savedName khi không nhập
+  - [x] Sử dụng tên đăng ký làm savedName khi không nhập
 
 #### 1.4 Chuyển khoản
 
 - [x] Chuyển khoản
 
   - [x] Luồng đi giữa các màn hình
-  - [ ] Điền thông tin **người nhận** và **ngân hàng**
-  - [ ] Nhập OTP
-  - [ ] Gợi ý lưu vào danh sách người nhận
+  - [x] Điền thông tin **người nhận** và **ngân hàng**
+  - [x] Nhập OTP
+  - [x] Gợi ý lưu vào danh sách người nhận
+
+- [ ] Chuyển khoản liên ngân hàng
 
 #### 1.5 Quản lý nợ
 
@@ -61,12 +63,13 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
 
 #### 1.6 Quản lý giao dịch
 
-- [ ] Xem lịch sử giao dịch
+- [x] Xem lịch sử giao dịch
 
-  - [ ] Nhận tiền
-  - [ ] Chuyển tiền
-  - [ ] Thanh toán nợ (nợ tạo + nợ được nhắc)
-  - [ ] Filter
+  - [x] Nhận tiền
+  - [x] Chuyển tiền
+  - [x] Thanh toán nợ (nợ tạo + nợ được nhắc)
+  - [x] Xem theo thời gian
+  - [ ] Filter (để sau)
 
 #### 1.7 Đổi mật khẩu
 
@@ -91,10 +94,11 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
 
 #### 2.2 Nạp tiền vào tài khoản
 
-- [ ] Nạp tiền cho customer
-  - [ ] Theo tên đăng nhập hoặc số tài khoản
+- [x] Nạp tiền cho customer
+  - [x] Theo số tài khoản
+  - [ ] Hoặc theo tên đăng nhập
   - [x] Luồng màn hình
-  - [ ] Luồng dữ liệu
+  - [x] Luồng dữ liệu
 
 #### 2.3 Xem lịch sử giao dịch một khách hàng
 
