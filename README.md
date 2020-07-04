@@ -41,23 +41,25 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
 
 #### 1.5 Quản lý nợ
 
-- [ ] Tạo nhắc nợ
+- [x] Tạo nhắc nợ
 
-  - [ ] Điền thông tin người nợ
-  - [ ] Nhập **số tiền** và **nội dung nợ**
+  - [x] Điền thông tin người nợ
+  - [x] Nhập **số tiền** và **nội dung nợ**
 
-- [ ] Xem danh sách nợ
+- [x] Xem danh sách nợ
 
-  - [ ] Nợ tạo
-  - [ ] Nợ do người khác nhắc
+  - [x] Nợ tạo
+  - [x] Nợ do người khác nhắc
 
 - [ ] Huỷ nợ
 
-  - [ ] Chọn nhắc nợ (id) và nội dung xoá
+  - [x] Chọn nhắc nợ (id) và nội dung xoá
+  - [x] Xoá được nhắc nợ
+  - [ ] Notify cho người nhắc hoặc người được nhắc
 
 - [ ] Thanh toán nợ
 
-  - [ ] Chọn nợ (id)
+  - [x] Chọn nợ (id)
   - [ ] Nhập OTP
   - [ ] Báo thành công
 
@@ -102,13 +104,16 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
 
 #### 2.3 Xem lịch sử giao dịch một khách hàng
 
-- [ ] Như ở **1.6**
+- [x] Như ở **1.6**
 
 ## 3. Quản trị viên - Administrator
 
 - [ ] Quản lý nhân viên
 
-  - [ ] Create, Read, Delete
+  - [x] Xem danh sách nhân viên
+  - [x] Xem thông tin một nhân viên
+  - [ ] Xoá tài khoản nhân viên
+  - [ ] Tạo tài khoản nhân viên
 
 - [ ] Xem giao dịch trong tháng với ngân hàng khác
   - [ ] Xem trong khoảng thời gian
