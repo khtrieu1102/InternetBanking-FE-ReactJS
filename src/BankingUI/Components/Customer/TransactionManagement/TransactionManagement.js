@@ -4,6 +4,7 @@ import axios from "axios";
 
 import AlertBox from "../../Others/AlertBox/AlertBox";
 import "./TransactionManagement.css";
+import TransactionList from "./TransactionList/TransactionList";
 
 import moneyFormatter from "../../HelperFunctions/moneyFormatter";
 
@@ -56,6 +57,7 @@ const TransactionManagement = (props) => {
 			.then((result) => result.data.data)
 			.then((result) => {
 				if (isGettingAList) {
+					result.reverse();
 					setTransactionsData(result);
 					isGettingAList = false;
 				}
@@ -79,24 +81,22 @@ const TransactionManagement = (props) => {
 				<>
 					{transactionsData.map((item, index) => {
 						let nameToShow = "";
-						let thisUserIsReceiver = false;
 						let moneyType, moneyDetail, transactionType, badgeName;
 						if (item.receivedUserId === currentUser.accountNumber) {
 							nameToShow = item.sentUserName;
-							thisUserIsReceiver = true;
 							moneyType = "success";
 							moneyDetail = `+ ${moneyFormatter.format(item.amount)}`;
 							transactionType = "success";
 							badgeName = item.isDebt ? "Thanh toán nợ" : "Nhận từ";
 						} else {
 							nameToShow = item.receivedUserName;
-							thisUserIsReceiver = false;
 							moneyType = "danger";
 							moneyDetail = `- ${moneyFormatter.format(item.amount)}`;
 							transactionType = item.isDebt ? "secondary" : "danger";
 							badgeName = item.isDebt ? "Thanh toán nợ" : "Chuyển cho";
 						}
 						const badgeType = item.isDebt ? "secondary" : "primary";
+						const dateToShow = new Date(item.createdAt).toDateString();
 						return (
 							<Alert variant={transactionType} key={index}>
 								<Badge variant={badgeType}>{badgeName}</Badge>{" "}
@@ -110,63 +110,10 @@ const TransactionManagement = (props) => {
 								</span>
 								<p>{item.content}</p>
 								<hr />
-								<span>{item.createdAt}</span>
+								<span>{dateToShow}</span>
 							</Alert>
 						);
 					})}
-					{/* <Alert variant="success">
-						<Badge variant="primary">Giao dịch</Badge>{" "}
-						<span>
-							<span>
-								<b>NGUYEN NGOC KHAC TRIEU</b>
-							</span>
-							<Badge variant="success" className="float-right money">
-								+ đ750.000
-							</Badge>
-						</span>
-						<hr />
-						<span>20/01/2020</span>
-					</Alert>
-					<Alert variant="danger">
-						<Badge variant="primary">Giao dịch</Badge>{" "}
-						<span>
-							<span>
-								<b>NGUYEN NGOC KHAC TRIEU</b>
-							</span>
-							<Badge variant="danger" className="float-right money">
-								- đ1.750.000
-							</Badge>
-						</span>
-						<hr />
-						<span>20/01/2020</span>
-					</Alert>
-					<Alert variant="success">
-						<Badge variant="secondary">Thanh toán nợ</Badge>{" "}
-						<span>
-							<span>
-								<b>NGUYEN NGOC KHAC TRIEU</b>
-							</span>
-							<Badge variant="success" className="float-right money">
-								+ đ750.000
-							</Badge>
-						</span>
-						<p>Thanh toán nợ hôm 20 nha mày, cảm ơn nhiều hehee!</p>
-						<hr />
-						<span>20/01/2020</span>
-					</Alert>
-					<Alert variant="dark">
-						<Badge variant="secondary">Thanh toán nợ</Badge>{" "}
-						<span>
-							<span>
-								<b>NGUYEN NGOC KHAC TRIEU</b>
-							</span>
-							<Badge variant="danger" className="float-right money">
-								- đ350.000
-							</Badge>
-						</span>
-						<hr />
-						<span>20/01/2020</span>
-					</Alert> */}
 				</>
 			);
 		}
@@ -198,7 +145,10 @@ const TransactionManagement = (props) => {
 									/>
 								</div>
 							</div>
-							{showComponent()}
+							<TransactionList
+								transactionsData={transactionsData}
+								currentUser={currentUser}
+							/>
 						</Card.Body>
 					</Card>
 				</Col>
