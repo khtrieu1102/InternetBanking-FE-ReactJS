@@ -56,7 +56,6 @@ const PayInForm = (props) => {
 			event.stopPropagation();
 		} else {
 			console.log(formVariables);
-			setFormError(null, "Cái này chưa có gọi api");
 			setFormVariables({ ...formVariables, isLoading: true });
 			await axios
 				.post(
@@ -71,7 +70,7 @@ const PayInForm = (props) => {
 				)
 				.then((result) => {
 					console.log();
-					if (result.status === 200) setFormError(null, result.data.message);
+					if (result.status === 200) setFormError(null, "Nạp tiền thành công");
 				})
 				.catch((err) => {
 					const { response } = err;
@@ -197,7 +196,7 @@ const PayInForm = (props) => {
 										isInvalid={formVariables.amount % 1000 !== 0}
 									/>
 									<Form.Control.Feedback type="invalid">
-										Số tiền phải chia hết cho 1.000đ và trên 50.000đ.
+										Số tiền phải chia hết cho 1.000đ.
 									</Form.Control.Feedback>
 									<Form.Text className="text-muted font-weight-bold">
 										Content

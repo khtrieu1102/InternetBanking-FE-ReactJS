@@ -157,6 +157,8 @@ const AddAmountForm = (props) => {
 					<Form.Text className="text-muted font-weight-bold">Message</Form.Text>
 					<Form.Control
 						required
+						as="textarea"
+						rows="3"
 						type="text"
 						name="content"
 						value={formVariables.content}
