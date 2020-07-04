@@ -130,8 +130,8 @@ const Header = (props) => {
 						</Link>
 					</Nav.Link>
 					<Nav.Link>
-						<Link to="/join" className="text-light mr-2">
-							Join Chat
+						<Link to="/customer-transaction" className="text-light mr-2">
+							Customer Transaction
 						</Link>
 					</Nav.Link>
 					<Button

@@ -32,19 +32,15 @@ const Dashboard = (props) => {
 						<Card.Header>ADMIN DASHBOARD</Card.Header>
 						<Card.Body>
 							<Card.Title>
-								Xin chào,{" "}
+								Xin chào, admin{" "}
 								<Link to="/edit">
 									<span className="text-primary">{name}</span>
 								</Link>
 							</Card.Title>
-							<Card.Text>
-								Số dư khả dụng của bạn:{" "}
-								<span className="text-primary">{formattedBalance}</span>
-							</Card.Text>
 							<Col>
-								<Link to="/receivers">
+								<Link to="/employees">
 									<Button variant="primary" className="extraButton">
-										Danh sách người nhận
+										Danh sách nhân viên
 									</Button>
 								</Link>
 							</Col>
