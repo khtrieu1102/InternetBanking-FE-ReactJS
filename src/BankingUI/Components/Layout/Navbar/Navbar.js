@@ -26,7 +26,6 @@ const Header = (props) => {
 				<Nav className="mr-auto">
 					<Navbar.Text className="text-light">
 						<Image src="./tic-tac-toe.png" className="avatar" roundedCircle />{" "}
-						<span className="text-dark bold">{name}</span>
 					</Navbar.Text>
 				</Nav>
 				<Nav>
