@@ -15,6 +15,8 @@ import {
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
+// import socketIO from "../../service/socket";
+
 const App = (props) => {
 	const {
 		reducerAuthorization,
@@ -42,15 +44,30 @@ const App = (props) => {
 		};
 	}, []);
 
+	axios.defaults.baseURL = "http://localhost:5000";
+	axios.defaults.headers.common[
+		"Authorization"
+	] = `Bearer ${authentication.accessToken}`;
+
+	// TODO: Gọi tới refresh token
+	// useEffect(() => {
+	// 	let interval;
+	// 	console.log(isAuthenticated, authentication.accessToken);
+	// 	if (isAuthenticated !== false && authentication.accessToken !== "") {
+	// 		interval = setInterval(() => {
+	// 			console.log("This will run 5 seconds!");
+	// 		}, 5000);
+	// 	}
+	// 	return () => clearInterval(interval);
+	// }, [isAuthenticated, authentication.accessToken]);
+
 	useEffect(() => {
 		if (!mountedRef.current) return null;
 
 		if (authentication.accessToken) {
 			setRole(jwtDecode(authentication.accessToken).role);
 			axios
-				.get("http://localhost:5000/api/users/me", {
-					headers: { Authorization: `Bearer ${authentication.accessToken}` },
-				})
+				.get("/api/users/me")
 				.then((result) => {
 					if (result.status === 200) {
 						setIsAuthenticated(true);
@@ -62,11 +79,13 @@ const App = (props) => {
 				.catch((err) => {
 					console.log(err);
 					setIsAuthenticated(false);
+					setUserAccessToken("");
 					localStorage.removeItem("token");
 				});
 		}
 		if (!authentication.accessToken && !localAccessToken) {
 			setIsAuthenticated(false);
+			setUserAccessToken("");
 			localStorage.removeItem("token");
 		}
 	}, [authentication.accessToken]);
@@ -97,6 +116,7 @@ const App = (props) => {
 						public_routes.map((item, index) => {
 							return (
 								<Redirect
+									key={index}
 									to={{
 										pathname: "/login",
 										// state: { from: props.location },
