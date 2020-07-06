@@ -68,10 +68,7 @@ const ReceiverList = (props) => {
 
 	// Delete
 	const deleteReceiver = async (accountNumber, bankId) => {
-		await axios.delete(`http://localhost:5000/api/users/receiver-list`, {
-			headers: {
-				Authorization: `Bearer ${reducerAuthorization.authentication.accessToken}`,
-			},
+		await axios.delete(`/api/users/receiver-list`, {
 			data: { accountNumber: accountNumber, bankId: +bankId },
 		});
 		window.location.reload();

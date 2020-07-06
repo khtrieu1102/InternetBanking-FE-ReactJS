@@ -24,11 +24,7 @@ const ModalForm = ({
 
 		if (bankId !== -1 && accountNumber !== "") {
 			const result = await axios
-				.get(`http://localhost:5000/api/users/${accountNumber}`, {
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-					},
-				})
+				.get(`/api/users/${accountNumber}`)
 				.then((result) => {
 					if (result.data.name)
 						return { name: result.data.name, username: result.data.username };
@@ -62,32 +58,24 @@ const ModalForm = ({
 		} else {
 			if (isAdding) {
 				// Nếu như là add vào một receiver mới
-				await axios.patch(
-					`http://localhost:5000/api/users/receiver-list`,
-					{
-						savedName:
-							workingReceiver.savedName !== ""
-								? workingReceiver.savedName
-								: workingReceiver.username,
-						bankId: +workingReceiver.bankId,
-						accountNumber: workingReceiver.accountNumber,
-					},
-					{ headers: { Authorization: `Bearer ${accessToken}` } }
-				);
+				await axios.patch(`/api/users/receiver-list`, {
+					savedName:
+						workingReceiver.savedName !== ""
+							? workingReceiver.savedName
+							: workingReceiver.username,
+					bankId: +workingReceiver.bankId,
+					accountNumber: workingReceiver.accountNumber,
+				});
 			} else {
 				// Nếu như update (chỉ đổi savedName)
-				await axios.patch(
-					`http://localhost:5000/api/users/receiver-list-update`,
-					{
-						savedName:
-							workingReceiver.savedName !== ""
-								? workingReceiver.savedName
-								: workingReceiver.username,
-						bankId: +workingReceiver.bankId,
-						accountNumber: workingReceiver.accountNumber,
-					},
-					{ headers: { Authorization: `Bearer ${accessToken}` } }
-				);
+				await axios.patch(`/api/users/receiver-list-update`, {
+					savedName:
+						workingReceiver.savedName !== ""
+							? workingReceiver.savedName
+							: workingReceiver.username,
+					bankId: +workingReceiver.bankId,
+					accountNumber: workingReceiver.accountNumber,
+				});
 			}
 		}
 		setValidated(true);

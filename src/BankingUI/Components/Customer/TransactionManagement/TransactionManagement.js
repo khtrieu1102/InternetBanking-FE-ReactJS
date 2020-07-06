@@ -49,15 +49,12 @@ const TransactionManagement = (props) => {
 
 	const getList = async (isGettingAList) => {
 		await axios
-			.get(`http://localhost:5000/api/transaction/history`, {
-				headers: {
-					Authorization: `Bearer ${reducerAuthorization.authentication.accessToken}`,
-				},
-			})
+			.get(`/api/transaction/history`)
 			.then((result) => result.data.data)
 			.then((result) => {
 				if (isGettingAList) {
 					result.reverse();
+					console.log(result);
 					setTransactionsData(result);
 					isGettingAList = false;
 				}
@@ -65,58 +62,6 @@ const TransactionManagement = (props) => {
 			.catch((error) => {
 				console.log(error.response);
 			});
-	};
-
-	const showComponent = () => {
-		if (transactionsData.length === 0) {
-			return (
-				<AlertBox
-					alertTypes="success"
-					alertHeading="Xin chào!"
-					alertMessage="Chưa có giao dịch nào trong thời gian này!"
-				/>
-			);
-		} else {
-			return (
-				<>
-					{transactionsData.map((item, index) => {
-						let nameToShow = "";
-						let moneyType, moneyDetail, transactionType, badgeName;
-						if (item.receivedUserId === currentUser.accountNumber) {
-							nameToShow = item.sentUserName;
-							moneyType = "success";
-							moneyDetail = `+ ${moneyFormatter.format(item.amount)}`;
-							transactionType = "success";
-							badgeName = item.isDebt ? "Thanh toán nợ" : "Nhận từ";
-						} else {
-							nameToShow = item.receivedUserName;
-							moneyType = "danger";
-							moneyDetail = `- ${moneyFormatter.format(item.amount)}`;
-							transactionType = item.isDebt ? "secondary" : "danger";
-							badgeName = item.isDebt ? "Thanh toán nợ" : "Chuyển cho";
-						}
-						const badgeType = item.isDebt ? "secondary" : "primary";
-						const dateToShow = new Date(item.createdAt).toDateString();
-						return (
-							<Alert variant={transactionType} key={index}>
-								<Badge variant={badgeType}>{badgeName}</Badge>{" "}
-								<span>
-									<span>
-										<b>{nameToShow.toUpperCase()}</b>
-									</span>
-									<Badge variant={moneyType} className="float-right money">
-										{moneyDetail}
-									</Badge>
-								</span>
-								<p>{item.content}</p>
-								<hr />
-								<span>{dateToShow}</span>
-							</Alert>
-						);
-					})}
-				</>
-			);
-		}
 	};
 
 	return (

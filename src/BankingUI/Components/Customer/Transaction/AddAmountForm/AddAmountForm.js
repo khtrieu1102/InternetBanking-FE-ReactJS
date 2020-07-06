@@ -35,18 +35,14 @@ const AddAmountForm = (props) => {
 			if (balance - 50000 - formVariables.amount - payFee >= 0) {
 				setFormVariables({ ...formVariables, isLoading: true });
 				await axios
-					.post(
-						"http://localhost:5000/api/transaction",
-						{
-							receivedUserId: formVariables.accountNumber,
-							receivedBankId: formVariables.bankId,
-							isDebt: false,
-							isReceiverPaid: formVariables.isReceiverPaid,
-							amount: formVariables.amount,
-							content: formVariables.content,
-						},
-						{ headers: { Authorization: `Bearer ${accessToken}` } }
-					)
+					.post("/api/transaction", {
+						receivedUserId: formVariables.accountNumber,
+						receivedBankId: formVariables.bankId,
+						isDebt: false,
+						isReceiverPaid: formVariables.isReceiverPaid,
+						amount: formVariables.amount,
+						content: formVariables.content,
+					})
 					.then((result) => {
 						console.log(result);
 						setFormVariables({ ...formVariables, isLoading: false });
@@ -137,7 +133,7 @@ const AddAmountForm = (props) => {
 								formVariables.isReceiverPaid = e.target.checked;
 								setFormVariables({ ...formVariables });
 							}}
-							label="Người nhận chịu phí (10.000đ)"
+							label="Người nhận chịu phí (1.000đ)"
 						/>
 					</Form.Group>
 					<Form.Text className="text-muted font-weight-bold">Amount</Form.Text>
@@ -145,7 +141,7 @@ const AddAmountForm = (props) => {
 						required
 						type="number"
 						step="1000"
-						min="50000"
+						min="1000"
 						name="amount"
 						value={formVariables.amount}
 						onChange={(e) => handleChange(e)}

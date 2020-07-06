@@ -58,16 +58,12 @@ const PayInForm = (props) => {
 			console.log(formVariables);
 			setFormVariables({ ...formVariables, isLoading: true });
 			await axios
-				.post(
-					"http://localhost:5000/api/admin/deposit",
-					{
-						receivedUserId: formVariables.accountNumber,
-						receivedBankId: +formVariables.bankId,
-						amount: +formVariables.amount,
-						content: formVariables.content,
-					},
-					{ headers: { Authorization: `Bearer ${accessToken}` } }
-				)
+				.post("/api/admin/deposit", {
+					receivedUserId: formVariables.accountNumber,
+					receivedBankId: +formVariables.bankId,
+					amount: +formVariables.amount,
+					content: formVariables.content,
+				})
 				.then((result) => {
 					console.log();
 					if (result.status === 200) setFormError(null, "Nạp tiền thành công");
@@ -90,11 +86,7 @@ const PayInForm = (props) => {
 
 		if (bankId !== -1 && accountNumber !== "") {
 			const name = await axios
-				.get(`http://localhost:5000/api/users/${accountNumber}`, {
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-					},
-				})
+				.get(`/api/users/${accountNumber}`)
 				.then((result) => {
 					if (result.data.name) return result.data.name;
 					return "KHONG TIM THAY";

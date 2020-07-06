@@ -33,16 +33,12 @@ const AddAmountForm = (props) => {
 		} else {
 			console.log(formVariables);
 			axios
-				.post(
-					"http://localhost:5000/api/debt",
-					{
-						receivedUserId: formVariables.accountNumber,
-						receivedBankId: formVariables.bankId,
-						amount: formVariables.amount,
-						debtContent: formVariables.content,
-					},
-					{ headers: { Authorization: `Bearer ${accessToken}` } }
-				)
+				.post("/api/debt", {
+					receivedUserId: formVariables.accountNumber,
+					receivedBankId: formVariables.bankId,
+					amount: formVariables.amount,
+					debtContent: formVariables.content,
+				})
 				.then((result) => {
 					setFormError(null, "Nhắc nợ thành công");
 					console.log(result.message);

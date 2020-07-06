@@ -93,13 +93,10 @@ const DebtsFilter = (props) => {
 		console.log(formVariables.debtId);
 		event.preventDefault();
 		await axios
-			.delete(`http://localhost:5000/api/debt/record`, {
+			.delete("/api/debt/record", {
 				data: {
 					debtId: formVariables.debtId,
 					feedbackContent: formVariables.feedbackContent,
-				},
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
 				},
 			})
 			.then((result) => result.data)
@@ -115,11 +112,8 @@ const DebtsFilter = (props) => {
 	const handleGetOtp = async (debtId, feedbackContent) => {
 		console.log(debtId);
 		await axios
-			.delete(`http://localhost:5000/api/debt/record`, {
+			.delete(`/api/debt/record`, {
 				data: { debtId: debtId, feedbackContent: feedbackContent },
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
 			})
 			.then((result) => result.data.data)
 			.then((result) => {})

@@ -25,11 +25,7 @@ const ReceiverDetail = (props) => {
 
 		if (bankId !== -1 && accountNumber !== "") {
 			const name = await axios
-				.get(`http://localhost:5000/api/users/${accountNumber}`, {
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-					},
-				})
+				.get(`/api/users/${accountNumber}`)
 				.then((result) => {
 					if (result.data.name) return result.data.name;
 					return "KHONG TIM THAY";

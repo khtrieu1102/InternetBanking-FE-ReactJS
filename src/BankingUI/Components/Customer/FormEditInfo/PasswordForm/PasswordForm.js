@@ -24,14 +24,10 @@ const PasswordForm = ({
 			console.log(passwordForm);
 			// updateUserInfo(passwordForm, accessToken);6
 			const request = await axios
-				.patch(
-					`http://localhost:5000/api/users/change-password`,
-					{
-						password: passwordForm.currentPassword,
-						newPassword: passwordForm.newPassword,
-					},
-					{ headers: { Authorization: `Bearer ${accessToken}` } }
-				)
+				.patch(`/api/users/change-password`, {
+					password: passwordForm.currentPassword,
+					newPassword: passwordForm.newPassword,
+				})
 				.then((result) => {
 					setFormError(null, "Password is changed successfully!");
 					return result;

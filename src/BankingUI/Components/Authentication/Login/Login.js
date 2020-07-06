@@ -58,7 +58,7 @@ const LogIn = (props) => {
 		} else {
 			setFormVariables({ ...formVariables, isLoading: true });
 			await axios
-				.post("http://localhost:5000/api/auth/login", {
+				.post("/api/auth/login", {
 					username: formVariables.username,
 					password: formVariables.password,
 				})

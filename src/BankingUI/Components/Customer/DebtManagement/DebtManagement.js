@@ -33,11 +33,7 @@ const DebtManagement = (props) => {
 
 	const getList = async (isGettingAList) => {
 		await axios
-			.get(`http://localhost:5000/api/debt/history`, {
-				headers: {
-					Authorization: `Bearer ${reducerAuthorization.authentication.accessToken}`,
-				},
-			})
+			.get("/api/debt/history")
 			.then((result) => result.data.data)
 			.then((result) => {
 				if (isGettingAList) {

@@ -50,7 +50,7 @@ export const UserInformationActionCreators = {
 		type: UserInformationActionTypes.USER_UPDATE_INFORMATION,
 		payload: new Promise((resolve, reject) =>
 			axios
-				.patch(`${URL_API}/api/users/me`, entity, {
+				.patch(`/api/users/me`, entity, {
 					headers: { Authorization: `Bearer ${token}` },
 				})
 				.then((result) => {
@@ -72,7 +72,6 @@ export const UserTransactionsActionCreators = {
 					headers: { Authorization: `Bearer ${token}` },
 				})
 				.then((result) => {
-					// console.log(result.data.data);
 					if (result.status === 200) resolve(result.data.data);
 				})
 				.catch((error) => {
