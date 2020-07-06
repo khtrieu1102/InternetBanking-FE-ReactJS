@@ -108,12 +108,12 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
 
 ## 3. Quản trị viên - Administrator
 
-- [ ] Quản lý nhân viên
+- [x] Quản lý nhân viên
 
   - [x] Xem danh sách nhân viên
   - [x] Xem thông tin một nhân viên
-  - [ ] Xoá tài khoản nhân viên
-  - [ ] Tạo tài khoản nhân viên
+  - [x] Vô hiệu hoá tài khoản nhân viên
+  - [x] Tạo tài khoản nhân viên
 
 - [ ] Xem giao dịch trong tháng với ngân hàng khác
   - [ ] Xem trong khoảng thời gian
