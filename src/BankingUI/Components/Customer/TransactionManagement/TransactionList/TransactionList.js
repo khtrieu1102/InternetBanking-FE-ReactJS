@@ -38,7 +38,7 @@ const TransactionList = (props) => {
 							badgeName = item.isDebt ? "Thanh toán nợ" : "Chuyển cho";
 						}
 						const badgeType = item.isDebt ? "secondary" : "primary";
-						const dateToShow = new Date(item.createdAt).toDateString();
+						const dateToShow = new Date(item.createdAt).toGMTString();
 						return (
 							<Alert variant={transactionType} key={index}>
 								<Badge variant={badgeType}>{badgeName}</Badge>{" "}
