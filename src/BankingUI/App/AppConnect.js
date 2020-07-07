@@ -22,6 +22,7 @@ const mapDispatchToProps = {
 	getAllInformation: UserInformationActionCreators.getAllInformation,
 	getAllReceivers: UserInformationActionCreators.getAllReceivers,
 	getAllTransactions: UserTransactionsActionCreators.getAllTransactions,
+	setUserRefreshToken: AuthorizationActionCreators.setUserRefreshToken,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

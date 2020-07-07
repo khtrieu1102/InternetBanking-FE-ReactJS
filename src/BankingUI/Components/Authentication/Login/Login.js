@@ -64,8 +64,8 @@ const LogIn = (props) => {
 				})
 				.then((result) => {
 					if (result.status === 200) {
-						console.log(result);
 						localStorage.setItem("token", result.data.accessToken);
+						localStorage.setItem("refreshToken", result.data.refreshToken);
 					}
 				})
 				.catch((error) => {

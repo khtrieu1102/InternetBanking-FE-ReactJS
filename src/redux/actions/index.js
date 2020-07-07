@@ -14,6 +14,10 @@ export const AuthorizationActionCreators = {
 		type: AuthorizationActionTypes.AUTH_SET_ACCESS_TOKEN,
 		payload: accessToken,
 	}),
+	setUserRefreshToken: (refreshToken) => ({
+		type: AuthorizationActionTypes.AUTH_SET_REFRESH_TOKEN,
+		payload: refreshToken,
+	}),
 	setIsAuthenticated: (value) => ({
 		// value: "true" or "false"
 		type: AuthorizationActionTypes.AUTH_SET_IS_AUTHENTICATED,

@@ -24,6 +24,15 @@ const reducerAuthorization = (state = initialState, action) => {
 				},
 			};
 		}
+		case AuthorizationActionTypes.AUTH_SET_REFRESH_TOKEN: {
+			return {
+				...state,
+				authentication: {
+					...state.authentication,
+					refreshToken: payload,
+				},
+			};
+		}
 		case AuthorizationActionTypes.AUTH_SET_IS_AUTHENTICATED: {
 			return {
 				...state,
