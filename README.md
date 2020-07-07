@@ -71,6 +71,7 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
   - [x] Chuyển tiền
   - [x] Thanh toán nợ (nợ tạo + nợ được nhắc)
   - [x] Xem theo thời gian
+  - [ ] Xem chi tiết giao dịch
   - [ ] Filter (để sau)
 
 #### 1.7 Đổi mật khẩu
@@ -119,3 +120,16 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
   - [ ] Xem trong khoảng thời gian
   - [ ] Xem theo từng ngân hàng/tất cả ngân hàng
   - [ ] Thống kê số tiền giao dịch (nhận hoặc chuyển)
+
+## 4. Phát sinh theo đề bài
+
+- [ ] Realtime Notification
+
+## 5. Yêu cầu khác
+
+- [x] Có 8 tài khoản
+- [x] API nội bộ đều phải cài đặt **access-token** và **refresh-token**
+- [ ] Kết nối 2 ngân hàng khác
+  - [ ] PGP
+  - [ ] RSA
+- [x] Up lên Github
