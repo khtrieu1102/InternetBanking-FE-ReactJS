@@ -35,6 +35,7 @@ const FormEditInfo = (props) => {
 		error: "",
 	});
 
+	
 	const [showBasicForm, setShowBasicForm] = useState(true);
 
 	const renderAlert = () => {
