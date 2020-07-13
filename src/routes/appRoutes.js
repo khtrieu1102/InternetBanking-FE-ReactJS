@@ -15,6 +15,7 @@ import TransactionConnect from "../BankingUI/Components/Customer/Transaction/Tra
 import TransactionManagementConnect from "../BankingUI/Components/Customer/TransactionManagement/TransactionManagementConnect";
 import DebtAddFormConnect from "../BankingUI/Components/Customer/DebtAddForm/DebtAddFormConnect";
 import DebtManagementConnect from "../BankingUI/Components/Customer/DebtManagement/DebtManagementConnect";
+import NotificationConnect from "../BankingUI/Components/Customer/Notification/NotificationConnect";
 
 //* EMPLOYEE'S COMPONENTS *//
 import EmployeeDashboardConnect from "../BankingUI/Components/Employee/Dashboard/DashboardConnect";
@@ -102,6 +103,12 @@ export const customer_routes = [
 		path: "/debt-management",
 		routetype: PrivateRoute,
 		component: DebtManagementConnect,
+		layout: DefaultLayout,
+	},
+	{
+		path: "/notification",
+		routetype: PrivateRoute,
+		component: NotificationConnect,
 		layout: DefaultLayout,
 	},
 	{
