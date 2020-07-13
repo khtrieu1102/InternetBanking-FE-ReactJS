@@ -16,7 +16,7 @@ const JumbotronComponent = (props) => {
 		return (
 			<Jumbotron fluid className="jumbotronComponent">
 				<Container className="text-center">
-					<h1>{name.toUpperCase()}</h1>
+					<h1 className="userName">{name.toUpperCase()}</h1>
 					<p>Account Number: {accountNumber} - SAPHASAN Bank - 2020</p>
 				</Container>
 			</Jumbotron>
