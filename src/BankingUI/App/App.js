@@ -5,6 +5,7 @@ import {
 	Redirect,
 	Route,
 } from "react-router-dom";
+import { notification } from "antd";
 
 import {
 	public_routes,
@@ -47,6 +48,7 @@ const App = (props) => {
 	axios.defaults.headers.common[
 		"Authorization"
 	] = `Bearer ${authentication.accessToken}`;
+	// axios.defaults.timeout = 15000;
 
 	// https://medium.com/@monkov/react-using-axios-interceptor-for-token-refreshing-1477a4d5fc26
 	axios.interceptors.response.use(
@@ -54,12 +56,21 @@ const App = (props) => {
 			return response;
 		},
 		(err) => {
+			console.log(err.response);
+			if (
+				err.response.data.message === "Invalid username or password!" ||
+				err.response.data.from === "LOGIN"
+			)
+				return err.response.data;
+
 			return new Promise((resolve, reject) => {
 				const originalReq = err.config;
+
 				if (
 					err.response.status === 401 &&
 					err.config &&
-					!err.config.__isRetryRequest
+					!err.config.__isRetryRequest &&
+					err.response.data.message !== "Invalid username or password!"
 				) {
 					originalReq._retry = true;
 
@@ -83,7 +94,6 @@ const App = (props) => {
 						.then((res) => res.json())
 						.then((res) => {
 							console.log(res);
-							// this.setSession({ token: res.token, refresh_token: res.refresh });
 							originalReq.headers[
 								"Authorization"
 							] = `Bearer ${res.accessToken}`;
@@ -105,6 +115,7 @@ const App = (props) => {
 	useEffect(() => {
 		if (!mountedRef.current) return null;
 
+		console.log(localAccessToken);
 		if (localAccessToken && localRefreshToken) {
 			if (!authentication.accessToken || !authentication.refreshToken) {
 				setUserAccessToken(localAccessToken);
@@ -113,6 +124,8 @@ const App = (props) => {
 		} else {
 			setUserAccessToken(null);
 			setUserRefreshToken(null);
+			localStorage.removeItem("token");
+			localStorage.removeItem("refreshToken");
 		}
 	}, [localAccessToken, localRefreshToken]);
 

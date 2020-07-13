@@ -67,8 +67,15 @@ const LogIn = (props) => {
 						localStorage.setItem("token", result.data.accessToken);
 						localStorage.setItem("refreshToken", result.data.refreshToken);
 					}
+
+					// ONLY IN LOGIN! EXIT OF REFRESH-TOKEN LOOP
+					if (result.from === "LOGIN") {
+						console.log("hereee ", result);
+						setFormError(true, result.message);
+					}
 				})
 				.catch((error) => {
+					console.log(error);
 					setFormError(
 						true,
 						error.response
@@ -76,10 +83,11 @@ const LogIn = (props) => {
 							: "Something's wrong. Try again later!"
 					);
 				});
-			const accessToken = localStorage.getItem("token");
-			if (accessToken) setUserAccessToken(accessToken);
-
 			setFormVariables({ ...formVariables, isLoading: false });
+			const accessToken = localStorage.getItem("token");
+			if (accessToken) {
+				setUserAccessToken(accessToken);
+			}
 		}
 		setValidated(true);
 	};
