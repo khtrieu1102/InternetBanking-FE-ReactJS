@@ -1,5 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Container, Col, Card, Row, Badge, Alert } from "react-bootstrap";
+import {
+	Container,
+	Col,
+	Card,
+	Row,
+	DropdownButton,
+	Dropdown,
+	ButtonGroup,
+} from "react-bootstrap";
 import axios from "axios";
 
 import AlertBox from "../../Others/AlertBox/AlertBox";
@@ -18,21 +26,6 @@ const TransactionManagement = (props) => {
 	// const transactionsData = reducerUserTransactions.data;
 	// const transactionsData = [];
 	const [transactionsData, setTransactionsData] = useState([]);
-	const [formVariables, setFormVariables] = useState({
-		accountNumber: "",
-		bankId: 0,
-		name: "",
-		savedName: "",
-		amount: 50000,
-		content: "",
-		otp: "",
-		isDebt: 0,
-		isReceiverPaid: false,
-		transactionId: "",
-		createdAt: "",
-		error: null,
-		message: "",
-	});
 	const mountedRef = useRef(true);
 
 	useEffect(() => {
@@ -78,17 +71,17 @@ const TransactionManagement = (props) => {
 									for="example-date-input"
 									className="col-4 col-form-label"
 								>
-									Date
+									Sort
 								</label>
-								<div className="col-8">
-									<input
-										className="form-control"
-										type="date"
-										value={Date()}
-										onChange={(e) => console.log(e.target.value)}
-										id="example-date-input"
-									/>
-								</div>
+								<DropdownButton
+									as={ButtonGroup}
+									id="dropdown-variants-light"
+									variant="light"
+									title="Date"
+								>
+									<Dropdown.Item eventKey="1">Action</Dropdown.Item>
+									<Dropdown.Item eventKey="2">Another action</Dropdown.Item>
+								</DropdownButton>
 							</div>
 							<TransactionList
 								transactionsData={transactionsData}
