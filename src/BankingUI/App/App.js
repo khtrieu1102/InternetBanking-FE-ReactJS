@@ -33,6 +33,8 @@ const App = (props) => {
 	const mountedRef = useRef(true);
 
 	useEffect(() => {
+
+		console.log(process.env.REACT_APP_BASE_URL);
 		if (!mountedRef.current) return null;
 
 		if (localAccessToken) {
@@ -44,7 +46,7 @@ const App = (props) => {
 		};
 	}, []);
 
-	axios.defaults.baseURL = "http://localhost:5000";
+	axios.defaults.baseURL = process.env.REACT_APP_BASE_URL|| "http://localhost:5000";
 	axios.defaults.headers.common[
 		"Authorization"
 	] = `Bearer ${authentication.accessToken}`;
