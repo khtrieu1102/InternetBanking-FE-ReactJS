@@ -4,6 +4,7 @@ import {
 	AuthorizationActionCreators,
 	UserInformationActionCreators,
 	UserTransactionsActionCreators,
+	UserNotificationActionCreators,
 } from "../../redux/actions/index";
 import App from "./App";
 
@@ -12,6 +13,7 @@ const mapStateToProps = (state) => {
 		reducerAuthorization: state.reducerAuthorization,
 		reducerUserInformation: state.reducerUserInformation,
 		reducerUserTransactions: state.reducerUserTransactions,
+		reducerUserNotification: state.reducerUserNotification,
 	};
 };
 
@@ -23,6 +25,7 @@ const mapDispatchToProps = {
 	getAllReceivers: UserInformationActionCreators.getAllReceivers,
 	getAllTransactions: UserTransactionsActionCreators.getAllTransactions,
 	setUserRefreshToken: AuthorizationActionCreators.setUserRefreshToken,
+	setAllNotification: UserNotificationActionCreators.setAllNotification,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

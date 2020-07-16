@@ -6,8 +6,7 @@ import AlertBox from "../../../Others/AlertBox/AlertBox";
 import moneyFormatter from "../../../HelperFunctions/moneyFormatter";
 
 const NotificationList = (props) => {
-	const { notificationsData } = props;
-
+	let { notificationsData } = props;
 	const showComponent = () => {
 		if (notificationsData.length === 0) {
 			return (

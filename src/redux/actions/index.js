@@ -2,6 +2,7 @@ import {
 	AuthorizationActionTypes,
 	UserInformationActionTypes,
 	UserTransactionsActionTypes,
+	UserNotificationActionTypes,
 } from "./actionTypes";
 import axios from "axios";
 
@@ -82,5 +83,12 @@ export const UserTransactionsActionCreators = {
 					reject(error);
 				})
 		),
+	}),
+};
+
+export const UserNotificationActionCreators = {
+	setAllNotification: (valueList) => ({
+		type: UserNotificationActionTypes.USER_SET_ALL_NOTIFICATION,
+		payload: valueList,
 	}),
 };

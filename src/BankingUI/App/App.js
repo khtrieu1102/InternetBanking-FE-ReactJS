@@ -5,7 +5,7 @@ import {
 	Redirect,
 	Route,
 } from "react-router-dom";
-import { notification } from "antd";
+import openNotification from "../Components/HelperFunctions/openNotification";
 
 import {
 	public_routes,
@@ -21,6 +21,7 @@ import jwtDecode from "jwt-decode";
 const App = (props) => {
 	const {
 		reducerAuthorization,
+		reducerUserNotification,
 		setUserAccessToken,
 		setIsAuthenticated,
 		getAllInformation,
@@ -28,20 +29,15 @@ const App = (props) => {
 		getAllReceivers,
 		getAllTransactions,
 		setUserRefreshToken,
+		setAllNotification,
 	} = props;
 	const { isAuthenticated, authentication } = reducerAuthorization;
 	const { role } = authentication;
 	const localAccessToken = localStorage.getItem("token");
 	const localRefreshToken = localStorage.getItem("refreshToken");
 	const mountedRef = useRef(true);
-
-	useEffect(() => {
-		if (!mountedRef.current) return null;
-
-		return () => {
-			mountedRef.current = false;
-		};
-	}, []);
+	// const [notificationsData, setNotificationsData] = useState([]);
+	const notificationsData = reducerUserNotification.data;
 
 	// --- CONFIG AXIOS ---
 	axios.defaults.baseURL = "http://localhost:5000";
@@ -112,6 +108,73 @@ const App = (props) => {
 		}
 	);
 
+	// --- GETTING NOTIFICATION && LONG POLLING WITH SERVER
+	let isGettingAList = true;
+	let isQueryingNotification = true;
+
+	useEffect(() => {
+		if (!mountedRef.current) return null;
+
+		return () => {
+			mountedRef.current = false;
+			isGettingAList = false;
+			isQueryingNotification = false;
+			console.log("isLoading: ", isQueryingNotification);
+		};
+	}, []);
+
+	let ts = 0;
+	let flag = 0;
+
+	const getNotificationHistory = async () => {
+		if (isQueryingNotification === false) return;
+		// const fn = () => {
+		await axios
+			.get(`/api/notification/history?ts=${ts}`)
+			.then((result) => {
+				console.log("isloading at fn: ", isQueryingNotification);
+				if (result.status === 200) {
+					if (result.data.return_ts !== ts) {
+						ts = result.data.return_ts;
+						console.log("ts: ", ts);
+						return result.data.data;
+					}
+					// return result.data.data;
+				} else {
+					if (isQueryingNotification) getNotificationHistory();
+				}
+			})
+			.then((result) => {
+				// if (!isLoading) return;
+				let newArray = reducerUserNotification.data.slice();
+				result.forEach((element) => {
+					newArray.push(element);
+					if (flag !== 0) {
+						openNotification(
+							element.notificationTitle,
+							element.notificationContent
+						);
+					}
+				});
+				setAllNotification(newArray);
+				// setNotificationsData((notificationsData) => [
+				// 	element,
+				// 	...notificationsData,
+				// ]);
+				// setAllNotification(notificationsData);
+				console.log(newArray, ts);
+				// isGettingAList = false;
+				flag++;
+				console.log("flag: ", flag);
+				if (isQueryingNotification) {
+					getNotificationHistory();
+				}
+			})
+			.catch((error) => {});
+		// };
+	};
+
+	// Check localStorage variables
 	useEffect(() => {
 		if (!mountedRef.current) return null;
 
@@ -129,8 +192,9 @@ const App = (props) => {
 		}
 	}, [localAccessToken, localRefreshToken]);
 
+	// Check if accessToken is valid
 	useEffect(() => {
-		if (!mountedRef.current) return null;
+		if (!mountedRef.current || isQueryingNotification === false) return null;
 
 		if (authentication.accessToken) {
 			setRole(jwtDecode(authentication.accessToken).role);
@@ -151,6 +215,7 @@ const App = (props) => {
 					localStorage.removeItem("token");
 					localStorage.removeItem("refreshToken");
 				});
+			getNotificationHistory();
 		}
 		if (!authentication.accessToken && !localAccessToken) {
 			setIsAuthenticated(false);

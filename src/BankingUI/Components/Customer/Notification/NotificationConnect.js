@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
 		reducerAuthorization: state.reducerAuthorization,
 		reducerUserInformation: state.reducerUserInformation,
 		reducerUserTransactions: state.reducerUserTransactions,
+		reducerUserNotification: state.reducerUserNotification,
 	};
 };
 
