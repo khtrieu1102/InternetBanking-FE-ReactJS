@@ -16,6 +16,8 @@ import {
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
+const axiosInstance = axios.create();
+
 // import socketIO from "../../service/socket";
 
 const App = (props) => {
@@ -44,6 +46,11 @@ const App = (props) => {
 	axios.defaults.headers.common[
 		"Authorization"
 	] = `Bearer ${authentication.accessToken}`;
+	axiosInstance.defaults.baseURL = "http://localhost:5000";
+	axiosInstance.defaults.headers.common[
+		"Authorization"
+	] = `Bearer ${authentication.accessToken}`;
+
 	// axios.defaults.timeout = 15000;
 
 	// https://medium.com/@monkov/react-using-axios-interceptor-for-token-refreshing-1477a4d5fc26
@@ -129,7 +136,7 @@ const App = (props) => {
 	const getNotificationHistory = async () => {
 		if (isQueryingNotification === false) return;
 		// const fn = () => {
-		await axios
+		await axiosInstance
 			.get(`/api/notification/history?ts=${ts}`)
 			.then((result) => {
 				console.log("isloading at fn: ", isQueryingNotification);
