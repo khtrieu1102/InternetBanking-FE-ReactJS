@@ -33,7 +33,11 @@ const Header = (props) => {
 	const CustomerNavbar = () => (
 		<Navbar collapseOnSelect expand="lg" bg="info" variant="dark" href="#x">
 			<a to="/" href="#x">
-				<Navbar.Brand href="/">SAPHASAN Bank</Navbar.Brand>
+				<Navbar.Brand>
+					<Link to="/" className="text-light mr-2">
+						SAPHASAN Bank
+					</Link>
+				</Navbar.Brand>
 			</a>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">
