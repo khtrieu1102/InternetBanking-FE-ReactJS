@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, Col, Row } from "react-bootstrap";
 import axios from "axios";
 
-import getNameOfThisAccountNumber from "../../../HelperFunctions/getNameOfThisAccountNumber";
-
 const RecommendAddReceiver = ({
 	formVariables,
 	accessToken,
@@ -23,11 +21,7 @@ const RecommendAddReceiver = ({
 
 		if (bankId !== -1 && accountNumber !== "") {
 			const name = await axios
-				.get(`http://localhost:5000/api/users/${accountNumber}`, {
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-					},
-				})
+				.get(`/api/users/bank/${bankId}/users/${accountNumber}`)
 				.then((result) => {
 					if (result.data.name) return result.data.name;
 					return "KHONG TIM THAY";
@@ -51,15 +45,11 @@ const RecommendAddReceiver = ({
 			event.preventDefault();
 			event.stopPropagation();
 		} else {
-			await axios.patch(
-				`http://localhost:5000/api/users/receiver-list`,
-				{
-					savedName: formVariables.savedName,
-					bankId: +formVariables.bankId,
-					accountNumber: formVariables.accountNumber,
-				},
-				{ headers: { Authorization: `Bearer ${accessToken}` } }
-			);
+			await axios.patch(`/api/users/receiver-list`, {
+				savedName: formVariables.savedName,
+				bankId: +formVariables.bankId,
+				accountNumber: formVariables.accountNumber,
+			});
 		}
 		setValidated(true);
 	};

@@ -1,7 +1,14 @@
 import React from "react";
 import "./Navbar.css";
 import { Avatar } from "antd";
-import { Navbar, Nav, NavDropdown, Button, Image } from "react-bootstrap";
+import {
+	Navbar,
+	Nav,
+	NavDropdown,
+	Button,
+	Image,
+	Badge,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faPowerOff } from "@fortawesome/free-solid-svg-icons";
@@ -16,17 +23,27 @@ const Header = (props) => {
 	const { name } = reducerUserInformation.data;
 	console.log(authentication.role);
 
+	const handleLogout = () => {
+		localStorage.removeItem("token");
+		localStorage.removeItem("refreshToken");
+		setIsAuthenticated(false);
+		props.history.push("/login");
+	};
+
 	const CustomerNavbar = () => (
-		<Navbar collapseOnSelect expand="lg" bg="info" variant="dark">
-			<Link to="/">
-				<Navbar.Brand href="/">SAPHASAN Bank</Navbar.Brand>
-			</Link>
+		<Navbar collapseOnSelect expand="lg" bg="info" variant="dark" href="#x">
+			<a to="/" href="#x">
+				<Navbar.Brand>
+					<Link to="/" className="text-light mr-2">
+						SAPHASAN Bank
+					</Link>
+				</Navbar.Brand>
+			</a>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">
 				<Nav className="mr-auto">
 					<Navbar.Text className="text-light">
 						<Image src="./tic-tac-toe.png" className="avatar" roundedCircle />{" "}
-						<span className="text-dark bold">{name}</span>
 					</Navbar.Text>
 				</Nav>
 				<Nav>
@@ -45,14 +62,12 @@ const Header = (props) => {
 							Quản lý giao dịch
 						</Link>
 					</Nav.Link>
-					<Button
-						eventKey={2}
-						variant="danger"
-						onClick={() => {
-							localStorage.removeItem("token");
-							setIsAuthenticated(false);
-						}}
-					>
+					<Nav.Link>
+						<Link to="/notification" className="text-light mr-2">
+							<FontAwesomeIcon icon={faBell} />
+						</Link>
+					</Nav.Link>
+					<Button eventKey={2} variant="danger" onClick={handleLogout}>
 						<FontAwesomeIcon icon={faPowerOff} /> Logout
 					</Button>
 				</Nav>
@@ -89,15 +104,7 @@ const Header = (props) => {
 							Join Chat
 						</Link>
 					</Nav.Link>
-					<Button
-						eventKey={2}
-						variant="danger"
-						onClick={() => {
-							localStorage.removeItem("token");
-							setIsAuthenticated(false);
-							props.history.push("/login");
-						}}
-					>
+					<Button eventKey={2} variant="danger" onClick={handleLogout}>
 						<FontAwesomeIcon icon={faPowerOff} /> Logout
 					</Button>
 				</Nav>
@@ -130,19 +137,11 @@ const Header = (props) => {
 						</Link>
 					</Nav.Link>
 					<Nav.Link>
-						<Link to="/join" className="text-light mr-2">
-							Join Chat
+						<Link to="/customer-transaction" className="text-light mr-2">
+							Customer Transaction
 						</Link>
 					</Nav.Link>
-					<Button
-						eventKey={2}
-						variant="danger"
-						onClick={() => {
-							localStorage.removeItem("token");
-							setIsAuthenticated(false);
-							props.history.push("/login");
-						}}
-					>
+					<Button eventKey={2} variant="danger" onClick={handleLogout}>
 						<FontAwesomeIcon icon={faPowerOff} /> Logout
 					</Button>
 				</Nav>

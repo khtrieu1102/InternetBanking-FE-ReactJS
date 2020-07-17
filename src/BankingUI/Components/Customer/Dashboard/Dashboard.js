@@ -53,6 +53,13 @@ const Dashboard = (props) => {
 									</Button>
 								</Link>
 							</Col>
+							<Col className="mt-2">
+								<Link to="/debt" className="extraButton">
+									<Button variant="primary" className="extraButton">
+										Tạo nhắc nợ
+									</Button>
+								</Link>
+							</Col>
 						</Card.Body>
 						<Card.Footer className="text-muted">
 							HCMUS - PTUDWNC - 2019

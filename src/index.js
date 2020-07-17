@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "antd/dist/antd.css";
 import AppConnect from "./BankingUI/App/AppConnect";
 import { Provider } from "react-redux";
 import store from "./redux/store";

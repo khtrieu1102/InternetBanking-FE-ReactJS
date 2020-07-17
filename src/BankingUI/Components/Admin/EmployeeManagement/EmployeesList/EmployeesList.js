@@ -1,20 +1,21 @@
 import React from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Badge } from "react-bootstrap";
 
 import formatter from "../../../HelperFunctions/moneyFormatter";
 
 const CustomersList = (props) => {
-	const { employeesData, setStep, setCurrentUser, currentUser } = props;
+	const { employeesData, setStep, setCurrentEmployee, currentEmployee } = props;
 
 	const handleClick = (item) => {
-		currentUser["name"] = item.name;
-		currentUser["username"] = item.username;
-		currentUser["accountNumber"] = item.accountNumber;
-		currentUser["email"] = item.email;
-		currentUser["phone"] = item.phone;
-		currentUser["createdAt"] = item.createdAt;
+		currentEmployee["name"] = item.name;
+		currentEmployee["username"] = item.username;
+		currentEmployee["accountNumber"] = item.accountNumber;
+		currentEmployee["email"] = item.email;
+		currentEmployee["phone"] = item.phone;
+		currentEmployee["createdAt"] = item.createdAt;
+		currentEmployee["status"] = item.status;
 
-		setCurrentUser({ ...currentUser });
+		setCurrentEmployee({ ...currentEmployee });
 		setStep(1);
 		// getUserTransaction();
 	};
@@ -24,11 +25,12 @@ const CustomersList = (props) => {
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>Username</th>
-					<th>Full Name</th>
+					<th>username</th>
+					<th>Tên</th>
 					<th>Email</th>
-					<th>Number</th>
-					<th>Actions</th>
+					<th>SĐT</th>
+					<th>Tình trạng</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,6 +42,13 @@ const CustomersList = (props) => {
 							<td>{item.name}</td>
 							<td>{item.email}</td>
 							<td>{item.phone}</td>
+							<td>
+								{item.status === true ? (
+									<Badge variant="primary">working</Badge>
+								) : (
+									<Badge variant="danger">deleted</Badge>
+								)}
+							</td>
 							<td>
 								<Button onClick={() => handleClick(item)}>Detail</Button>
 							</td>

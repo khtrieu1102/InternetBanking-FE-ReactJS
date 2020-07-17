@@ -2,6 +2,7 @@ import {
 	AuthorizationActionTypes,
 	UserInformationActionTypes,
 	UserTransactionsActionTypes,
+	UserNotificationActionTypes,
 } from "./actionTypes";
 import axios from "axios";
 
@@ -13,6 +14,10 @@ export const AuthorizationActionCreators = {
 	setUserAccessToken: (accessToken) => ({
 		type: AuthorizationActionTypes.AUTH_SET_ACCESS_TOKEN,
 		payload: accessToken,
+	}),
+	setUserRefreshToken: (refreshToken) => ({
+		type: AuthorizationActionTypes.AUTH_SET_REFRESH_TOKEN,
+		payload: refreshToken,
 	}),
 	setIsAuthenticated: (value) => ({
 		// value: "true" or "false"
@@ -50,7 +55,7 @@ export const UserInformationActionCreators = {
 		type: UserInformationActionTypes.USER_UPDATE_INFORMATION,
 		payload: new Promise((resolve, reject) =>
 			axios
-				.patch(`${URL_API}/api/users/me`, entity, {
+				.patch(`/api/users/me`, entity, {
 					headers: { Authorization: `Bearer ${token}` },
 				})
 				.then((result) => {
@@ -72,12 +77,18 @@ export const UserTransactionsActionCreators = {
 					headers: { Authorization: `Bearer ${token}` },
 				})
 				.then((result) => {
-					// console.log(result.data.data);
 					if (result.status === 200) resolve(result.data.data);
 				})
 				.catch((error) => {
 					reject(error);
 				})
 		),
+	}),
+};
+
+export const UserNotificationActionCreators = {
+	setAllNotification: (valueList) => ({
+		type: UserNotificationActionTypes.USER_SET_ALL_NOTIFICATION,
+		payload: valueList,
 	}),
 };

@@ -33,13 +33,12 @@ const OtpForm = (props) => {
 		} else {
 			await axios
 				.post(
-					"http://localhost:5000/api/transaction/verify-code",
+					"/api/transaction/verify-code",
 					{
 						code: formVariables.otp,
 					},
 					{
 						headers: {
-							Authorization: `Bearer ${accessToken}`,
 							transactionId: formVariables.transactionId,
 						},
 					}

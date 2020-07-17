@@ -51,11 +51,7 @@ const CustomerTransaction = (props) => {
 
 	const getList = async (isGettingAList) => {
 		await axios
-			.get(`http://localhost:5000/api/admin/all-users`, {
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			})
+			.get(`/api/admin/all-users`)
 			.then((result) => result.data)
 			.then((result) => {
 				if (isGettingAList) {
@@ -72,19 +68,20 @@ const CustomerTransaction = (props) => {
 
 	const getUserTransaction = async () => {
 		await axios
-			.post(
-				`http://localhost:5000/api/admin/user-history-transactions`,
-				{ accountNumber: currentUser.accountNumber },
-				{
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-					},
-				}
-			)
+			.post(`/api/admin/user-history-transactions`, {
+				accountNumber: currentUser.accountNumber,
+			})
 			.then((result) => {
 				return result.data.data;
 			})
 			.then((result) => {
+				// console.log(
+				result.sort((a, b) => {
+					if (a.accountNumber < b.accountNumber) return -1;
+					if (a.accountNumber > b.accountNumber) return 1;
+					return 0;
+				});
+				// );
 				setTransactionsData(result);
 			})
 			.catch((error) => {

@@ -57,21 +57,17 @@ const NewCustomerForm = (props) => {
 		} else {
 			console.log(formVariables);
 			axios
-				.post(
-					"http://localhost:5000/api/users",
-					{
-						accountNumber: formVariables.accountNumber,
-						username: formVariables.username,
-						password: formVariables.password,
-						name: formVariables.name,
-						balance: formVariables.balance,
-						email: formVariables.email,
-						phone: formVariables.phone,
-						status: formVariables.status,
-						role: formVariables.role,
-					},
-					{ headers: { Authorization: `Bearer ${accessToken}` } }
-				)
+				.post("/api/users", {
+					accountNumber: formVariables.accountNumber,
+					username: formVariables.username,
+					password: formVariables.password,
+					name: formVariables.name,
+					balance: formVariables.balance,
+					email: formVariables.email,
+					phone: formVariables.phone,
+					status: formVariables.status,
+					role: formVariables.role,
+				})
 				.then((result) => {
 					if (result.status === 200) setFormError(null, result.data.message);
 				})

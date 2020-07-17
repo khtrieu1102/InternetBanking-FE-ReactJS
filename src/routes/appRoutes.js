@@ -13,15 +13,20 @@ import ReceiverListConnect from "../BankingUI/Components/Customer/ReceiverList/R
 import FormEditInfoConnect from "../BankingUI/Components/Customer/FormEditInfo/FormEditInfoConnect";
 import TransactionConnect from "../BankingUI/Components/Customer/Transaction/TransactionConnect";
 import TransactionManagementConnect from "../BankingUI/Components/Customer/TransactionManagement/TransactionManagementConnect";
-import DebtConnect from "../BankingUI/Components/Customer/Debt/DebtConnect";
+import DebtAddFormConnect from "../BankingUI/Components/Customer/DebtAddForm/DebtAddFormConnect";
+import DebtManagementConnect from "../BankingUI/Components/Customer/DebtManagement/DebtManagementConnect";
+import NotificationConnect from "../BankingUI/Components/Customer/Notification/NotificationConnect";
 
 //* EMPLOYEE'S COMPONENTS *//
 import EmployeeDashboardConnect from "../BankingUI/Components/Employee/Dashboard/DashboardConnect";
 import NewCustomerFormConnect from "../BankingUI/Components/Employee/NewCustomerForm/NewCustomerFormConnect";
 import DepositFormConnect from "../BankingUI/Components/Employee/DepositForm/DepositFormConnect";
+import CustomerTransactionConnect from "../BankingUI/Components/Employee/CustomerTransaction/CustomerTransactionConnect";
 
 //* ADMINISTRATOR'S COMPONENTS *//
 import AdminDashboardConnect from "../BankingUI/Components/Admin/Dashboard/DashboardConnect";
+import EmployeeManagementConnect from "../BankingUI/Components/Admin/EmployeeManagement/EmployeeManagementConnect";
+import NewEmployeeFormConnect from "../BankingUI/Components/Admin/NewEmployeeForm/NewEmployeeFormConnect";
 
 export const PrivateRoute = ({ comp: Component, ...rest }) => {
 	return (
@@ -91,7 +96,19 @@ export const customer_routes = [
 	{
 		path: "/debt",
 		routetype: PrivateRoute,
-		component: DebtConnect,
+		component: DebtAddFormConnect,
+		layout: DefaultLayout,
+	},
+	{
+		path: "/debt-management",
+		routetype: PrivateRoute,
+		component: DebtManagementConnect,
+		layout: DefaultLayout,
+	},
+	{
+		path: "/notification",
+		routetype: PrivateRoute,
+		component: NotificationConnect,
 		layout: DefaultLayout,
 	},
 	{
@@ -107,6 +124,25 @@ export const admin_routes = [
 		path: "/",
 		routetype: PrivateRoute,
 		component: AdminDashboardConnect,
+		layout: DefaultLayout,
+	},
+	{
+		path: "/edit",
+		routetype: PrivateRoute,
+		component: FormEditInfoConnect,
+		layout: DefaultLayout,
+	},
+	{
+		path: "/employees",
+		routetype: PrivateRoute,
+		component: EmployeeManagementConnect,
+		layout: DefaultLayout,
+	},
+	,
+	{
+		path: "/new-employee",
+		routetype: PrivateRoute,
+		component: NewEmployeeFormConnect,
 		layout: DefaultLayout,
 	},
 	{
@@ -140,6 +176,12 @@ export const employee_routes = [
 		path: "/deposit",
 		routetype: PrivateRoute,
 		component: DepositFormConnect,
+		layout: DefaultLayout,
+	},
+	{
+		path: "/customer-transaction",
+		routetype: PrivateRoute,
+		component: CustomerTransactionConnect,
 		layout: DefaultLayout,
 	},
 	{
