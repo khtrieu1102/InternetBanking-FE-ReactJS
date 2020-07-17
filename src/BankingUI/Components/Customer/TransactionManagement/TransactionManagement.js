@@ -66,7 +66,7 @@ const TransactionManagement = (props) => {
 							QUẢN LÝ GIAO DỊCH TÀI KHOẢN
 						</Card.Header>
 						<Card.Body>
-							<div className="form-group row">
+							{/* <div className="form-group row">
 								<label
 									for="example-date-input"
 									className="col-4 col-form-label"
@@ -82,7 +82,7 @@ const TransactionManagement = (props) => {
 									<Dropdown.Item eventKey="1">Action</Dropdown.Item>
 									<Dropdown.Item eventKey="2">Another action</Dropdown.Item>
 								</DropdownButton>
-							</div>
+							</div> */}
 							<TransactionList
 								transactionsData={transactionsData}
 								currentUser={currentUser}

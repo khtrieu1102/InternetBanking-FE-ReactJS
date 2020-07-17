@@ -1,14 +1,38 @@
-import React from "react";
-import { Badge, Alert } from "react-bootstrap";
+import React, { useState } from "react";
+import { Badge, Alert, Button } from "react-bootstrap";
 
 import AlertBox from "../../../Others/AlertBox/AlertBox";
-
 import moneyFormatter from "../../../HelperFunctions/moneyFormatter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faBackward } from "@fortawesome/free-solid-svg-icons";
+
+import TransactionDetail from "../TransactionDetail/TransactionDetail";
 
 const TransactionList = (props) => {
 	const { transactionsData, currentUser } = props;
+	const [step, setStep] = useState("total");
+	const [workingTransaction, setWorkingTransaction] = useState({
+		sentUserId: "",
+	});
 
-	const showComponent = () => {
+	const DetailTransaction = () => {
+		return (
+			<>
+				<TransactionDetail transactionDetail={workingTransaction} />
+				<Button
+					variant="light"
+					size="sm"
+					onClick={() => {
+						setStep("total");
+					}}
+				>
+					<FontAwesomeIcon icon={faBackward} /> BACK
+				</Button>
+			</>
+		);
+	};
+
+	const TotalTransaction = () => {
 		if (transactionsData.length === 0) {
 			return (
 				<AlertBox
@@ -38,7 +62,7 @@ const TransactionList = (props) => {
 							badgeName = item.isDebt ? "Thanh toán nợ" : "Chuyển cho";
 						}
 						const badgeType = item.isDebt ? "secondary" : "primary";
-						const dateToShow = new Date(item.createdAt).toGMTString();
+						const dateToShow = new Date(item.createdAt).toUTCString();
 						return (
 							<Alert variant={transactionType} key={index}>
 								<Badge variant={badgeType}>{badgeName}</Badge>{" "}
@@ -53,6 +77,18 @@ const TransactionList = (props) => {
 								<p>{item.content}</p>
 								<hr />
 								<span>{dateToShow}</span>
+								<Button
+									variant="success"
+									size="sm float-right"
+									onClick={() => {
+										setWorkingTransaction(
+											Object.assign(workingTransaction, item)
+										);
+										setStep("detail");
+									}}
+								>
+									<FontAwesomeIcon icon={faEye} />
+								</Button>
 							</Alert>
 						);
 					})}
@@ -61,7 +97,12 @@ const TransactionList = (props) => {
 		}
 	};
 
-	return <>{showComponent()}</>;
+	return (
+		<>
+			{step === "total" && <TotalTransaction />}
+			{step === "detail" && <DetailTransaction />}
+		</>
+	);
 };
 
 export default TransactionList;
