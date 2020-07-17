@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import "./SuccessInformation.css";
 
+import getBankName from "../../../HelperFunctions/getBankName";
+
 const SuccessInformation = (props) => {
 	const {
 		formVariables,
@@ -73,7 +75,7 @@ const SuccessInformation = (props) => {
 					<dd className="col-sm-7">{formVariables.name.toUpperCase()}</dd>
 
 					<dt className="col-sm-4">Ngân hàng:</dt>
-					<dd className="col-sm-7">{formVariables.bankId}</dd>
+					<dd className="col-sm-7">{getBankName(formVariables.bankId)}</dd>
 
 					<dt className="col-sm-4">Tài khoản nhận:</dt>
 					<dd className="col-sm-7">{formVariables.accountNumber}</dd>

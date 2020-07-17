@@ -21,7 +21,7 @@ const RecommendAddReceiver = ({
 
 		if (bankId !== -1 && accountNumber !== "") {
 			const name = await axios
-				.get(`/api/users/${accountNumber}`)
+				.get(`/api/users/bank/${bankId}/users/${accountNumber}`)
 				.then((result) => {
 					if (result.data.name) return result.data.name;
 					return "KHONG TIM THAY";

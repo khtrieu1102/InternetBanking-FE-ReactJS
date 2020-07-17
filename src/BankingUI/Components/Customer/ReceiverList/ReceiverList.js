@@ -7,6 +7,7 @@ import axios from "axios";
 import ToolBar from "./ToolBar/ToolBar";
 import ModalReceiverForm from "./ModalReceiverForm";
 import AlertBox from "../../Others/AlertBox/AlertBox";
+import getBankName from "../../HelperFunctions/getBankName";
 
 import "./ReceiverList.css";
 
@@ -110,13 +111,7 @@ const ReceiverList = (props) => {
 											{receiver.savedName}
 										</span>
 									</td>
-									<td>
-										{receiver.bankId === 0
-											? "SAPHASAN Bank"
-											: receiver.bankId === 1
-											? "Ngân hàng Ba Tê"
-											: "BAOSON Bank"}
-									</td>
+									<td>{getBankName(receiver.bankId)}</td>
 									<td className="action">
 										<Button
 											variant="danger"

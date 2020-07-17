@@ -24,22 +24,25 @@ const ModalForm = ({
 
 		if (bankId !== -1 && accountNumber !== "") {
 			const result = await axios
-				.get(`/api/users/${accountNumber}`)
+				.get(`/api/users/bank/${bankId}/users/${accountNumber}`)
 				.then((result) => {
-					if (result.data.name)
+					console.log(result.data);
+					if (result.data.name) {
 						return { name: result.data.name, username: result.data.username };
+					}
 					return { name: "KHONG TIM THAY", username: "KHONG TIM THAY" };
 				})
-				.catch((err) => ({
-					name: "KHONG TIM THAY",
-					username: "KHONG TIM THAY",
-				}));
+				.catch((err) => {
+					console.log(err.response);
+					return { name: "KHONG TIM THAY", username: "KHONG TIM THAY" };
+				});
 			console.log(accountNumber, bankId);
 			await setWorkingReceiver({
 				...workingReceiver,
 				name: result.name,
 				username: result.username,
 			});
+			console.log(workingReceiver);
 		}
 	};
 
@@ -52,7 +55,10 @@ const ModalForm = ({
 	// Submit
 	const handleSubmit = async (event) => {
 		const form = event.currentTarget;
-		if (form.checkValidity() === false) {
+		if (
+			form.checkValidity() === false ||
+			workingReceiver.name === "KHONG TIM THAY"
+		) {
 			event.preventDefault();
 			event.stopPropagation();
 		} else {
@@ -224,6 +230,7 @@ const ModalForm = ({
 							value={workingReceiver.name}
 							onChange={(e) => handleChange(e)}
 							disabled
+							isInvalid={workingReceiver.name === "KHONG TIM THAY"}
 						/>
 					</Form.Group>
 					<Form.Group>
