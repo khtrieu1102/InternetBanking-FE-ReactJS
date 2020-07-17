@@ -1,13 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-	Container,
-	Col,
-	Card,
-	Row,
-	DropdownButton,
-	Dropdown,
-	ButtonGroup,
-} from "react-bootstrap";
+import { Container, Col, Card, Row, Badge } from "react-bootstrap";
 // import { Button, notification } from "antd";
 import axios from "axios";
 import moment from "moment";
@@ -20,7 +12,7 @@ import NotificationList from "./NotificationList/NotificationList";
 const Notification = (props) => {
 	const { reducerUserNotification } = props;
 	const mountedRef = useRef(true);
-	const notificationsDataaaa = reducerUserNotification.data;
+	const notificationsData = reducerUserNotification.data;
 
 	useEffect(() => {
 		if (!mountedRef.current) return null;
@@ -37,9 +29,14 @@ const Notification = (props) => {
 			<Row>
 				<Col md={{ span: 5, offset: 3 }} lg={6}>
 					<Card className="mt-3">
-						<Card.Header className="toolBar">CÁC THÔNG BÁO</Card.Header>
+						<Card.Header className="toolBar">
+							<span>
+								CÁC THÔNG BÁO{" "}
+								<Badge variant="success">{notificationsData.length}</Badge>
+							</span>
+						</Card.Header>
 						<Card.Body>
-							<NotificationList notificationsData={notificationsDataaaa} />
+							<NotificationList notificationsData={notificationsData} />
 						</Card.Body>
 					</Card>
 				</Col>

@@ -39,7 +39,7 @@ const App = (props) => {
 	const localRefreshToken = localStorage.getItem("refreshToken");
 	const mountedRef = useRef(true);
 	// const [notificationsData, setNotificationsData] = useState([]);
-	const notificationsData = reducerUserNotification.data;
+	let notificationsData = [];
 
 	// --- CONFIG AXIOS ---
 	axios.defaults.baseURL = "http://localhost:5000";
@@ -146,14 +146,12 @@ const App = (props) => {
 						console.log("ts: ", ts);
 						return result.data.data;
 					}
-					// return result.data.data;
 				} else {
 					if (isQueryingNotification) getNotificationHistory();
 				}
 			})
 			.then((result) => {
-				// if (!isLoading) return;
-				let newArray = reducerUserNotification.data.slice();
+				let newArray = [];
 				result.forEach((element) => {
 					newArray.push(element);
 					if (flag !== 0) {
@@ -163,14 +161,9 @@ const App = (props) => {
 						);
 					}
 				});
-				setAllNotification(newArray);
-				// setNotificationsData((notificationsData) => [
-				// 	element,
-				// 	...notificationsData,
-				// ]);
-				// setAllNotification(notificationsData);
-				console.log(newArray, ts);
-				// isGettingAList = false;
+				notificationsData = notificationsData.concat(newArray);
+				setAllNotification(notificationsData);
+				console.log(notificationsData, ts);
 				flag++;
 				console.log("flag: ", flag);
 				if (isQueryingNotification) {

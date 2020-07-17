@@ -3,10 +3,14 @@ import { Badge, Alert, ListGroup } from "react-bootstrap";
 
 import AlertBox from "../../../Others/AlertBox/AlertBox";
 
-import moneyFormatter from "../../../HelperFunctions/moneyFormatter";
-
 const NotificationList = (props) => {
-	let { notificationsData } = props;
+	let notificationsData = props.notificationsData;
+
+	// Sắp xếp data theo ts sinh ra
+	notificationsData.sort((a, b) => {
+		return b.ts - a.ts;
+	});
+
 	const showComponent = () => {
 		if (notificationsData.length === 0) {
 			return (
@@ -21,7 +25,7 @@ const NotificationList = (props) => {
 				<>
 					<ListGroup>
 						{notificationsData.map((item, index) => {
-							const dateToShow = new Date(item.createdAt).toGMTString();
+							const dateToShow = new Date(item.createdAt).toUTCString();
 							return (
 								<ListGroup.Item key={index}>
 									<span>
