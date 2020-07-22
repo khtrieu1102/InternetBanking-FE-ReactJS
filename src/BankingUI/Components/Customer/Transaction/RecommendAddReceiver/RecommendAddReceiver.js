@@ -18,7 +18,7 @@ const RecommendAddReceiver = ({
 	// Hàm lấy tên người dùng theo accountNumber, gọi qua API
 	const getThisUserName = async (accountNumber, bankId) => {
 		console.log(accountNumber, bankId);
-
+		setFormVariables({ ...setFormVariables, name: "WAITING..." });
 		if (bankId !== -1 && accountNumber !== "") {
 			const name = await axios
 				.get(`/api/users/bank/${bankId}/users/${accountNumber}`)
