@@ -9,11 +9,14 @@ import { faEye, faBackward } from "@fortawesome/free-solid-svg-icons";
 import TransactionDetail from "../TransactionDetail/TransactionDetail";
 
 const TransactionList = (props) => {
-	const { transactionsData, currentUser } = props;
+	const { currentUser } = props;
 	const [step, setStep] = useState("total");
 	const [workingTransaction, setWorkingTransaction] = useState({
 		sentUserId: "",
 	});
+	const transactionsData = props.transactionsData.sort(
+		(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+	);
 
 	const DetailTransaction = () => {
 		return (

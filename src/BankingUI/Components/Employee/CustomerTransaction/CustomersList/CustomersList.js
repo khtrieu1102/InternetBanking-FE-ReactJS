@@ -21,6 +21,10 @@ const CustomersList = (props) => {
 		// getUserTransaction();
 	};
 
+	usersData.sort((firstCustomer, secondCustomer) => {
+		return firstCustomer.accountNumber - secondCustomer.accountNumber;
+	});
+
 	return (
 		<Table striped bordered hover variant="dark">
 			<thead>
