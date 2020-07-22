@@ -9,7 +9,6 @@ import AlertBox from "../../../Others/AlertBox/AlertBox";
 
 const ReceiverDetail = (props) => {
 	const {
-		receiversData,
 		formVariables,
 		setFormVariables,
 		accessToken,
@@ -18,14 +17,16 @@ const ReceiverDetail = (props) => {
 	} = props;
 	const [validated, setValidated] = useState(false);
 	const [renderOption, setRenderOption] = useState("component-0");
+	let receiversData = props.receiversData.filter((item) => item.bankId === 0);
 
 	// Hàm lấy tên người dùng theo accountNumber, gọi qua API
 	const getThisUserName = async (accountNumber, bankId) => {
 		console.log(accountNumber, bankId);
 
 		if (bankId !== -1 && accountNumber !== "") {
+			setFormVariables({ ...setFormVariables, name: "WAITING..." });
 			const name = await axios
-				.get(`/api/users/${accountNumber}`)
+				.get(`/api/users/bank/${bankId}/users/${accountNumber}`)
 				.then((result) => {
 					if (result.data.name) return result.data.name;
 					return "KHONG TIM THAY";
