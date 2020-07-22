@@ -23,6 +23,7 @@ const ModalForm = ({
 		console.log(accountNumber, bankId);
 
 		if (bankId !== -1 && accountNumber !== "") {
+			setWorkingReceiver({ ...workingReceiver, name: "WAITING..." });
 			const result = await axios
 				.get(`/api/users/bank/${bankId}/users/${accountNumber}`)
 				.then((result) => {
@@ -37,7 +38,7 @@ const ModalForm = ({
 					return { name: "KHONG TIM THAY", username: "KHONG TIM THAY" };
 				});
 			console.log(accountNumber, bankId);
-			await setWorkingReceiver({
+			setWorkingReceiver({
 				...workingReceiver,
 				name: result.name,
 				username: result.username,
