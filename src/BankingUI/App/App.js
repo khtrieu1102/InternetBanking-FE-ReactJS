@@ -46,6 +46,7 @@ const App = (props) => {
 	axios.defaults.headers.common[
 		"Authorization"
 	] = `Bearer ${authentication.accessToken}`;
+	axios.defaults.timeout = 15000;
 	axiosInstance.defaults.baseURL = "http://localhost:5000";
 	axiosInstance.defaults.headers.common[
 		"Authorization"
@@ -196,7 +197,10 @@ const App = (props) => {
 	useEffect(() => {
 		if (!mountedRef.current || isQueryingNotification === false) return null;
 
-		if (authentication.accessToken) {
+		if (
+			authentication.accessToken &&
+			authentication.accessToken != "undefined"
+		) {
 			setRole(jwtDecode(authentication.accessToken).role);
 			axios
 				.get("/api/users/me")
@@ -216,6 +220,13 @@ const App = (props) => {
 					localStorage.removeItem("refreshToken");
 				});
 			getNotificationHistory();
+		}
+		if (localAccessToken == "undefined") {
+			setIsAuthenticated(false);
+			setUserAccessToken(null);
+			setUserRefreshToken(null);
+			localStorage.removeItem("token");
+			localStorage.removeItem("refreshToken");
 		}
 		if (!authentication.accessToken && !localAccessToken) {
 			setIsAuthenticated(false);

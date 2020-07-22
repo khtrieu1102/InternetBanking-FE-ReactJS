@@ -70,7 +70,6 @@ const LogIn = (props) => {
 
 					// ONLY IN LOGIN! EXIT OF REFRESH-TOKEN LOOP
 					if (result.from === "LOGIN") {
-						console.log("hereee ", result);
 						setFormError(true, result.message);
 					}
 				})
