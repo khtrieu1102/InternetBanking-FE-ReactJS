@@ -48,12 +48,11 @@ const App = (props) => {
 		"Authorization"
 	] = `Bearer ${authentication.accessToken}`;
 	axios.defaults.timeout = 15000;
-	axiosInstance.defaults.baseURL = "http://localhost:5000";
+	axiosInstance.defaults.baseURL =
+		process.env.REACT_APP_BASE_URL || "http://localhost:5000";
 	axiosInstance.defaults.headers.common[
 		"Authorization"
 	] = `Bearer ${authentication.accessToken}`;
-
-	// axios.defaults.timeout = 15000;
 
 	// https://medium.com/@monkov/react-using-axios-interceptor-for-token-refreshing-1477a4d5fc26
 	axios.interceptors.response.use(
@@ -126,6 +125,7 @@ const App = (props) => {
 	let isQueryingNotification = true;
 
 	useEffect(() => {
+		console.log(process.env.REACT_APP_BASE_URL);
 		if (!mountedRef.current) return null;
 
 		return () => {
@@ -138,7 +138,6 @@ const App = (props) => {
 
 	let ts = 0;
 	let flag = 0;
-
 	const getNotificationHistory = async () => {
 		if (isQueryingNotification === false) return;
 		// const fn = () => {
