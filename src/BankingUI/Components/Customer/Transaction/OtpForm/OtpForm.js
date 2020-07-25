@@ -40,6 +40,7 @@ const OtpForm = (props) => {
 					{
 						headers: {
 							transactionId: formVariables.transactionId,
+							debtId: formVariables.debtId,
 						},
 					}
 				)
