@@ -12,20 +12,31 @@ import {
 	faMoneyBill,
 } from "@fortawesome/free-solid-svg-icons";
 
+import PayDebtForm from "../PayDebtForm/PayDebtForm";
+import OtpDebtForm from "../OtpDebtForm/OtpDebtForm";
+import DeleteDebtForm from "../DeleteDebtForm/DeleteDebtForm";
+
 const DebtsFilter = (props) => {
-	const { accessToken, currentUser, debtsData, filterType } = props;
+	const {
+		accessToken,
+		currentUser,
+		debtsData,
+		filterType,
+		step,
+		setStep,
+	} = props;
 	const [validated, setValidated] = useState(false);
-	const [step, setStep] = useState(0);
 	const [formVariables, setFormVariables] = useState({
 		debtId: "",
 		sentUserName: "",
 		receivedUserName: "",
 		debtContent: "",
-		cratedAt: "",
 		amount: 1000,
+		createdAt: "",
 		feedbackContent: "",
 		isReceiverPaid: false,
 		otpCode: "",
+		transactionId: "",
 		error: false,
 		message: "",
 	});
@@ -86,7 +97,7 @@ const DebtsFilter = (props) => {
 		setFormVariables({ ...formVariables });
 		console.log(formVariables);
 		if (type === "delete") setStep(1);
-		else setStep(2);
+		else setStep("pay-debt");
 	};
 
 	const handleDelete = async (event) => {
@@ -104,19 +115,6 @@ const DebtsFilter = (props) => {
 				console.log(result);
 				setFormError(null, result.message);
 			})
-			.catch((error) => {
-				console.log(error.response);
-			});
-	};
-
-	const handleGetOtp = async (debtId, feedbackContent) => {
-		console.log(debtId);
-		await axios
-			.delete(`/api/debt/record`, {
-				data: { debtId: debtId, feedbackContent: feedbackContent },
-			})
-			.then((result) => result.data.data)
-			.then((result) => {})
 			.catch((error) => {
 				console.log(error.response);
 			});
@@ -252,7 +250,7 @@ const DebtsFilter = (props) => {
 					<Button
 						variant="primary-outline"
 						type="button"
-						onClick={() => setStep(0)}
+						onClick={() => setStep("debt-list")}
 					>
 						<FontAwesomeIcon icon={faBackward} /> Back
 					</Button>
@@ -262,141 +260,7 @@ const DebtsFilter = (props) => {
 								<Spinner animation="border" size="sm" /> Waiting...
 							</>
 						) : (
-							<>Xoá nhắc nợ này</>
-						)}
-					</Button>
-				</Form>
-			</>
-		);
-	};
-
-	// Hiện render form khi bấm vào nút thanh toán
-	const renderPayDebtForm = () => {
-		console.log(formVariables);
-		return (
-			<>
-				<h5 className="text-center">THANH TOÁN NHẮC NỢ</h5>
-				{formVariables.message && (
-					<AlertBox
-						alertTypes={formVariables.error}
-						alertMessage={formVariables.message}
-					/>
-				)}
-				<p className="information">
-					<dl className="row">
-						<dt className="col-sm-4">Số tiền:</dt>
-						<dd className="col-sm-7">
-							{moneyFormatter.format(formVariables.amount)}
-						</dd>
-						<dt className="col-sm-4">Người tạo nợ:</dt>
-						<dd className="col-sm-7">{formVariables.sentUserName}</dd>
-						<dt className="col-sm-4">Người nợ</dt>
-						<dd className="col-sm-7">{formVariables.receivedUserName}</dd>
-						<dt className="col-sm-4">Nội dung:</dt>
-						<dd className="col-sm-7">"{formVariables.debtContent}"</dd>
-						<dt className="col-sm-4">Ngày nhắc:</dt>
-						<dd className="col-sm-7">
-							{new Date(formVariables.createdAt).toDateString()}
-						</dd>
-					</dl>
-				</p>
-				<Form noValidate validated={validated} onSubmit={handleGetOtp}>
-					<Form.Group>
-						<Form.Text className="text-muted font-weight-bold">
-							Nội dung thanh toán
-						</Form.Text>
-						<Form.Control
-							required
-							as="textarea"
-							rows="3"
-							type="text"
-							name="feedbackContent"
-							value={formVariables.feedbackContent}
-							onChange={(e) => handleChange(e)}
-							isInvalid={formVariables.feedbackContent === ""}
-						/>
-						<Form.Control.Feedback type="invalid">
-							Give your receiver a message to know
-						</Form.Control.Feedback>
-					</Form.Group>
-					<Button
-						variant="primary-outline"
-						type="button"
-						onClick={() => setStep(0)}
-					>
-						<FontAwesomeIcon icon={faBackward} /> Back
-					</Button>
-					<Button variant="danger" type="submit" className="float-right">
-						{false ? (
-							<>
-								<Spinner animation="border" size="sm" /> Waiting...
-							</>
-						) : (
-							<>Thanh toán</>
-						)}
-					</Button>
-				</Form>
-			</>
-		);
-	};
-
-	// Hiện render form khi bấm vào nút xoá
-	const renderOtpForm = () => {
-		console.log(formVariables);
-		return (
-			<>
-				<h5 className="text-center">THANH TOÁN NHẮC NỢ</h5>
-				<p className="information">
-					<dl className="row">
-						<dt className="col-sm-4">Số tiền:</dt>
-						<dd className="col-sm-7">
-							{moneyFormatter.format(formVariables.amount)}
-						</dd>
-						<dt className="col-sm-4">Người tạo nợ:</dt>
-						<dd className="col-sm-7">{formVariables.sentUserName}</dd>
-						<dt className="col-sm-4">Người nợ</dt>
-						<dd className="col-sm-7">{formVariables.receivedUserName}</dd>
-						<dt className="col-sm-4">Nội dung:</dt>
-						<dd className="col-sm-7">"{formVariables.debtContent}"</dd>
-						<dt className="col-sm-4">Ngày nhắc:</dt>
-						<dd className="col-sm-7">
-							{new Date(formVariables.createdAt).toDateString()}
-						</dd>
-					</dl>
-				</p>
-				<Form noValidate validated={validated} onSubmit={handleDelete}>
-					<Form.Group>
-						<Form.Text className="text-muted font-weight-bold">
-							Your OTP Code
-						</Form.Text>
-						<Form.Control
-							required
-							as="textarea"
-							rows="3"
-							type="text"
-							name="feedbackContent"
-							value={formVariables.feedbackContent}
-							onChange={(e) => handleChange(e)}
-							isInvalid={formVariables.feedbackContent === ""}
-						/>
-						<Form.Control.Feedback type="invalid">
-							Give your receiver a message to know
-						</Form.Control.Feedback>
-					</Form.Group>
-					<Button
-						variant="primary-outline"
-						type="button"
-						onClick={() => setStep(2)}
-					>
-						<FontAwesomeIcon icon={faBackward} /> Back
-					</Button>
-					<Button variant="primary" type="submit" className="float-right">
-						{false ? (
-							<>
-								<Spinner animation="border" size="sm" /> Waiting...
-							</>
-						) : (
-							<>Xác nhận OTP</>
+							<>Xoá nhắc nợ</>
 						)}
 					</Button>
 				</Form>
@@ -406,10 +270,34 @@ const DebtsFilter = (props) => {
 
 	return (
 		<div className="mt-3">
-			{step === 0 && renderDebts()}
-			{step === 1 && renderDeleteForm()}
-			{step === 2 && renderPayDebtForm()}
-			{step === 3 && renderOtpForm()}
+			{step === "debt-list" && renderDebts()}
+			{step === 1 && (
+				<DeleteDebtForm
+					formVariables={formVariables}
+					setFormVariables={setFormVariables}
+					setStep={setStep}
+					handleChange={handleChange}
+					setFormError={setFormError}
+				/>
+			)}
+			{step === "pay-debt" && (
+				<PayDebtForm
+					formVariables={formVariables}
+					setFormVariables={setFormVariables}
+					setStep={setStep}
+					handleChange={handleChange}
+					setFormError={setFormError}
+				/>
+			)}
+			{step === "get-otp-debt" && (
+				<OtpDebtForm
+					formVariables={formVariables}
+					setFormVariables={setFormVariables}
+					setStep={setStep}
+					handleChange={handleChange}
+					setFormError={setFormError}
+				/>
+			)}
 		</div>
 	);
 };
