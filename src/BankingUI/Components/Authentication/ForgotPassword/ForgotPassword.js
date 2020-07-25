@@ -19,7 +19,7 @@ const ForgotPassword = (props) => {
 		message: "",
 		isLoading: false,
 	});
-	const [step, setStep] = useState(0);
+	const [step, setStep] = useState("email-form");
 	const [validated, setValidated] = useState(false);
 
 	const from = props.location.state || { from: { pathname: "/" } };
@@ -50,7 +50,7 @@ const ForgotPassword = (props) => {
 
 	const renderStepForm = () => {
 		switch (step) {
-			case 0:
+			case "email-form":
 				return (
 					<EmailForm
 						formVariables={formVariables}
@@ -60,7 +60,7 @@ const ForgotPassword = (props) => {
 						setFormError={setFormError}
 					/>
 				);
-			case 1:
+			case "otp-form":
 				return (
 					<OtpForm
 						formVariables={formVariables}
@@ -70,7 +70,7 @@ const ForgotPassword = (props) => {
 						setFormError={setFormError}
 					/>
 				);
-			case 2:
+			case "redirect":
 				return <Redirect to="/login" />;
 		}
 	};

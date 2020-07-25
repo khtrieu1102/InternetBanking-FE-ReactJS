@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackward } from "@fortawesome/free-solid-svg-icons";
 
 import axios from "axios";
+import { axiosInstance } from "../../../../App/App";
 
 const OtpForm = ({
 	formVariables,
@@ -22,11 +23,12 @@ const OtpForm = ({
 		event.preventDefault();
 		if (
 			form.checkValidity() === false ||
-			formVariables.retypeNewPassword !== formVariables.newPassword
+			formVariables.retypeNewPassword !== formVariables.newPassword ||
+			formVariables.email === ""
 		) {
 			event.stopPropagation();
 		} else {
-			await axios
+			await axiosInstance
 				.post(`/api/auth/verify-forgot-password`, {
 					code: formVariables.otp,
 					email: formVariables.email,
@@ -34,16 +36,23 @@ const OtpForm = ({
 				})
 				.then((result) => {
 					if (result.status === 200) {
-						setFormError(null, result.data.message);
+						setFormError(
+							null,
+							(result.data && result.data.message) ||
+								"Changed password successfully!"
+						);
 						setTimeout(() => {
-							setStep(2);
+							setStep("redirect");
 						}, 5000);
 					}
 				})
 				.catch((err) => {
-					if (err.status === 404) {
-						setFormError(true, "Something's wrong");
-					} else setFormError(true, "Something's wrong");
+					console.log("login: ", err);
+					setFormError(
+						true,
+						(err.response && err.response.data && err.response.data.message) ||
+							"Something's wrong"
+					);
 				});
 			// if (false) {
 			// 	setStep(2);
@@ -122,7 +131,7 @@ const OtpForm = ({
 				variant="primary-outline"
 				type="button"
 				className="mt-3"
-				onClick={() => setStep(0)}
+				onClick={() => setStep("email-form")}
 			>
 				<FontAwesomeIcon icon={faBackward} /> Add email
 			</Button>
