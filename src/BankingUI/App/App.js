@@ -15,6 +15,7 @@ import {
 } from "../../routes/appRoutes";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import "./App.css";
 
 const axiosInstance = axios.create();
 
@@ -66,6 +67,10 @@ const App = (props) => {
 				err.response.data.from === "LOGIN"
 			)
 				return err.response.data;
+
+			if (err.response.status !== 401) {
+				return err.response.data;
+			}
 
 			return new Promise((resolve, reject) => {
 				const originalReq = err.config;
@@ -346,4 +351,5 @@ const App = (props) => {
 	);
 };
 
+export { axiosInstance };
 export default App;
