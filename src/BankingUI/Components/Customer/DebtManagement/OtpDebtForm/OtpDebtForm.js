@@ -46,7 +46,15 @@ const OtpDebtForm = ({
 				.then((result) => {
 					setFormVariables({ ...formVariables, isLoading: false });
 					if (result.status === 200) {
-						setFormError(null, "Thanh toán nợ thành công! Tuyệt vời!!!");
+						setFormError(
+							null,
+							`Thanh toán nợ thành công! Tuyệt vời! 
+							Bạn sẽ quay lại danh sách nợ trong 5 giây nữa...`
+						);
+						setTimeout(() => {
+							setStep("debt-list");
+							setFormError(null, "");
+						}, 5000);
 					}
 				})
 				.catch((err) => {
