@@ -107,7 +107,7 @@ const CustomerTransaction = (props) => {
 							{step === 1 && (
 								<>
 									<Button
-										variant="primary-outline"
+										variant="outline-dark"
 										type="button"
 										onClick={() => setStep(0)}
 									>

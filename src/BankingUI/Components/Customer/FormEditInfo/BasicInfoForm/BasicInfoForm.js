@@ -77,8 +77,9 @@ const BasicInfoForm = ({
 					required
 					type="text"
 					name="name"
-					value={basicInfoForm.name}
+					value={basicInfoForm.name.toUpperCase()}
 					onChange={(e) => handleBasicInfoChange(e)}
+					disabled
 				/>
 				<Form.Control.Feedback type="invalid">
 					Please fill the field.

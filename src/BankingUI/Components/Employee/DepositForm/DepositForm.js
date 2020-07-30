@@ -60,6 +60,7 @@ const PayInForm = (props) => {
 			await axios
 				.post("/api/admin/deposit", {
 					receivedUserId: formVariables.accountNumber,
+					receivedUserName: formVariables.name,
 					receivedBankId: +formVariables.bankId,
 					amount: +formVariables.amount,
 					content: formVariables.content,
@@ -83,8 +84,9 @@ const PayInForm = (props) => {
 
 	const getThisUserName = async (accountNumber, bankId) => {
 		console.log(accountNumber, bankId);
-
 		if (bankId !== -1 && accountNumber !== "") {
+			setFormVariables({ ...setFormVariables, name: "WAITING..." });
+
 			const name = await axios
 				.get(`/api/users/bank/${bankId}/users/${accountNumber}`)
 				.then((result) => {

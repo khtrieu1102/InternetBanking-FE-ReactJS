@@ -24,9 +24,14 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
 #### 1.3 Thiết lập danh sách người nhận
 
 - [x] Thông tin danh sách người nhận
+
   - [x] Show thông tin từ API
   - [x] CRUD
   - [x] Sử dụng tên đăng ký làm savedName khi không nhập
+
+- [ ] Xử lý liên ngân hàng
+  - [x] 3TBank
+  - [ ] BAOSON Bank
 
 #### 1.4 Chuyển khoản
 
@@ -38,6 +43,8 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
   - [x] Gợi ý lưu vào danh sách người nhận
 
 - [ ] Chuyển khoản liên ngân hàng
+  - [ ] 3TBank
+  - [ ] BAOSON Bank
 
 #### 1.5 Quản lý nợ
 
@@ -51,17 +58,18 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
   - [x] Nợ tạo
   - [x] Nợ do người khác nhắc
 
-- [ ] Huỷ nợ
+- [x] Huỷ nợ
 
   - [x] Chọn nhắc nợ (id) và nội dung xoá
   - [x] Xoá được nhắc nợ
-  - [ ] Notify cho người nhắc hoặc người được nhắc
+  - [x] Notify cho người nhắc hoặc người được nhắc
 
-- [ ] Thanh toán nợ
+- [x] Thanh toán nợ
 
   - [x] Chọn nợ (id)
-  - [ ] Nhập OTP
-  - [ ] Báo thành công
+  - [x] Nhập OTP
+  - [x] Báo thành công
+  - [x] Notification cho người nhắc nợ
 
 #### 1.6 Quản lý giao dịch
 
@@ -71,7 +79,7 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
   - [x] Chuyển tiền
   - [x] Thanh toán nợ (nợ tạo + nợ được nhắc)
   - [x] Xem theo thời gian
-  - [ ] Xem chi tiết giao dịch
+  - [x] Xem chi tiết giao dịch
   - [ ] Filter (để sau)
 
 #### 1.7 Đổi mật khẩu
@@ -123,7 +131,7 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
 
 ## 4. Phát sinh theo đề bài
 
-- [ ] Realtime Notification
+- [x] Realtime Notification
 
 ## 5. Yêu cầu khác
 

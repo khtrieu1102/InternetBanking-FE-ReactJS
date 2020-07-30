@@ -17,6 +17,7 @@ const DebtManagement = (props) => {
 	const currentUser = reducerUserInformation.data;
 	const [renderOption, setRenderOption] = useState("pending-mine");
 	const [debtsData, setDebtsData] = useState([]);
+	const [step, setStep] = useState("debt-list");
 	const mountedRef = useRef(true);
 
 	useEffect(() => {
@@ -55,23 +56,6 @@ const DebtManagement = (props) => {
 					<Card className="mt-3">
 						<Card.Header className="toolBar">QUẢN LÝ NỢ</Card.Header>
 						<Card.Body>
-							<div className="form-group row">
-								<label
-									for="example-date-input"
-									className="col-4 col-form-label"
-								>
-									Date
-								</label>
-								<div className="col-8">
-									<input
-										className="form-control"
-										type="date"
-										value={Date()}
-										onChange={(e) => console.log(e.target.value)}
-										id="example-date-input"
-									/>
-								</div>
-							</div>
 							<Nav
 								fill
 								justify
@@ -93,6 +77,8 @@ const DebtManagement = (props) => {
 								currentUser={currentUser}
 								debtsData={debtsData}
 								filterType={renderOption}
+								setStep={setStep}
+								step={step}
 							/>
 						</Card.Body>
 					</Card>

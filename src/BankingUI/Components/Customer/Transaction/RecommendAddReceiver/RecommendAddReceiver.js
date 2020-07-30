@@ -12,13 +12,14 @@ const RecommendAddReceiver = ({
 
 	// Lấy tên người dùng khi bấm vào receiver có sẵn.
 	useEffect(() => {
-		getThisUserName(formVariables.accountNumber, formVariables.bankId);
+		if (formVariables.accountNumber && formVariables.bankId)
+			getThisUserName(formVariables.accountNumber, formVariables.bankId);
 	}, [formVariables.accountNumber, formVariables.bankId]);
 
 	// Hàm lấy tên người dùng theo accountNumber, gọi qua API
 	const getThisUserName = async (accountNumber, bankId) => {
 		console.log(accountNumber, bankId);
-
+		setFormVariables({ ...setFormVariables, name: "WAITING..." });
 		if (bankId !== -1 && accountNumber !== "") {
 			const name = await axios
 				.get(`/api/users/bank/${bankId}/users/${accountNumber}`)

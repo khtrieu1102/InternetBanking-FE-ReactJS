@@ -15,6 +15,7 @@ import {
 } from "../../routes/appRoutes";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import "./App.css";
 
 const axiosInstance = axios.create();
 
@@ -42,16 +43,16 @@ const App = (props) => {
 	let notificationsData = [];
 
 	// --- CONFIG AXIOS ---
-	axios.defaults.baseURL = "http://localhost:5000";
+	const apiURL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+	axios.defaults.baseURL = apiURL;
 	axios.defaults.headers.common[
 		"Authorization"
 	] = `Bearer ${authentication.accessToken}`;
-	axiosInstance.defaults.baseURL = "http://localhost:5000";
+	axios.defaults.timeout = 15000;
+	axiosInstance.defaults.baseURL = apiURL;
 	axiosInstance.defaults.headers.common[
 		"Authorization"
 	] = `Bearer ${authentication.accessToken}`;
-
-	// axios.defaults.timeout = 15000;
 
 	// https://medium.com/@monkov/react-using-axios-interceptor-for-token-refreshing-1477a4d5fc26
 	axios.interceptors.response.use(
@@ -77,7 +78,7 @@ const App = (props) => {
 				) {
 					originalReq._retry = true;
 
-					let res = fetch("http://localhost:5000/api/auth/refresh", {
+					let res = fetch(`${apiURL}/api/auth/refresh`, {
 						method: "POST",
 						mode: "cors",
 						cache: "no-cache",
@@ -120,6 +121,7 @@ const App = (props) => {
 	let isQueryingNotification = true;
 
 	useEffect(() => {
+		console.log(process.env.REACT_APP_BASE_URL);
 		if (!mountedRef.current) return null;
 
 		return () => {
@@ -132,7 +134,6 @@ const App = (props) => {
 
 	let ts = 0;
 	let flag = 0;
-
 	const getNotificationHistory = async () => {
 		if (isQueryingNotification === false) return;
 		// const fn = () => {
@@ -196,7 +197,10 @@ const App = (props) => {
 	useEffect(() => {
 		if (!mountedRef.current || isQueryingNotification === false) return null;
 
-		if (authentication.accessToken) {
+		if (
+			authentication.accessToken &&
+			authentication.accessToken != "undefined"
+		) {
 			setRole(jwtDecode(authentication.accessToken).role);
 			axios
 				.get("/api/users/me")
@@ -216,6 +220,13 @@ const App = (props) => {
 					localStorage.removeItem("refreshToken");
 				});
 			getNotificationHistory();
+		}
+		if (localAccessToken == "undefined") {
+			setIsAuthenticated(false);
+			setUserAccessToken(null);
+			setUserRefreshToken(null);
+			localStorage.removeItem("token");
+			localStorage.removeItem("refreshToken");
 		}
 		if (!authentication.accessToken && !localAccessToken) {
 			setIsAuthenticated(false);
@@ -335,4 +346,5 @@ const App = (props) => {
 	);
 };
 
+export { axiosInstance };
 export default App;

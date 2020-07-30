@@ -23,6 +23,7 @@ const ReceiverDetail = (props) => {
 	const getThisUserName = async (accountNumber, bankId) => {
 		console.log(accountNumber, bankId);
 
+		setFormVariables({ ...formVariables, name: "WAITING..." });
 		if (bankId !== -1 && accountNumber !== "") {
 			const name = await axios
 				.get(`/api/users/bank/${bankId}/users/${accountNumber}`)
