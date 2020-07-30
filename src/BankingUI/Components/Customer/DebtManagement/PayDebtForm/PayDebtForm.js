@@ -100,7 +100,7 @@ const PayDebtForm = ({
 				<Button
 					variant="primary-outline"
 					type="button"
-					onClick={() => setStep(0)}
+					onClick={() => setStep("debt-list")}
 				>
 					<FontAwesomeIcon icon={faBackward} /> Back
 				</Button>
