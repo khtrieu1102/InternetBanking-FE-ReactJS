@@ -5,6 +5,7 @@ import { Link, Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackward } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { axiosInstance } from "../../../../App/App";
 
 const EmailForm = ({
 	formVariables,
@@ -22,7 +23,7 @@ const EmailForm = ({
 			event.stopPropagation();
 		} else {
 			setFormVariables({ ...formVariables, isLoading: true });
-			await axios
+			await axiosInstance
 				.post(`/api/auth/forgot-password`, {
 					email: formVariables.email,
 				})
@@ -35,9 +36,11 @@ const EmailForm = ({
 				})
 				.catch((err) => {
 					console.log(err.response);
-					if (err.status === 404) {
-						setFormError(true, "This email doesn't exist. Please try again!");
-					} else setFormError(true, "Something's wrong. Please try again!");
+					setFormError(
+						true,
+						(err.response && err.response.data && err.response.data.message) ||
+							"Something's wrong. Please try again!"
+					);
 				});
 
 			setFormVariables({ ...formVariables, isLoading: false });
