@@ -37,6 +37,7 @@ const AddAmountForm = (props) => {
 				await axios
 					.post("/api/transaction", {
 						receivedUserId: formVariables.accountNumber,
+						receivedUserName: formVariables.name,
 						receivedBankId: formVariables.bankId,
 						isDebt: false,
 						isReceiverPaid: formVariables.isReceiverPaid,
@@ -60,7 +61,10 @@ const AddAmountForm = (props) => {
 				// setStep(3);
 				// setFormError(null, "");
 			} else
-				setFormError(true, "Tiền không đủ, chuyển cái gì mà chuyển hả trời!");
+				return setFormError(
+					true,
+					"Tiền không đủ, chuyển cái gì mà chuyển hả trời!"
+				);
 			setStep(3);
 		}
 		setValidated(true);

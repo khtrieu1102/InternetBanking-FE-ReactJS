@@ -60,6 +60,7 @@ const PayInForm = (props) => {
 			await axios
 				.post("/api/admin/deposit", {
 					receivedUserId: formVariables.accountNumber,
+					receivedUserName: formVariables.name,
 					receivedBankId: +formVariables.bankId,
 					amount: +formVariables.amount,
 					content: formVariables.content,
