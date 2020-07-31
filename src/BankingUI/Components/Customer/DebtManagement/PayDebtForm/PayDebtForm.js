@@ -18,6 +18,7 @@ const PayDebtForm = ({
 	setFormVariables,
 	handleChange,
 	setStep,
+	setFormError,
 }) => {
 	const [validated, setValidated] = useState(false);
 
@@ -42,6 +43,10 @@ const PayDebtForm = ({
 						console.log(result.data.transactionId);
 						setFormVariables({ ...formVariables });
 					}
+					setFormError(
+						null,
+						"Hệ thống đã gửi OTP code cho bạn, hãy kiểm tra mail!"
+					);
 				})
 				.catch((error) => {
 					console.log(error.response);
