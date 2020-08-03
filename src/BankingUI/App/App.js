@@ -117,7 +117,6 @@ const App = (props) => {
 	);
 
 	// --- GETTING NOTIFICATION && LONG POLLING WITH SERVER
-	let isGettingAList = true;
 	let isQueryingNotification = true;
 
 	useEffect(() => {
@@ -126,7 +125,6 @@ const App = (props) => {
 
 		return () => {
 			mountedRef.current = false;
-			isGettingAList = false;
 			isQueryingNotification = false;
 			console.log("isLoading: ", isQueryingNotification);
 		};
