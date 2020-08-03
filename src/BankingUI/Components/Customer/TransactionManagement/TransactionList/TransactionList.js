@@ -9,11 +9,12 @@ import { faEye, faBackward } from "@fortawesome/free-solid-svg-icons";
 import TransactionDetail from "../TransactionDetail/TransactionDetail";
 
 const TransactionList = (props) => {
-	const { currentUser } = props;
-	const [step, setStep] = useState("total");
+	const { currentUser, setStep } = props;
+	const [step, setLittleStep] = useState("total");
 	const [workingTransaction, setWorkingTransaction] = useState({
 		sentUserId: "",
 	});
+	console.log("currentUser: ", currentUser);
 	const transactionsData = props.transactionsData.sort(
 		(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
 	);
@@ -21,16 +22,16 @@ const TransactionList = (props) => {
 	const DetailTransaction = () => {
 		return (
 			<>
-				<TransactionDetail transactionDetail={workingTransaction} />
 				<Button
 					variant="light"
 					size="sm"
 					onClick={() => {
-						setStep("total");
+						setLittleStep("total");
 					}}
 				>
 					<FontAwesomeIcon icon={faBackward} /> BACK
 				</Button>
+				<TransactionDetail transactionDetail={workingTransaction} />
 			</>
 		);
 	};
@@ -38,15 +39,29 @@ const TransactionList = (props) => {
 	const TotalTransaction = () => {
 		if (transactionsData.length === 0) {
 			return (
-				<AlertBox
-					alertTypes="success"
-					alertHeading="Xin chào!"
-					alertMessage="Chưa có giao dịch nào trong thời gian này!"
-				/>
+				<>
+					<AlertBox
+						alertTypes="success"
+						alertHeading="Xin chào!"
+						alertMessage="Chưa có giao dịch nào trong thời gian này!"
+					/>
+					<Button
+						variant="light"
+						size="sm"
+						onClick={() => {
+							setStep(0);
+						}}
+					>
+						<FontAwesomeIcon icon={faBackward} /> BACK
+					</Button>
+				</>
 			);
 		} else {
 			return (
 				<>
+					<Button variant="light" size="sm" onClick={() => setLittleStep(0)}>
+						<FontAwesomeIcon icon={faBackward} /> Back to transaction list
+					</Button>
 					<h5>Khách hàng: {currentUser.name.toUpperCase()}</h5>
 					{transactionsData.map((item, index) => {
 						let nameToShow = "";
@@ -87,7 +102,7 @@ const TransactionList = (props) => {
 										setWorkingTransaction(
 											Object.assign(workingTransaction, item)
 										);
-										setStep("detail");
+										setLittleStep("detail");
 									}}
 								>
 									<FontAwesomeIcon icon={faEye} />

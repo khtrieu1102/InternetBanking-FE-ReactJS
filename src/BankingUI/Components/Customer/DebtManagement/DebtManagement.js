@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Container, Col, Card, Row, Nav, Badge, Alert } from "react-bootstrap";
+import { Container, Col, Card, Row, Nav, Button, Alert } from "react-bootstrap";
 import axios from "axios";
 
 import AlertBox from "../../Others/AlertBox/AlertBox";
@@ -70,6 +70,9 @@ const DebtManagement = (props) => {
 								</Nav.Item>
 								<Nav.Item>
 									<Nav.Link eventKey="pending-theirs">Nhắc nợ gửi đến</Nav.Link>
+								</Nav.Item>
+								<Nav.Item>
+									<Nav.Link eventKey="paid">Hoàn tất</Nav.Link>
 								</Nav.Item>
 							</Nav>
 							<DebtFilter

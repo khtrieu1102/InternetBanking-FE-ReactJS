@@ -1,7 +1,9 @@
 import React from "react";
-import { Table, Button } from "react-bootstrap";
-
+import { Table, Button } from "antd";
 import formatter from "../../../HelperFunctions/moneyFormatter";
+import { TransactionOutlined } from "@ant-design/icons";
+
+const { Column } = Table;
 
 const CustomersList = (props) => {
 	const {
@@ -11,7 +13,6 @@ const CustomersList = (props) => {
 		currentUser,
 		getUserTransaction,
 	} = props;
-
 	const handleClick = (item) => {
 		currentUser["name"] = item.name;
 		currentUser["accountNumber"] = item.accountNumber;
@@ -26,31 +27,37 @@ const CustomersList = (props) => {
 	});
 
 	return (
-		<Table striped bordered hover variant="dark">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>Username</th>
-					<th>Full Name</th>
-					<th>Balance</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{usersData.map((item, index) => {
-					return (
-						<tr key={index}>
-							<td>{item.accountNumber}</td>
-							<td>{item.username}</td>
-							<td>{item.name}</td>
-							<td>{formatter.format(item.balance)}</td>
-							<td>
-								<Button onClick={() => handleClick(item)}>Go</Button>
-							</td>
-						</tr>
-					);
-				})}
-			</tbody>
+		<Table dataSource={usersData}>
+			<Column
+				title="#"
+				dataIndex="accountNumber"
+				key="accountNumber"
+				sorter={(a, b) => a.accountNumber - b.accountNumber}
+			/>
+			<Column title="Username" dataIndex="username" key="username" />
+			<Column title="Name" dataIndex="name" key="name" />
+			<Column
+				title="Balance"
+				dataIndex="balance"
+				key="balance"
+				sorter={(a, b) => a.balance - b.balance}
+				render={(balance) => <p>{formatter.format(balance)}</p>}
+			/>
+			<Column
+				title="Action"
+				key="action"
+				render={(item) => (
+					<Button
+						type="primary"
+						onClick={() => {
+							handleClick(item);
+							console.log(item);
+						}}
+					>
+						Go
+					</Button>
+				)}
+			/>
 		</Table>
 	);
 };

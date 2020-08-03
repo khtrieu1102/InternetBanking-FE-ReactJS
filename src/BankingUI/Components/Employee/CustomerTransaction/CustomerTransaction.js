@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const CustomerTransaction = (props) => {
-	const { reducerAuthorization, reducerUserInformation } = props;
+	const { reducerAuthorization } = props;
 	const { accessToken } = reducerAuthorization.authentication;
 	const [validated, setValidated] = useState(false);
 	const [usersData, setUsersData] = useState([]);
@@ -106,13 +106,6 @@ const CustomerTransaction = (props) => {
 							)}
 							{step === 1 && (
 								<>
-									<Button
-										variant="outline-dark"
-										type="button"
-										onClick={() => setStep(0)}
-									>
-										<FontAwesomeIcon icon={faBackward} /> Back
-									</Button>
 									<TransactionList
 										currentUser={currentUser}
 										transactionsData={transactionsData}
