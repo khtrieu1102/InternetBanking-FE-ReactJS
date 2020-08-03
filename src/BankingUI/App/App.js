@@ -82,7 +82,7 @@ const App = (props) => {
 				) {
 					originalReq._retry = true;
 
-					let res = fetch("http://localhost:5000/api/auth/refresh", {
+					let res = fetch(`${apiURL}/api/auth/refresh`, {
 						method: "POST",
 						mode: "cors",
 						cache: "no-cache",
