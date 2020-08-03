@@ -27,6 +27,7 @@ import CustomerTransactionConnect from "../BankingUI/Components/Employee/Custome
 import AdminDashboardConnect from "../BankingUI/Components/Admin/Dashboard/DashboardConnect";
 import EmployeeManagementConnect from "../BankingUI/Components/Admin/EmployeeManagement/EmployeeManagementConnect";
 import NewEmployeeFormConnect from "../BankingUI/Components/Admin/NewEmployeeForm/NewEmployeeFormConnect";
+import TransactionStatisticsConnect from "../BankingUI/Components/Admin/TransactionStatistics/TransactionStatisticsConnect";
 
 export const PrivateRoute = ({ comp: Component, ...rest }) => {
 	return (
@@ -138,11 +139,16 @@ export const admin_routes = [
 		component: EmployeeManagementConnect,
 		layout: DefaultLayout,
 	},
-	,
 	{
 		path: "/new-employee",
 		routetype: PrivateRoute,
 		component: NewEmployeeFormConnect,
+		layout: DefaultLayout,
+	},
+	{
+		path: "/statistics",
+		routetype: PrivateRoute,
+		component: TransactionStatisticsConnect,
 		layout: DefaultLayout,
 	},
 	{
