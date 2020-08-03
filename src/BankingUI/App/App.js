@@ -43,13 +43,13 @@ const App = (props) => {
 	let notificationsData = [];
 
 	// --- CONFIG AXIOS ---
-	axios.defaults.baseURL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+	const apiURL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+	axios.defaults.baseURL = apiURL;
 	axios.defaults.headers.common[
 		"Authorization"
 	] = `Bearer ${authentication.accessToken}`;
 	axios.defaults.timeout = 15000;
-	axiosInstance.defaults.baseURL =
-		process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+	axiosInstance.defaults.baseURL = apiURL;
 	axiosInstance.defaults.headers.common[
 		"Authorization"
 	] = `Bearer ${authentication.accessToken}`;
