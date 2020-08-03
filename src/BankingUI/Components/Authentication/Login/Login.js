@@ -5,6 +5,7 @@ import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import AlertBox from "../../Others/AlertBox/AlertBox";
+import { axiosInstance } from "../../../App/App";
 
 const LogIn = (props) => {
 	const { reducerAuthorization, setUserAccessToken } = props;
@@ -57,7 +58,7 @@ const LogIn = (props) => {
 			event.stopPropagation();
 		} else {
 			setFormVariables({ ...formVariables, isLoading: true });
-			await axios
+			await axiosInstance
 				.post("/api/auth/login", {
 					username: formVariables.username,
 					password: formVariables.password,
