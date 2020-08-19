@@ -60,12 +60,12 @@ const App = (props) => {
 			return response;
 		},
 		(err) => {
-			console.log(err.response);
-			if (
-				err.response.data.message === "Invalid username or password!" ||
-				err.response.data.from === "LOGIN"
-			)
-				return err.response.data;
+			// console.log(err.response);
+			// if (
+			// 	err.response.data.message === "Invalid username or password!" ||
+			// 	err.response.data.from === "LOGIN"
+			// )
+			// 	return err.response.data;
 
 			return new Promise((resolve, reject) => {
 				const originalReq = err.config;
