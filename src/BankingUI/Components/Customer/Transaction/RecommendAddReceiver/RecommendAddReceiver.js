@@ -10,29 +10,6 @@ const RecommendAddReceiver = ({
 }) => {
 	const [validated, setValidated] = useState(false);
 
-	// Lấy tên người dùng khi bấm vào receiver có sẵn.
-	useEffect(() => {
-		if (formVariables.accountNumber && formVariables.bankId)
-			getThisUserName(formVariables.accountNumber, formVariables.bankId);
-	}, [formVariables.accountNumber, formVariables.bankId]);
-
-	// Hàm lấy tên người dùng theo accountNumber, gọi qua API
-	const getThisUserName = async (accountNumber, bankId) => {
-		console.log(accountNumber, bankId);
-		setFormVariables({ ...setFormVariables, name: "WAITING..." });
-		if (bankId !== -1 && accountNumber !== "") {
-			const name = await axios
-				.get(`/api/users/bank/${bankId}/users/${accountNumber}`)
-				.then((result) => {
-					if (result.data.name) return result.data.name;
-					return "KHONG TIM THAY";
-				})
-				.catch((err) => "KHONG TIM THAY");
-			console.log(accountNumber, bankId);
-			await setFormVariables({ ...formVariables, name: name });
-		}
-	};
-
 	// Update giá trị điền vào Form
 	const handleChange = (e) => {
 		formVariables[e.target.name] = e.target.value;
@@ -70,12 +47,7 @@ const RecommendAddReceiver = ({
 							name="accountNumber"
 							value={formVariables.accountNumber}
 							onChange={(e) => handleChange(e)}
-							onBlur={() =>
-								getThisUserName(
-									formVariables.accountNumber,
-									formVariables.bankId
-								)
-							}
+							disabled
 						/>
 					</Col>
 					<Col>
@@ -86,12 +58,7 @@ const RecommendAddReceiver = ({
 							name="bankId"
 							value={formVariables.bankId}
 							onChange={(e) => handleChange(e)}
-							onBlur={() =>
-								getThisUserName(
-									formVariables.accountNumber,
-									formVariables.bankId
-								)
-							}
+							disabled
 						>
 							<option value={-1}></option>
 							<option value={0}>SAPHASAN Bank</option>
@@ -109,7 +76,6 @@ const RecommendAddReceiver = ({
 					type="text"
 					name="name"
 					value={formVariables.name}
-					onChange={(e) => handleChange(e)}
 					disabled
 				/>
 			</Form.Group>
