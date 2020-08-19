@@ -50,8 +50,8 @@ const LogIn = (props) => {
 
 	const handleSubmit = async (event) => {
 		const form = event.currentTarget;
-		// const reCaptchaValue = reCaptchaRef.current.getValue();
-		const reCaptchaValue = true;
+		const reCaptchaValue = reCaptchaRef.current.getValue();
+		// const reCaptchaValue = true;
 		event.preventDefault();
 		if (form.checkValidity() === false || !reCaptchaValue) {
 			if (!reCaptchaValue) setFormError(true, "Captcha is invalid, try again!");
