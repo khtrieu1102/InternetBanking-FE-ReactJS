@@ -66,6 +66,7 @@ const App = (props) => {
 			// 	err.response.data.from === "LOGIN"
 			// )
 			// 	return err.response.data;
+			if (err.response.status !== 401) return Promise.reject(err);
 
 			return new Promise((resolve, reject) => {
 				const originalReq = err.config;
