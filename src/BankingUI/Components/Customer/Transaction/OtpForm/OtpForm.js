@@ -53,7 +53,7 @@ const OtpForm = (props) => {
 				})
 				.catch((err) => {
 					console.log(err.response);
-					err.response.message
+					err.response && err.response.message
 						? setFormError(true, err.response.data.message)
 						: setFormError(true, "Something's wrong, please try again!");
 				});
