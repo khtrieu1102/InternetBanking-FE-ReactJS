@@ -47,6 +47,7 @@ const TransactionStatistics = (props) => {
 	};
 
 	const onFilter = (range) => {
+		if (range === null) return alert("Sai");
 		const fromDateUTC = new Date(range.fromDate);
 		const toDateUTC = new Date(range.toDate);
 		const newTransactionData = transactionsData.filter((item) => {
@@ -125,6 +126,7 @@ const TransactionStatistics = (props) => {
 						render={(row) => {
 							return <>{new Date(row.createdAt).toUTCString()}</>;
 						}}
+						sorter={(a, b) => new Date(a.createdAt) - new Date(b.createdAt)}
 					/>
 					<Column
 						title="Action"
