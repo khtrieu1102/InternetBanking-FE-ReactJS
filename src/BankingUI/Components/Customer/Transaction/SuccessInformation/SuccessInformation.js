@@ -50,7 +50,7 @@ const SuccessInformation = (props) => {
 					) : (
 						<>
 							<dt className="col-sm-4">Người chuyển chịu phí:</dt>
-							<dd className="col-sm-7">10,000đ</dd>
+							<dd className="col-sm-7">1,000đ</dd>
 						</>
 					)}
 				</dl>

@@ -7,18 +7,7 @@ import getBankName from "../../../HelperFunctions/getBankName";
 const TransactionDetail = ({ transactionDetail }) => {
 	let sentBankName = "";
 	let receivedBankName = "";
-	// const getBankName = (bankId) => {
-	// 	switch (bankId) {
-	// 		case 0:
-	// 			return "SAPHASAN Bank";
-	// 		case 1:
-	// 			return "3TBank";
-	// 		case 2:
-	// 			return "BAOSON Bank";
-	// 		default:
-	// 			return "SAPHASAN Bank";
-	// 	}
-	// };
+
 	return (
 		<>
 			<Descriptions title="Thông tin chuyển khoản">
@@ -30,6 +19,9 @@ const TransactionDetail = ({ transactionDetail }) => {
 				</Descriptions.Item>
 				<Descriptions.Item label="Trả nợ">
 					{transactionDetail.isDebt ? "true" : "false"}
+				</Descriptions.Item>
+				<Descriptions.Item label="Nội dung">
+					"{transactionDetail.content}"
 				</Descriptions.Item>
 				<Descriptions.Item label="Thời gian">
 					{new Date(transactionDetail.createdAt).toUTCString()}

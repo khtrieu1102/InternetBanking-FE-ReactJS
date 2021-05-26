@@ -60,12 +60,13 @@ const App = (props) => {
 			return response;
 		},
 		(err) => {
-			console.log(err.response);
-			if (
-				err.response.data.message === "Invalid username or password!" ||
-				err.response.data.from === "LOGIN"
-			)
-				return err.response.data;
+			// console.log(err.response);
+			// if (
+			// 	err.response.data.message === "Invalid username or password!" ||
+			// 	err.response.data.from === "LOGIN"
+			// )
+			// 	return err.response.data;
+			if (err.response.status !== 401) return Promise.reject(err);
 
 			return new Promise((resolve, reject) => {
 				const originalReq = err.config;
@@ -117,7 +118,6 @@ const App = (props) => {
 	);
 
 	// --- GETTING NOTIFICATION && LONG POLLING WITH SERVER
-	let isGettingAList = true;
 	let isQueryingNotification = true;
 
 	useEffect(() => {
@@ -126,7 +126,6 @@ const App = (props) => {
 
 		return () => {
 			mountedRef.current = false;
-			isGettingAList = false;
 			isQueryingNotification = false;
 			console.log("isLoading: ", isQueryingNotification);
 		};

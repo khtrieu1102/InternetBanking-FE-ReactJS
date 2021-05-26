@@ -72,11 +72,9 @@ const NewCustomerForm = (props) => {
 					if (result.status === 200) setFormError(null, result.data.message);
 				})
 				.catch((err) => {
-					const { response } = err;
-					console.log(err.response);
-					if (response.status === 400) {
-						setFormError(true, response.data.message);
-					} else setFormError(true, "Something's wrong!");
+					err.response && err.response.data && err.response.data.message
+						? setFormError(true, err.response.data.message)
+						: setFormError(true, "Something's wrong!");
 				});
 		}
 		setValidated(true);
@@ -188,7 +186,7 @@ const NewCustomerForm = (props) => {
 									</Form.Control.Feedback>
 								</Form.Group>
 								<Button variant="primary" type="submit">
-									Edit
+									ADD
 									{/* {isLoading ? <Spinner animation="border" size="sm" /> : null} */}
 								</Button>
 							</Form>

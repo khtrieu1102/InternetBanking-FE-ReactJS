@@ -54,13 +54,15 @@ const ReceiverDetail = (props) => {
 		if (
 			form.checkValidity() === false ||
 			formVariables.name == "" ||
-			formVariables.name == "KHONG TIM THAY"
+			formVariables.name == "KHONG TIM THAY" ||
+			formVariables.name === "WAITING..."
 		) {
 			event.stopPropagation();
 		} else {
 			if (
 				formVariables.name === "" ||
 				formVariables.name === "KHONG TIM THAY" ||
+				formVariables.name === "WAITING..." ||
 				formVariables.accountNumber === "" ||
 				formVariables.bankId === -1
 			) {
