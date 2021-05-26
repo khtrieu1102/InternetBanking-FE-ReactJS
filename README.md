@@ -1,6 +1,17 @@
 # InternetBanking-FrontEnd
 
 FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
+Sinh viên: NGUYỄN NGỌC KHẮC TRIỆU 1612738
+
+# Công nghệ sử dụng
+- [x] **ReactJS** kết hợp React-Bootstrap + Ant Design
+- [x] **React-Redux, Redux Thunk**
+
+# Các kĩ thuật/thuật toán thêm
+- [x] Authentication (nhiều role), **Access Token JWT**
+- [x] Refresh Token
+- [x] Mã hoá bất đối xứng RSA/PGP
+- [x] Realtime (Các kĩ thuật Short Polling, Long Polling, WebSockets). Trong đồ án này sử dụng **Long Polling**
 
 # Theo dõi công việc
 
@@ -29,9 +40,9 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
   - [x] CRUD
   - [x] Sử dụng tên đăng ký làm savedName khi không nhập
 
-- [ ] Xử lý liên ngân hàng
+- [x] Xử lý liên ngân hàng
   - [x] 3TBank
-  - [ ] BAOSON Bank
+  - [x] BAOSON Bank
 
 #### 1.4 Chuyển khoản
 
@@ -42,9 +53,9 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
   - [x] Nhập OTP
   - [x] Gợi ý lưu vào danh sách người nhận
 
-- [ ] Chuyển khoản liên ngân hàng
-  - [ ] 3TBank
-  - [ ] BAOSON Bank
+- [x] Chuyển khoản liên ngân hàng
+  - [x] 3TBank
+  - [x] BAOSON Bank
 
 #### 1.5 Quản lý nợ
 
@@ -80,7 +91,7 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
   - [x] Thanh toán nợ (nợ tạo + nợ được nhắc)
   - [x] Xem theo thời gian
   - [x] Xem chi tiết giao dịch
-  - [ ] Filter (để sau)
+  - [x] Filter
 
 #### 1.7 Đổi mật khẩu
 
@@ -107,7 +118,7 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
 
 - [x] Nạp tiền cho customer
   - [x] Theo số tài khoản
-  - [ ] Hoặc theo tên đăng nhập
+  - [x] Hoặc theo tên đăng nhập
   - [x] Luồng màn hình
   - [x] Luồng dữ liệu
 
@@ -124,10 +135,10 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
   - [x] Vô hiệu hoá tài khoản nhân viên
   - [x] Tạo tài khoản nhân viên
 
-- [ ] Xem giao dịch trong tháng với ngân hàng khác
+- [x] Xem giao dịch trong tháng với ngân hàng khác
   - [ ] Xem trong khoảng thời gian
   - [ ] Xem theo từng ngân hàng/tất cả ngân hàng
-  - [ ] Thống kê số tiền giao dịch (nhận hoặc chuyển)
+  - [x] Thống kê số tiền giao dịch (nhận hoặc chuyển)
 
 ## 4. Phát sinh theo đề bài
 
@@ -137,7 +148,7 @@ FrontEnd Internet Banking - Đồ án cuối kì - PTUDWNC 2020 - HCMUS
 
 - [x] Có 8 tài khoản
 - [x] API nội bộ đều phải cài đặt **access-token** và **refresh-token**
-- [ ] Kết nối 2 ngân hàng khác
-  - [ ] PGP
-  - [ ] RSA
+- [x] Kết nối 2 ngân hàng khác
+  - [x] PGP
+  - [x] RSA
 - [x] Up lên Github
