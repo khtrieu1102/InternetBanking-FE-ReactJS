@@ -22,7 +22,7 @@ const OtpDebtForm = ({
 }) => {
 	const [validated, setValidated] = useState(false);
 
-	const handleGetOtp = async (event) => {
+	const handleSubmitOtp = async (event) => {
 		const form = event.currentTarget;
 
 		event.preventDefault();
@@ -93,7 +93,7 @@ const OtpDebtForm = ({
 					</dd>
 				</dl>
 			</p>
-			<Form noValidate validated={validated} onSubmit={handleGetOtp}>
+			<Form noValidate validated={validated} onSubmit={handleSubmitOtp}>
 				<Form.Group>
 					<Form.Text className="text-muted font-weight-bold">
 						Your OTP code

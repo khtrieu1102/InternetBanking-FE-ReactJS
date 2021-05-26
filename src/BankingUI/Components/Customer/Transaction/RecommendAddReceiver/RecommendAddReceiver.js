@@ -19,6 +19,7 @@ const RecommendAddReceiver = ({
 	// Submit
 	const handleSubmit = async (event) => {
 		const form = event.currentTarget;
+		event.preventDefault();
 		if (form.checkValidity() === false) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -28,6 +29,7 @@ const RecommendAddReceiver = ({
 				bankId: +formVariables.bankId,
 				accountNumber: formVariables.accountNumber,
 			});
+			window.reload();
 		}
 		setValidated(true);
 	};
